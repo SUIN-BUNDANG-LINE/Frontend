@@ -9,11 +9,7 @@ export const metadata: Metadata = {
   description: '설문 작성부터 홍보까지 한 방에!',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ko">
       <body className={inter.className}>{children}</body>
