@@ -1,0 +1,10 @@
+.customize {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 6rem;
+}
+
+.sort {
+  padding: 0 12px;
+}

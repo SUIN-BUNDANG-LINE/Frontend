@@ -1,0 +1,15 @@
+.reward {
+  border: 1px solid var(--gray);
+  width: fit-content;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.items {
+  display: none;
+}
+
+.reward:hover + .items {
+  display: block;
+  color: red;
+}
