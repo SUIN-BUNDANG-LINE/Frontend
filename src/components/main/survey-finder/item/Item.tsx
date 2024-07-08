@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { dateReader } from '@/utils';
 import { FaArrowUp, FaGift } from 'react-icons/fa';
 import type { Survey } from '../types';
@@ -11,7 +12,7 @@ function SurveyFinderListItem({ survey }: { survey: Survey }) {
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
-    <div className={styles.item} onClick={() => alert(surveyId)}>
+    <Link className={styles.item} href={`/s/${surveyId}`}>
       <div
         className={styles.thumbnail}
         style={{ backgroundColor: 'var(--gray-ml)', backgroundSize: 'cover', backgroundImage: `url("${thumbnail}")` }}
@@ -36,7 +37,7 @@ function SurveyFinderListItem({ survey }: { survey: Survey }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

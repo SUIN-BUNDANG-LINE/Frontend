@@ -1,9 +1,9 @@
 'use client';
 
-import { response } from '@/app/(main)/DUMMY_RESPONSE';
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { replaceURLSearchParams } from '@/utils';
+import { useSurveyList } from '@/queries/main';
 import SurveyFinderList from './list/List';
 import SurveyFinderCustomize from './control/Customize';
 import SurveyFinderPagination from './control/Pagination';
@@ -16,11 +16,16 @@ const sortOptions = [
 function SurveyFinder() {
   const searchParams = useSearchParams();
 
-  const { data } = response;
-  const { pageCount, surveys } = data;
-
   const [sort, setSort] = useState<string>(searchParams.get('sort') || sortOptions[0].value);
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
+
+  const { data, isLoading } = useSurveyList(sort, page);
+
+  if (!data || isLoading) {
+    return <div>loading...</div>;
+  }
+
+  const { pageCount, surveys } = data;
 
   const setSortHandler = (value: string) => {
     setSort(value);

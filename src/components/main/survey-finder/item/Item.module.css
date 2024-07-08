@@ -10,6 +10,9 @@
   background-color: #fff;
 
   position: relative;
+
+  text-decoration: none;
+  color: inherit;
 }
 
 .item::before {

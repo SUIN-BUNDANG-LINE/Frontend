@@ -1,5 +1,10 @@
 @import 'normalize.css';
 
+html,
+body {
+  background-color: var(--background);
+}
+
 :root {
   --container-width: 1080px;
 
@@ -8,6 +13,12 @@
   --gray: #9ca3af; /* Medium gray */
   --gray-md: #6b7280; /* Medium dark gray */
   --gray-d: #374151; /* Dark gray */
+
+  --primary: #ffbc49;
+  --primary-alt: #ffa347;
+  --secondary: #e8dfd0;
+  --secondary-alt: #ead7bf;
+  --background: #f8f8f8;
 
   width: 100%;
   min-width: 320px;

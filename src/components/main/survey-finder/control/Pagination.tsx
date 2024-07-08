@@ -1,5 +1,5 @@
 import Wrapper from '@/components/layout/Wrapper';
-import styles from './pagination.module.css';
+import styles from './Pagination.module.css';
 
 interface Props {
   page: number;
@@ -17,7 +17,7 @@ function SurveyFinderPagination({ page, setPageHandler, maxPage }: Props) {
   };
 
   return (
-    <Wrapper outerColor="var(--gray-l)">
+    <Wrapper>
       <div className={styles.pagination}>
         <div>
           <button type="button" className={styles.button} onClick={decrement} disabled={page === 1}>
