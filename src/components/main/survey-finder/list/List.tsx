@@ -5,7 +5,7 @@ import styles from './List.module.css';
 
 function SurveyFinderList({ surveys }: { surveys: Survey[] }) {
   return (
-    <Wrapper outerColor="var(--gray-l)">
+    <Wrapper>
       <div className={styles.list}>
         {surveys.map((survey) => (
           <SurveyListItem survey={survey} key={survey.surveyId} />
