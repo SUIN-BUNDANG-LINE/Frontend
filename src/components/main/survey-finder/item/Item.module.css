@@ -13,6 +13,8 @@
 
   text-decoration: none;
   color: inherit;
+
+  transition: background-color 0.2s ease-out;
 }
 
 .item::before {
@@ -135,5 +137,11 @@
 
   .rewards {
     padding-top: 8px;
+  }
+}
+
+@media (pointer: fine) {
+  .item:hover {
+    background-color: var(--gray-l);
   }
 }

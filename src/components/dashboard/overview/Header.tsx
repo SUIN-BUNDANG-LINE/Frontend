@@ -2,7 +2,7 @@ import Wrapper from '@/components/layout/Wrapper';
 import Image from 'next/image';
 import styles from './Header.module.css';
 
-export default function Header() {
+export default function OverviewHeader() {
   return (
     <Wrapper outerColor="#fff">
       <div className={styles.container}>
