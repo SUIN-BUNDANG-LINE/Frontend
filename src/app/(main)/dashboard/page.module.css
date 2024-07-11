@@ -6,3 +6,21 @@
   flex-direction: column;
   row-gap: 24px;
 }
+
+.newSurvey {
+  display: inline-block;
+
+  color: var(--primary);
+  font-size: 18px;
+  text-decoration: none;
+
+  background-color: #fff;
+  padding: 0 12px;
+  line-height: 42px;
+  height: 42px;
+  border-radius: 21px;
+}
+
+.newSurvey:hover {
+  color: var(--primary-alt);
+}
