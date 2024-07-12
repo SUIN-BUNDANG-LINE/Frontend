@@ -4,13 +4,13 @@ interface Reward {
 }
 
 interface Survey {
-  surveyId: number;
+  surveyId: string;
   thumbnail: string;
   title: string;
   description: string;
   targetParticipants: number;
   rewardCount: number;
-  endDate: string;
+  finishedAt: string;
   rewards: Reward[];
 }
 

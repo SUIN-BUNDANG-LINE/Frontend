@@ -1,6 +1,7 @@
 import Wrapper from '@/components/layout/Wrapper';
 import SurveyListItem from '../item/Item';
 import type { Survey } from '../types';
+
 import styles from './List.module.css';
 
 function SurveyFinderList({ surveys }: { surveys: Survey[] }) {

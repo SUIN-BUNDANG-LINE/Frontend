@@ -1,4 +1,3 @@
-import { SurveyDetails } from '@/queries/survey/types';
 import { FiActivity } from 'react-icons/fi';
 import { FaCalendarAlt, FaGift, FaInfoCircle, FaPaperclip } from 'react-icons/fa';
 import { FaUserGroup } from 'react-icons/fa6';
@@ -7,6 +6,7 @@ import Wrapper from '@/components/layout/Wrapper';
 import Button from '@/components/ui/button/Button';
 import Tooltip from '@/components/ui/tooltip/Tooltip';
 import Link from 'next/link';
+import type { SurveysDetailsResponse } from '@/queries/types';
 
 import styles from './index.module.css';
 
@@ -21,7 +21,7 @@ function statusReader(status: string) {
   }
 }
 
-function SurveyDetailsViewer({ data }: { data: SurveyDetails }) {
+function SurveyDetailsViewer({ data }: { data: SurveysDetailsResponse }) {
   const router = useRouter();
 
   const {

@@ -8,7 +8,7 @@ import styles from './Item.module.css';
 import RewardTag from './RewardTag';
 
 function SurveyFinderListItem({ survey }: { survey: Survey }) {
-  const { surveyId, thumbnail, title, description, targetParticipants, rewardCount, endDate, rewards } = survey;
+  const { surveyId, thumbnail, title, description, targetParticipants, rewardCount, finishedAt, rewards } = survey;
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
@@ -20,7 +20,7 @@ function SurveyFinderListItem({ survey }: { survey: Survey }) {
       <div className={styles.info}>
         <div>
           <div className={styles.title}>{title.length < 28 ? title : `${title.substring(0, 25).trim()}...`}</div>
-          <div className={styles.time}>{dateReader(endDate)}</div>
+          <div className={styles.time}>{dateReader(finishedAt)}</div>
           <div className={styles.description}>{description}</div>
           <div className={styles.rewards}>
             {rewards.map((i) => (
