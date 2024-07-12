@@ -1,7 +1,7 @@
 'use client';
 
 import { Footer, Header } from '@/components/layout/survey';
-import { useSurveyDetails } from '@/queries/survey';
+import { useSurveysDetails } from '@/queries/surveys';
 import styles from './layout.module.css';
 
 export default function SurveyLayout({
@@ -9,15 +9,15 @@ export default function SurveyLayout({
   children,
 }: Readonly<{ children: React.ReactNode; params: { surveyId: string } }>) {
   const { surveyId } = params;
-  const { data, isLoading } = useSurveyDetails(surveyId);
+  const { data, isLoading } = useSurveysDetails(surveyId);
 
-  if (isLoading) {
+  if (!data || isLoading) {
     return <div>loading...</div>;
   }
 
   return (
     <div className={styles.layout}>
-      <Header title={data!.title} />
+      <Header title={data.title} />
       <div className={styles.content}>{children}</div>
       <Footer />
     </div>

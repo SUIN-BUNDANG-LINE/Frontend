@@ -1,25 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { replaceURLSearchParams } from '@/utils';
-import { useSurveyList } from '@/queries/main';
+import { useSurveysList } from '@/queries/surveys';
 import SurveyFinderList from './list/List';
 import SurveyFinderCustomize from './control/Customize';
 import SurveyFinderPagination from './control/Pagination';
 
-const sortOptions = [
-  { value: 'new', label: '최신순' },
-  { value: 'trend', label: '인기순' },
-];
+const sortOptions = [{ value: 'RECENT', label: '최신순' }];
+
+function getSortFromSearchParams(searchParams: ReadonlyURLSearchParams) {
+  const arg = searchParams.get('sort');
+  const tar = sortOptions.find((option) => option.value === arg);
+  return tar ? tar.value : sortOptions[0].value;
+}
 
 function SurveyFinder() {
   const searchParams = useSearchParams();
 
-  const [sort, setSort] = useState<string>(searchParams.get('sort') || sortOptions[0].value);
+  const [sort, setSort] = useState<string>(getSortFromSearchParams(searchParams));
   const [page, setPage] = useState(Number(searchParams.get('page')) || 1);
 
-  const { data, isLoading } = useSurveyList(sort, page);
+  const { data, isLoading } = useSurveysList(sort, page);
 
   if (!data || isLoading) {
     return <div>loading...</div>;
