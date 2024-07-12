@@ -1,0 +1,35 @@
+.container {
+  padding: 16px 24px;
+  display: grid;
+  grid-template-columns: 96px 1fr;
+}
+
+.icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 48px;
+  overflow: hidden;
+}
+
+.userdata {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 12px;
+}
+
+.userdata > div {
+  line-height: 32px;
+}
+
+.userdata > div:nth-child(1) {
+  height: 32px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.userdata > div:nth-child(2) {
+  height: 32px;
+  font-size: 16px;
+}

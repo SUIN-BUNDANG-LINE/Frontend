@@ -1,0 +1,14 @@
+.container {
+  padding: 24px 12px 0;
+  overflow-x: auto;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.content {
+  width: 100%;
+  min-width: fit-content;
+}
