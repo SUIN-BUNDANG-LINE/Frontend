@@ -1,3 +1,5 @@
+/* eslint-disable no-console, no-alert */
+
 'use client';
 
 // hooks
@@ -8,8 +10,8 @@ import { useSurveysProgressQuery } from '@/components/survey/p/queries';
 import { loadInteractions } from '@/components/survey/p/funcs/session-storage';
 import SectionBlock from '@/components/survey/p/SectionBlock';
 import Question from '@/components/survey/p/ui/question/Question';
-import Button from '@/components/ui/button/Button';
 import { useRouter } from 'next/navigation';
+import Navigator from '@/components/survey/p/ui/navigator/Navigator';
 
 // component
 export default function Page({ params }: { params: { surveyId: string } }) {
@@ -19,7 +21,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const { data: survey } = useSurveysProgressQuery(surveyId);
   const { history: initialHistory, responses: initialResponses } = loadInteractions(surveyId);
 
-  const { section, getResponse, getResponseDispatcher, navigator, writeInteractionsResult } = useForm({
+  const { section, getResponse, getResponseDispatcher, navigator } = useForm({
     surveySections: survey?.sections,
     surveyQuestions: survey?.questions,
     initialHistory,
@@ -39,6 +41,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
     if (code === 'SUBMIT') {
       alert(`submit!`);
+      console.log(payload);
     }
   };
 
@@ -65,30 +68,12 @@ export default function Page({ params }: { params: { surveyId: string } }) {
           );
         })}
       </SectionBlock>
-      <Button
-        variant="primary"
-        onClick={() => {
-          const x = document.getElementById('question-01');
-          x!.scrollIntoView();
-        }}>
-        scroll test
-      </Button>
-      <Button variant="primary" onClick={() => console.log(writeInteractionsResult())}>
-        logger
-      </Button>
-      {navigator.isFirst() && (
-        <Button variant="primary" onClick={() => nextRouter.push(`/s/${surveyId}`)}>
-          처음으로
-        </Button>
-      )}
-      {!navigator.isFirst() && (
-        <Button variant="primary" onClick={navigator.moveBack}>
-          이전
-        </Button>
-      )}
-      <Button variant="primary" onClick={moveNext}>
-        다음
-      </Button>
+      <Navigator
+        exit={() => nextRouter.push(`/s/${surveyId}`)}
+        isFirst={navigator.isFirst()}
+        moveBack={navigator.moveBack}
+        moveNext={moveNext}
+      />
     </>
   );
 }

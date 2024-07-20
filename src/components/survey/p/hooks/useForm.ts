@@ -89,55 +89,9 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
     return { size, empty, top, push, pop };
   }, [sections]);
 
-  const logger = () => {
-    console.log(sections);
-  };
+  // result
 
-  // does modify sections stack
-
-  const navigator = useMemo(() => {
-    const isFirst = () => sectionsManager.size() <= 1;
-    const moveBack = () => sectionsManager.pop();
-    const moveNext = (): MoveNext => {
-      if (!surveyQuestions) return { ok: false, reason: { code: 'FATAL', payload: 'no-survey-questions' } };
-
-      const { router, questions } = sectionsManager.top();
-      const { type, nextSection } = router;
-
-      const incomplete = questions.find((i) => i.isRequired && !isValidResponse(i.type, getResponse(i.id)))?.id;
-      if (incomplete) return { ok: false, reason: { code: 'INCOMPLETE', payload: incomplete } };
-
-      if (type === 'FIXED') {
-        if (nextSection === null) return { ok: false, reason: { code: 'SUBMIT' } };
-
-        const newSection = surveySections!.find((i) => i.id === (nextSection as string));
-        if (!newSection) return { ok: false, reason: { code: 'FATAL', payload: 'fixed-new-section-not-found' } };
-
-        sectionsManager.push(newSection);
-        return { ok: true };
-      }
-
-      const { keyQid, routingTable } = nextSection as NextSection;
-      const keyQ = getQuestion(keyQid);
-      const keyR = getResponse(keyQid, false);
-      if (!keyQ || !keyR || keyR.selected.length === 0) {
-        return { ok: false, reason: { code: 'FATAL', payload: `keyq keyr keysel ${keyQ} ${keyR} ${keyR?.selected}` } };
-      }
-
-      const route = routingTable.find((i) => i.content === keyR.selected[0])?.nextSid;
-      if (!route) return { ok: false, reason: { code: 'FATAL', payload: 'route-not-found' } };
-      const routeT = surveySections?.find((i) => i.id === route);
-      if (!routeT) return { ok: false, reason: { code: 'FATAL', payload: 'routet-not-found' } };
-
-      sectionsManager.push(routeT);
-      return { ok: true };
-    };
-    return { isFirst, moveBack, moveNext };
-  }, [getQuestion, getResponse, sectionsManager, surveyQuestions, surveySections]);
-
-  //
-
-  const writeInteractionsResult = (): InteractionsResult => {
+  const writeInteractionsResult = useCallback((): InteractionsResult => {
     const rewriteResponse = (question: Question, response: Response) => {
       const res = [];
       if (question.type === 'TEXT') {
@@ -166,14 +120,70 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
     }));
 
     return { sectionResponses: res.filter((i) => i.questionResponses.length > 0) };
-  };
+  }, [getResponse, sections]);
+
+  // does modify sections stack
+
+  const navigator = useMemo(() => {
+    const isFirst = () => sectionsManager.size() <= 1;
+    const moveBack = () => sectionsManager.pop();
+    const moveNext = (): MoveNext => {
+      if (!surveyQuestions) return { ok: false, reason: { code: 'FATAL', payload: 'survey-questions not found' } };
+
+      const { router, questions } = sectionsManager.top();
+
+      const incompleteQuestion = questions.find((i) => i.isRequired && !isValidResponse(i.type, getResponse(i.id)));
+      if (incompleteQuestion) return { ok: false, reason: { code: 'INCOMPLETE', payload: incompleteQuestion.id } };
+
+      if (router.type === 'FIXED') {
+        if (router.nextSection === null)
+          return { ok: false, reason: { code: 'SUBMIT', payload: JSON.stringify(writeInteractionsResult()) } };
+
+        const newSection = surveySections!.find((i) => i.id === (router.nextSection as string));
+        if (!newSection) return { ok: false, reason: { code: 'FATAL', payload: 'fixed-new-section not found' } };
+
+        sectionsManager.push(newSection);
+        return { ok: true };
+      }
+
+      if (router.type === 'BRANCH') {
+        const { keyQid, routingTable } = router.nextSection as NextSection;
+        const keyQuestion = getQuestion(keyQid);
+        const keyResponse = getResponse(keyQid, false);
+
+        if (!keyQuestion) return { ok: false, reason: { code: 'FATAL', payload: 'key-question not found' } };
+        if (!keyResponse) return { ok: false, reason: { code: 'FATAL', payload: 'key-response not found' } };
+        if (!isValidResponse(keyQuestion.type, keyResponse)) {
+          return { ok: false, reason: { code: 'FATAL', payload: 'key-response incomplete' } };
+        }
+
+        const route = routingTable.find((i) => i.content === keyResponse.selected[0]);
+        if (!route) return { ok: false, reason: { code: 'FATAL', payload: 'route not found' } };
+
+        const newSection = surveySections!.find((i) => i.id === route.nextSid);
+        if (newSection === undefined) {
+          return { ok: false, reason: { code: 'FATAL', payload: 'new-section not found' } };
+        }
+        if (newSection === null) {
+          return { ok: false, reason: { code: 'SUBMIT', payload: JSON.stringify(writeInteractionsResult()) } };
+        }
+
+        sectionsManager.push(newSection);
+        return { ok: true };
+      }
+
+      return { ok: false, reason: { code: 'FATAL', payload: 'invalid router type' } };
+    };
+    return { isFirst, moveBack, moveNext };
+  }, [getQuestion, getResponse, sectionsManager, surveyQuestions, surveySections, writeInteractionsResult]);
+
+  //
 
   return {
     section: sectionsManager.top(),
     getResponse,
     getResponseDispatcher,
     navigator,
-    logger,
     writeInteractionsResult,
   };
 };

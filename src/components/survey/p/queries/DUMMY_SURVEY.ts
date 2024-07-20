@@ -116,7 +116,7 @@ export const DUMMY_SURVEY = {
           title: '하나 이상 선택하세요.',
           description: '기타를 선택하고 아무것도 입력하지 않으면 인정하지 않습니다.',
           isRequired: true,
-          type: 'SINGLE_CHOICE',
+          type: 'MULTIPLE_CHOICE',
           choices: ['1', '2', '3'],
           isAllowOther: true,
         },
