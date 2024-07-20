@@ -1,0 +1,96 @@
+.option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  background: none;
+  border: none;
+  height: 40px;
+  border-radius: 4px;
+
+  transition: background-color 0.5s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.indicator {
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px gray inset;
+  background: none;
+
+  transition:
+    box-shadow 0.2s,
+    width 0.2s,
+    height 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.radio.active {
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  box-shadow: 0 0 0 6px var(--primary) inset;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px gray inset;
+  background: none;
+
+  transition:
+    box-shadow 0.2s,
+    width 0.2s,
+    height 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.checkbox.active {
+  width: 22px;
+  height: 22px;
+  background-color: #fff;
+  box-shadow: 0 0 0 6px var(--primary) inset;
+}
+
+.input {
+  width: calc(50% - 16px);
+  min-width: 140px;
+  padding: 6px 4px;
+
+  border: none;
+  border-bottom: 1px solid var(--gray);
+  background: none;
+
+  transition:
+    border-color 0.2s,
+    width 0.2s;
+
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.input:focus {
+  width: calc(80% - 16px);
+  border-color: var(--primary-alt);
+  outline: none;
+}
+
+.blank {
+  width: 32px;
+  background-color: blue;
+}
+
+@media (pointer: fine) {
+  .option:hover {
+    background-color: var(--gray-l);
+  }
+}

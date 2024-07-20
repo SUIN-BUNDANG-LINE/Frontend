@@ -1,0 +1,42 @@
+.question {
+  padding: 24px;
+  background-color: #fff;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.head {
+  font-size: 20px;
+}
+
+.required {
+  display: inline-block;
+
+  font-size: 20px;
+  text-align: center;
+  width: 56px;
+  height: 20px;
+  overflow: hidden;
+  color: var(--primary);
+  padding-right: 4px;
+
+  transition:
+    width 0.5s,
+    padding-right 0.5s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.required.complete {
+  width: 0;
+  padding-right: 0;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--gray-d);
+}

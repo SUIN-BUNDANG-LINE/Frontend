@@ -1,3 +1,5 @@
+import type { QuestionResponse, SectionResponse, SurveyResponse, SurveysResponseParams } from './surveys/response';
+
 interface SurveysListParams {
   size: number;
   page: number;
@@ -30,12 +32,20 @@ interface SurveysDetailsResponse {
   title: string;
   description: string;
   status: string;
-  endDate: string;
+  finishedAt: string;
   thumbnail: string;
   currentParticipants: number;
   targetParticipants: number;
-  firstSectionId: number;
   rewards: { item: string; count: number }[];
 }
 
-export type { SurveysListParams, SurveysListResponse, SurveysDetailsParams, SurveysDetailsResponse };
+export type {
+  SurveysListParams,
+  SurveysListResponse,
+  SurveysDetailsParams,
+  SurveysDetailsResponse,
+  QuestionResponse,
+  SectionResponse,
+  SurveyResponse,
+  SurveysResponseParams,
+};
