@@ -11,5 +11,5 @@ export default function SurveyDetails({ params }: { params: { surveyId: string }
     return <div>loading...</div>;
   }
 
-  return <SurveyDetailsViewer data={data} />;
+  return <SurveyDetailsViewer data={data} surveyId={surveyId} />;
 }

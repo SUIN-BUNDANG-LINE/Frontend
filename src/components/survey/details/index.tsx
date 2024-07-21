@@ -7,6 +7,7 @@ import Button from '@/components/ui/button/Button';
 import Tooltip from '@/components/ui/tooltip/Tooltip';
 import Link from 'next/link';
 import type { SurveysDetailsResponse } from '@/queries/types';
+import { yymmdd } from '@/utils/misc';
 
 import styles from './index.module.css';
 
@@ -21,28 +22,17 @@ function statusReader(status: string) {
   }
 }
 
-function SurveyDetailsViewer({ data }: { data: SurveysDetailsResponse }) {
+function SurveyDetailsViewer({ data, surveyId }: { data: SurveysDetailsResponse; surveyId: string }) {
   const router = useRouter();
 
-  const {
-    title,
-    description,
-    status,
-    endDate,
-    currentParticipants,
-    targetParticipants,
-    firstSectionId,
-    rewards,
-    thumbnail,
-  } = data;
+  const { title, description, status, finishedAt, currentParticipants, targetParticipants, rewards, thumbnail } = data;
 
   function copyUrl() {
     navigator.clipboard.writeText(`${window.location.href}`);
   }
 
   function participate() {
-    // TODO : participant ID 요청하기
-    router.push(`${window.location.href}/${firstSectionId}`);
+    router.push(`/s/${surveyId}/p`);
   }
 
   const [statusTitle, statusDescription] = statusReader(status);
@@ -58,10 +48,10 @@ function SurveyDetailsViewer({ data }: { data: SurveysDetailsResponse }) {
           </div>
         </div>
         <div className={styles.share}>
-          <button type="button" className={styles.url} onClick={() => copyUrl()}>
+          <Button variant="default" onClick={() => copyUrl()}>
             <FaPaperclip />
-            <span>{`${window.location.href}`}</span>
-          </button>
+            <span>URL 복사</span>
+          </Button>
         </div>
       </Wrapper>
       <Wrapper>
@@ -88,7 +78,7 @@ function SurveyDetailsViewer({ data }: { data: SurveysDetailsResponse }) {
               </div>
               <div>
                 <FaCalendarAlt />
-                <div>{endDate} 자동 마감</div>
+                <div>{yymmdd(finishedAt)} 자동 마감</div>
               </div>
               <div>
                 <FaUserGroup />
