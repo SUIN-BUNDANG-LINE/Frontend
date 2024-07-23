@@ -1,0 +1,27 @@
+.rewards {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 8px;
+  background-color: #fff;
+  transition: background-color 0.3s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.rewards:hover {
+  background-color: var(--gray-l);
+}
+
+.rewards > .inputDesc > div:nth-child(2) {
+  padding: 4px 0;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+.rewards > input[type='text'] {
+  padding: 9px;
+  border: none;
+  background: none;
+  outline: none;
+  user-select: unset;
+  background-color: #fff;
+}
