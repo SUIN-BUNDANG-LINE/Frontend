@@ -2,16 +2,17 @@ import { FiActivity } from 'react-icons/fi';
 import { FaCalendarAlt, FaGift, FaInfoCircle, FaPaperclip } from 'react-icons/fa';
 import { FaUserGroup } from 'react-icons/fa6';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Wrapper from '@/components/layout/Wrapper';
 import Button from '@/components/ui/button/Button';
 import Tooltip from '@/components/ui/tooltip/Tooltip';
-import Link from 'next/link';
-import type { SurveysDetailsResponse } from '@/queries/types';
-import { yymmdd } from '@/utils/misc';
-
+import type { SurveysDetailsResponse } from '@/services/surveys/types';
+import { yymmdd } from '@/utils/dates';
+import { writeClipboard } from '@/utils/misc';
 import styles from './index.module.css';
 
-function statusReader(status: string) {
+// TODO : utils로 이동
+const statusReader = (status: string) => {
   switch (status) {
     case 'IN_PROGRESS':
       return ['응답 받는 중', '바로 참여할 수 있습니다.'];
@@ -20,20 +21,20 @@ function statusReader(status: string) {
     default:
       return ['알 수 없음', '알 수 없음'];
   }
-}
+};
 
-function SurveyDetailsViewer({ data, surveyId }: { data: SurveysDetailsResponse; surveyId: string }) {
+export default function DetailsViewer({ data, surveyId }: { data: SurveysDetailsResponse; surveyId: string }) {
   const router = useRouter();
 
   const { title, description, status, finishedAt, currentParticipants, targetParticipants, rewards, thumbnail } = data;
 
-  function copyUrl() {
-    navigator.clipboard.writeText(`${window.location.href}`);
-  }
+  const copyUrl = () => {
+    writeClipboard(window.location.href);
+  };
 
-  function participate() {
+  const participate = () => {
     router.push(`/s/${surveyId}/p`);
-  }
+  };
 
   const [statusTitle, statusDescription] = statusReader(status);
 
@@ -109,5 +110,3 @@ function SurveyDetailsViewer({ data, surveyId }: { data: SurveysDetailsResponse;
     </>
   );
 }
-
-export default SurveyDetailsViewer;

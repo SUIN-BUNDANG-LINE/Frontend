@@ -8,13 +8,7 @@ interface Props<T> {
   emptyMessage: string;
 }
 
-export default function OverviewTable<T>({
-  columnNames,
-  gridTemplateColumns,
-  data,
-  dataMapper,
-  emptyMessage,
-}: Props<T>) {
+export default function Table<T>({ columnNames, gridTemplateColumns, data, dataMapper, emptyMessage }: Props<T>) {
   return (
     <div className={styles.container}>
       {data.length === 0 ? (

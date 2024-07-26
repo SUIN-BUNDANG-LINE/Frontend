@@ -1,11 +1,11 @@
-import Wrapper from './Wrapper';
-import styles from './SectionBlock.module.css';
+import Wrapper from '@/components/layout/Wrapper';
+import styles from './Field.module.css';
 
 interface Props {
   title: string;
 }
 
-export default function SectionBlock({ title, children }: React.PropsWithChildren<Props>) {
+export default function Field({ title, children }: React.PropsWithChildren<Props>) {
   return (
     <Wrapper>
       <div className={styles.container}>

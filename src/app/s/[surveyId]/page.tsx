@@ -1,9 +1,9 @@
 'use client';
 
-import { useSurveysDetails } from '@/queries/surveys';
-import SurveyDetailsViewer from '@/components/survey/details';
+import DetailsViewer from '@/components/survey-details';
+import { useSurveysDetails } from '@/services/surveys';
 
-export default function SurveyDetails({ params }: { params: { surveyId: string } }) {
+export default function Page({ params }: { params: { surveyId: string } }) {
   const { surveyId } = params;
   const { data } = useSurveysDetails(surveyId);
 
@@ -11,5 +11,5 @@ export default function SurveyDetails({ params }: { params: { surveyId: string }
     return <div>loading...</div>;
   }
 
-  return <SurveyDetailsViewer data={data} surveyId={surveyId} />;
+  return <DetailsViewer data={data} surveyId={surveyId} />;
 }

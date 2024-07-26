@@ -3,22 +3,22 @@
 'use client';
 
 // hooks
-import { useForm } from '@/components/survey/p/hooks/useForm';
-import { useSurveysProgressQuery } from '@/components/survey/p/queries';
+import { useForm } from '@/components/survey-p/hooks/useForm';
 
 // funcs
-import { loadInteractions } from '@/components/survey/p/funcs/session-storage';
-import SectionBlock from '@/components/survey/p/SectionBlock';
-import Question from '@/components/survey/p/ui/question/Question';
+import { loadInteractions } from '@/components/survey-p/funcs/session-storage';
+import SectionBlock from '@/components/survey-p/SectionBlock';
+import Question from '@/components/survey-p/ui/question/Question';
 import { useRouter } from 'next/navigation';
-import Navigator from '@/components/survey/p/ui/navigator/Navigator';
+import Navigator from '@/components/survey-p/ui/navigator/Navigator';
+import { useSurveysProgress } from '@/services/surveys';
 
 // component
 export default function Page({ params }: { params: { surveyId: string } }) {
   const nextRouter = useRouter();
   const { surveyId } = params;
 
-  const { data: survey } = useSurveysProgressQuery(surveyId);
+  const { data: survey } = useSurveysProgress(surveyId);
   const { history: initialHistory, responses: initialResponses } = loadInteractions(surveyId);
 
   const { section, getResponse, getResponseDispatcher, navigator } = useForm({

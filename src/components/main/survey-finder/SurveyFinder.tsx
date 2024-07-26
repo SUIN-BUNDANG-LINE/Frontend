@@ -1,22 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
-import { replaceURLSearchParams } from '@/utils';
-import { useSurveysList } from '@/queries/surveys';
-import SurveyFinderList from './list/List';
-import SurveyFinderCustomize from './control/Customize';
-import SurveyFinderPagination from './control/Pagination';
+import { useSearchParams, type ReadonlyURLSearchParams } from 'next/navigation';
+import { replaceURLSearchParams } from '@/utils/url-search-params';
+import { useSurveysList } from '@/services/surveys';
+import List from './list/List';
+import Customize from './control/Customize';
+import Pagination from './control/Pagination';
 
-const sortOptions = [{ value: 'RECENT', label: '최신순' }];
+const SORT_OPTIONS = [{ value: 'RECENT', label: '최신순' }];
 
-function getSortFromSearchParams(searchParams: ReadonlyURLSearchParams) {
+const getSortFromSearchParams = (searchParams: ReadonlyURLSearchParams) => {
   const arg = searchParams.get('sort');
-  const tar = sortOptions.find((option) => option.value === arg);
-  return tar ? tar.value : sortOptions[0].value;
-}
+  const tar = SORT_OPTIONS.find((option) => option.value === arg);
+  return tar ? tar.value : SORT_OPTIONS[0].value;
+};
 
-function SurveyFinder() {
+export default function SurveyFinder() {
   const searchParams = useSearchParams();
 
   const [sort, setSort] = useState<string>(getSortFromSearchParams(searchParams));
@@ -43,11 +43,9 @@ function SurveyFinder() {
 
   return (
     <>
-      <SurveyFinderCustomize sort={sort} setSortHandler={setSortHandler} sortOptions={sortOptions} />
-      <SurveyFinderList surveys={surveys} />
-      <SurveyFinderPagination page={page} setPageHandler={setPageHandler} maxPage={pageCount} />
+      <Customize sort={sort} setSortHandler={setSortHandler} sortOptions={SORT_OPTIONS} />
+      <List surveys={surveys} />
+      <Pagination page={page} setPageHandler={setPageHandler} maxPage={pageCount} />
     </>
   );
 }
-
-export default SurveyFinder;
