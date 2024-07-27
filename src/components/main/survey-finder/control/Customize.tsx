@@ -11,7 +11,7 @@ interface Props {
   }[];
 }
 
-function SurveyFinderCustomize({ sort, setSortHandler, sortOptions }: Props) {
+export default function Customize({ sort, setSortHandler, sortOptions }: Props) {
   return (
     <Wrapper outerColor="#fff" zIndex={1}>
       <div className={styles.customize}>
@@ -22,5 +22,3 @@ function SurveyFinderCustomize({ sort, setSortHandler, sortOptions }: Props) {
     </Wrapper>
   );
 }
-
-export default SurveyFinderCustomize;

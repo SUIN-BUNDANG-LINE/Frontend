@@ -1,10 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import type { Survey as SurveysProgressResponse, Question as QueryQuestion } from '../types/query';
-import type { Survey, Section, Question, Router } from '../types/survey';
-
-import { DUMMY_SURVEY } from './DUMMY_SURVEY';
-
-const queryKey = (surveyId: string) => ['surveys', 'progress', surveyId];
+import type { Survey, Section, Question, Router } from '@/components/survey-p/types';
+import type { SurveysProgressResponse, Question as FetchedQuestion } from './types';
 
 const toSurvey = ({
   title: surveyTitle,
@@ -43,7 +38,7 @@ const toSurvey = ({
     };
   };
 
-  const questionMapper = (question: QueryQuestion): Question => {
+  const questionMapper = (question: FetchedQuestion): Question => {
     const { questionId, type, ...rest } = question;
 
     return {
@@ -80,12 +75,4 @@ const toSurvey = ({
   };
 };
 
-function useSurveysProgressQuery(surveyId: string) {
-  return useQuery({
-    queryKey: queryKey(surveyId),
-    queryFn: () => DUMMY_SURVEY as SurveysProgressResponse,
-    select: (data) => toSurvey(data),
-  });
-}
-
-export { useSurveysProgressQuery };
+export { toSurvey };

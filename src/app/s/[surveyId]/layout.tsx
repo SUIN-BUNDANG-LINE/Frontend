@@ -1,7 +1,7 @@
 'use client';
 
 import { Footer, Header } from '@/components/layout/survey';
-import { useSurveysDetails } from '@/queries/surveys';
+import { useSurveysDetails } from '@/services/surveys';
 import styles from './layout.module.css';
 
 export default function SurveyLayout({

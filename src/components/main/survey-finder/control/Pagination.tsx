@@ -7,7 +7,7 @@ interface Props {
   maxPage: number;
 }
 
-function SurveyFinderPagination({ page, setPageHandler, maxPage }: Props) {
+export default function Pagination({ page, setPageHandler, maxPage }: Props) {
   const increment = () => {
     setPageHandler(page + 1);
   };
@@ -35,5 +35,3 @@ function SurveyFinderPagination({ page, setPageHandler, maxPage }: Props) {
     </Wrapper>
   );
 }
-
-export default SurveyFinderPagination;

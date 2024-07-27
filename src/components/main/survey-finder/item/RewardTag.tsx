@@ -1,5 +1,5 @@
 import Tooltip from '@/components/ui/tooltip/Tooltip';
-import { Reward } from '../types';
+import type { Reward } from '../types';
 import styles from './RewardTag.module.css';
 
 function RewardTag({ reward }: { reward: Reward }) {

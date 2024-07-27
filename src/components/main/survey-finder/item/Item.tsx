@@ -1,13 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { dateReader } from '@/utils';
 import { FaArrowUp, FaGift } from 'react-icons/fa';
+import { dateReader } from '@/utils/dates';
 import type { Survey } from '../types';
 import styles from './Item.module.css';
 import RewardTag from './RewardTag';
 
-function SurveyFinderListItem({ survey }: { survey: Survey }) {
+export default function ListItem({ survey }: { survey: Survey }) {
   const { surveyId, thumbnail, title, description, targetParticipants, rewardCount, finishedAt, rewards } = survey;
 
   return (
@@ -40,5 +40,3 @@ function SurveyFinderListItem({ survey }: { survey: Survey }) {
     </Link>
   );
 }
-
-export default SurveyFinderListItem;

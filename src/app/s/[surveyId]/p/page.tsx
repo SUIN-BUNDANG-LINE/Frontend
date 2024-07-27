@@ -3,22 +3,23 @@
 'use client';
 
 // hooks
-import { useForm } from '@/components/survey/p/hooks/useForm';
-import { useSurveysProgressQuery } from '@/components/survey/p/queries';
+import { useForm } from '@/components/survey-p/hooks/useForm';
 
 // funcs
-import { loadInteractions } from '@/components/survey/p/funcs/session-storage';
-import SectionBlock from '@/components/survey/p/SectionBlock';
-import Question from '@/components/survey/p/ui/question/Question';
+import { loadInteractions } from '@/components/survey-p/funcs/session-storage';
+import SectionBlock from '@/components/survey-p/SectionBlock';
+import Question from '@/components/survey-p/ui/question/Question';
 import { useRouter } from 'next/navigation';
-import Navigator from '@/components/survey/p/ui/navigator/Navigator';
+import Navigator from '@/components/survey-p/ui/navigator/Navigator';
+import { useSurveysProgress, useSurveysResponse } from '@/services/surveys';
 
 // component
 export default function Page({ params }: { params: { surveyId: string } }) {
   const nextRouter = useRouter();
   const { surveyId } = params;
 
-  const { data: survey } = useSurveysProgressQuery(surveyId);
+  const { data: survey } = useSurveysProgress(surveyId);
+  const mutation = useSurveysResponse(surveyId);
   const { history: initialHistory, responses: initialResponses } = loadInteractions(surveyId);
 
   const { section, getResponse, getResponseDispatcher, navigator } = useForm({
@@ -30,18 +31,25 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
   const moveNext = () => {
     const { ok, reason } = navigator.moveNext();
-    if (ok || !reason) return;
+
+    if (ok) {
+      return;
+    }
+
+    if (!reason) {
+      console.error('no not-ok reason provided?');
+      return;
+    }
 
     const { code, payload } = reason;
 
     if (code === 'INCOMPLETE') {
-      const x = document.getElementById(payload!);
+      const x = document.getElementById(payload as string);
       x?.scrollIntoView();
     }
 
     if (code === 'SUBMIT') {
-      alert(`submit!`);
-      console.log(payload);
+      mutation.mutate(payload as object);
     }
   };
 
@@ -74,6 +82,9 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         moveBack={navigator.moveBack}
         moveNext={moveNext}
       />
+      {mutation.isPending && <p>제출 중입니다...</p>}
+      {mutation.isSuccess && <p>제출 완료. {mutation.data.participantId}</p>}
+      {mutation.isError && <p>제출에 문제가 발생했습니다. {mutation.failureReason?.name}</p>}
     </>
   );
 }

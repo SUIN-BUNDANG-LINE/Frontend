@@ -18,7 +18,7 @@ interface MoveNext {
   ok: boolean;
   reason?: {
     code: 'FATAL' | 'SUBMIT' | 'INCOMPLETE';
-    payload?: string;
+    payload?: string | object;
   };
 }
 

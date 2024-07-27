@@ -1,10 +1,9 @@
 import Wrapper from '@/components/layout/Wrapper';
 import SurveyListItem from '../item/Item';
 import type { Survey } from '../types';
-
 import styles from './List.module.css';
 
-function SurveyFinderList({ surveys }: { surveys: Survey[] }) {
+export default function List({ surveys }: { surveys: Survey[] }) {
   return (
     <Wrapper>
       <div className={styles.list}>
@@ -15,5 +14,3 @@ function SurveyFinderList({ surveys }: { surveys: Survey[] }) {
     </Wrapper>
   );
 }
-
-export default SurveyFinderList;

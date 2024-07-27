@@ -1,9 +1,8 @@
-import OverviewHeader from '@/components/dashboard/overview/Header';
-import OverviewTable from '@/components/dashboard/overview/Table';
-import SectionBlock from '@/components/layout/SectionBlock';
-import Button from '@/components/ui/button/Button';
 import Link from 'next/link';
-
+import Header from '@/components/dashboard/overview/Header';
+import Table from '@/components/dashboard/overview/Table';
+import Field from '@/components/dashboard/overview/Field';
+import Button from '@/components/ui/button/Button';
 import styles from './page.module.css';
 
 type Created = {
@@ -122,13 +121,13 @@ const collectedMapper = (arg: Collected) => {
   );
 };
 
-export default function Dashboard() {
+export default function Page() {
   return (
     <>
-      <OverviewHeader />
-      <div className={styles.sectionsWrapper}>
-        <SectionBlock title="제작한 설문">
-          <OverviewTable<Created>
+      <Header />
+      <div className={styles.fieldsWrapper}>
+        <Field title="제작한 설문">
+          <Table<Created>
             gridTemplateColumns="minmax(200px, 1fr) 96px 96px 142px"
             columnNames={['설문 제목', '상태', '최종 수정', '액션']}
             data={DUMMY_CREATED}
@@ -138,25 +137,25 @@ export default function Dashboard() {
           <Button variant="primary" height="42px">
             <span style={{ color: '#fff' }}>새로운 설문 만들기 →</span>
           </Button>
-        </SectionBlock>
-        <SectionBlock title="참여한 설문">
-          <OverviewTable<Participated>
+        </Field>
+        <Field title="참여한 설문">
+          <Table<Participated>
             gridTemplateColumns="minmax(200px, 1fr) 96px 96px"
             columnNames={['설문 제목', '상태', '마감일']}
             data={DUMMY_PARTICIPATED}
             dataMapper={participatedMapper}
             emptyMessage="참여한 설문이 없습니다."
           />
-        </SectionBlock>
-        <SectionBlock title="당첨 이력">
-          <OverviewTable<Collected>
+        </Field>
+        <Field title="당첨 이력">
+          <Table<Collected>
             gridTemplateColumns="minmax(200px, 1fr) 96px 96px"
             columnNames={['당첨 항목', '액션', '당첨일']}
             data={DUMMY_COLLECTED}
             dataMapper={collectedMapper}
             emptyMessage="당첨 기록이 없습니다."
           />
-        </SectionBlock>
+        </Field>
       </div>
     </>
   );
