@@ -22,10 +22,6 @@ interface SurveysListResponse {
   }[];
 }
 
-interface SurveysDetailsParams {
-  surveyId: string;
-}
-
 interface SurveysDetailsResponse {
   title: string;
   description: string;
@@ -36,25 +32,6 @@ interface SurveysDetailsResponse {
   targetParticipants: number;
   rewards: { item: string; count: number }[];
 }
-
-// type QuestionResponse = {
-//   content: string;
-//   isEtc: boolean;
-// };
-
-// type SectionResponse = {
-//   questionId: string;
-//   questionResponses: QuestionResponse[];
-// };
-
-// type SurveyResponse = {
-//   sectionId: string;
-//   sectionResponses: SectionResponse[];
-// };
-
-// interface SurveysResponseParams {
-//   surveyResponses: SurveyResponse[];
-// }
 
 type RDNumericalOrder = {
   type: 'NUMERICAL_ORDER';
@@ -103,12 +80,20 @@ interface SurveysProgressResponse {
   sections: Section[];
 }
 
+interface SurveysResponseParams {
+  surveyId: string;
+  responseBody: object;
+}
+
+interface SurveysResponseResponse {
+  participantId: string;
+}
+
 export type {
   SurveysListParams,
   SurveysListResponse,
-  SurveysDetailsParams,
   SurveysDetailsResponse,
   SurveysProgressResponse,
-  Question,
-  Section,
+  SurveysResponseParams,
+  SurveysResponseResponse,
 };

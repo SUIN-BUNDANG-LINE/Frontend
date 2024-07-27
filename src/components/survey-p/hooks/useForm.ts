@@ -94,6 +94,7 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
   const writeInteractionsResult = useCallback((): InteractionsResult => {
     const rewriteResponse = (question: Question, response: Response) => {
       const res = [];
+
       if (question.type === 'TEXT') {
         if (response.content.trim().length > 0) res.push({ content: response.content.trim(), isOther: false });
       } else {
@@ -119,7 +120,7 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
         .filter((i) => i.responses.length > 0),
     }));
 
-    return { sectionResponses: res.filter((i) => i.questionResponses.length > 0) };
+    return { sectionResponses: res };
   }, [getResponse, sections]);
 
   // does modify sections stack
@@ -137,7 +138,7 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
 
       if (router.type === 'FIXED') {
         if (router.nextSection === null)
-          return { ok: false, reason: { code: 'SUBMIT', payload: JSON.stringify(writeInteractionsResult()) } };
+          return { ok: false, reason: { code: 'SUBMIT', payload: writeInteractionsResult() } };
 
         const newSection = surveySections!.find((i) => i.id === (router.nextSection as string));
         if (!newSection) return { ok: false, reason: { code: 'FATAL', payload: 'fixed-new-section not found' } };
@@ -165,7 +166,7 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
           return { ok: false, reason: { code: 'FATAL', payload: 'new-section not found' } };
         }
         if (newSection === null) {
-          return { ok: false, reason: { code: 'SUBMIT', payload: JSON.stringify(writeInteractionsResult()) } };
+          return { ok: false, reason: { code: 'SUBMIT', payload: writeInteractionsResult() } };
         }
 
         sectionsManager.push(newSection);

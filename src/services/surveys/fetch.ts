@@ -1,35 +1,52 @@
+import ky, { type Options, type KyInstance } from 'ky';
 import { makeUrl } from '../utils';
 import type {
   SurveysListResponse,
   SurveysListParams,
   SurveysDetailsResponse,
-  SurveysDetailsParams,
+  SurveysResponseParams,
+  SurveysResponseResponse,
   SurveysProgressResponse,
 } from './types';
 
+class KyWrapper {
+  kyInstance: KyInstance;
+
+  constructor() {
+    this.kyInstance = ky.create({
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        Accept: 'application/json;charset=UTF-8',
+      },
+    });
+  }
+
+  get<T>(URL: string, options?: Options) {
+    return this.kyInstance.get(URL, options).json<T>();
+  }
+
+  post<T>(URL: string, options?: Options) {
+    return this.kyInstance.post(URL, options).json<T>();
+  }
+}
+
+const kyWrapper = new KyWrapper();
+
 const fetchSurveysList = async ({ size = 8, page, sortType = 'RECENT', isAsc = false }: SurveysListParams) => {
-  const response = await fetch(
-    makeUrl(['surveys', 'list'], {
-      size: `${size}`,
-      page: `${page}`,
-      sortType,
-      isAsc: isAsc ? 'true' : 'false',
-    })
-  );
-  const data = (await response.json()) as SurveysListResponse;
-  return data;
+  const URL = makeUrl(['surveys', 'list'], { size, page, sortType, isAsc });
+  return kyWrapper.get<SurveysListResponse>(URL);
 };
 
-const fetchSurveysDetails = async ({ surveyId }: SurveysDetailsParams) => {
-  const response = await fetch(makeUrl(['surveys', 'info', surveyId]));
-  const data = (await response.json()) as SurveysDetailsResponse;
-  return data;
+const fetchSurveysDetails = async ({ surveyId }: { surveyId: string }) => {
+  return kyWrapper.get<SurveysDetailsResponse>(makeUrl(['surveys', 'info', surveyId]));
 };
 
-const fetchSurveysProgress = async ({ surveyId }: SurveysDetailsParams) => {
-  const response = await fetch(makeUrl(['surveys', 'progress', surveyId]));
-  const data = (await response.json()) as SurveysProgressResponse;
-  return data;
+const fetchSurveysProgress = async ({ surveyId }: { surveyId: string }) => {
+  return kyWrapper.get<SurveysProgressResponse>(makeUrl(['surveys', 'progress', surveyId]));
 };
 
-export { fetchSurveysList, fetchSurveysDetails, fetchSurveysProgress };
+const fetchSurveysResponse = async ({ surveyId, responseBody }: SurveysResponseParams) => {
+  return kyWrapper.post<SurveysResponseResponse>(makeUrl(['surveys', 'response', surveyId]), { json: responseBody });
+};
+
+export { fetchSurveysList, fetchSurveysDetails, fetchSurveysProgress, fetchSurveysResponse };

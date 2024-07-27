@@ -1,5 +1,5 @@
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { fetchSurveysList, fetchSurveysDetails, fetchSurveysProgress } from './fetch';
+import { useQuery, keepPreviousData, useMutation } from '@tanstack/react-query';
+import { fetchSurveysList, fetchSurveysDetails, fetchSurveysProgress, fetchSurveysResponse } from './fetch';
 import { toSurvey } from './select';
 import type { SurveysListParams } from './types';
 
@@ -39,4 +39,10 @@ const useSurveysProgress = (surveyId: string) => {
   });
 };
 
-export { useSurveysList, useSurveysDetails, useSurveysProgress };
+const useSurveysResponse = (surveyId: string) => {
+  return useMutation({
+    mutationFn: (response: object) => fetchSurveysResponse({ surveyId, responseBody: response }),
+  });
+};
+
+export { useSurveysList, useSurveysDetails, useSurveysProgress, useSurveysResponse };
