@@ -1,0 +1,30 @@
+.container {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+
+  border: none;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  width: 280px;
+  height: 48px;
+
+  margin-top: 16px;
+  cursor: pointer;
+
+  transition:
+    transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
+    box-shadow 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.symbol {
+  display: flex;
+  padding: 0 8px;
+}
+
+.container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}

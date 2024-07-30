@@ -1,0 +1,22 @@
+.container {
+  padding: 24px 0 12px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--gray);
+}
+
+.description {
+  padding: 24px 12px 0 12px;
+}
+
+.description > a {
+  text-decoration: none;
+  color: #000;
+  background-color: var(--gray-ml);
+  padding: 4px;
+  margin: 0 2px;
+  border-radius: 4px;
+  font-weight: 400;
+}

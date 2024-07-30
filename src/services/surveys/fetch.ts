@@ -1,4 +1,4 @@
-import ky, { type Options, type KyInstance } from 'ky';
+import KyWrapper from '../ky-wrapper';
 import { makeUrl } from '../utils';
 import type {
   SurveysListResponse,
@@ -8,27 +8,6 @@ import type {
   SurveysResponseResponse,
   SurveysProgressResponse,
 } from './types';
-
-class KyWrapper {
-  kyInstance: KyInstance;
-
-  constructor() {
-    this.kyInstance = ky.create({
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        Accept: 'application/json;charset=UTF-8',
-      },
-    });
-  }
-
-  get<T>(URL: string, options?: Options) {
-    return this.kyInstance.get(URL, options).json<T>();
-  }
-
-  post<T>(URL: string, options?: Options) {
-    return this.kyInstance.post(URL, options).json<T>();
-  }
-}
 
 const kyWrapper = new KyWrapper();
 
