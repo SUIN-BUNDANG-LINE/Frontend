@@ -1,0 +1,10 @@
+.username {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout {
+  text-decoration: none;
+  color: #000;
+}

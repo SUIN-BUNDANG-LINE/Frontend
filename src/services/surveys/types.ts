@@ -96,4 +96,5 @@ export type {
   SurveysProgressResponse,
   SurveysResponseParams,
   SurveysResponseResponse,
+  Question,
 };

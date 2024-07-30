@@ -8,3 +8,26 @@
 .sort {
   padding: 0 12px;
 }
+
+.selector {
+  display: flex;
+  justify-content: space-between;
+
+  width: 180px;
+  border: none;
+  border-radius: 4px;
+  background: none;
+
+  font-size: 20px;
+  padding: 12px;
+}
+
+.angle.active {
+  transform: rotate(180deg);
+}
+
+@media screen and (pointer: fine) {
+  .selector:hover {
+    background-color: var(--gray-l);
+  }
+}

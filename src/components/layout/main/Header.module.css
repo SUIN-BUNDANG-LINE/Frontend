@@ -1,5 +1,5 @@
 .header {
-  height: 6rem;
+  height: 5rem;
   width: 100%;
 
   display: flex;
@@ -14,10 +14,16 @@
   width: 100%;
 
   max-width: var(--container-width);
+  margin: 1rem;
 
-  display: grid;
-  grid-template-columns: 64px 1fr;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+}
+
+.container > * {
+  text-decoration: none;
 }
 
 .logo {
@@ -27,11 +33,31 @@
 }
 
 .title {
-  font-size: 20px;
   display: flex;
   align-items: center;
-  overflow: auto;
-  white-space: nowrap;
   height: 100%;
-  padding-right: 1rem;
+
+  color: var(--primary-alt);
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.login {
+  height: 100%;
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 18px;
+  text-decoration: none;
+  color: #000;
+
+  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@media screen and (pointer: fine) {
+  .login:hover {
+    background-color: var(--gray-l);
+  }
 }
