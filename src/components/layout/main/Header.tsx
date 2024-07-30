@@ -12,7 +12,7 @@ export default function Header() {
     <div className={styles.header}>
       <div className={styles.container}>
         <Link href="/">
-          <div className={styles.title}>sulmun.io</div>
+          <div className={styles.title}>설문이용</div>
         </Link>
         {!user && (
           <Link href="/login" className={styles.login}>

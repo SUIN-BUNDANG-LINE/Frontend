@@ -8,7 +8,7 @@ export default function Container({ children }: React.PropsWithChildren) {
       {children}
       <br />
       <div className={styles.description}>
-        소셜 로그인으로 <a href="/">sulmun.io</a>의 모든 기능을 이용할 수 있습니다.
+        소셜 로그인으로 <a href="/">설문이용</a>의 모든 기능을 이용할 수 있습니다.
       </div>
     </div>
   );
