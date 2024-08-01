@@ -2,26 +2,25 @@
 
 'use client';
 
-// hooks
-import { useForm } from '@/components/survey-p/hooks/useForm';
-
-// funcs
-import { loadInteractions } from '@/components/survey-p/funcs/session-storage';
-import SectionBlock from '@/components/survey-p/SectionBlock';
-import Question from '@/components/survey-p/ui/question/Question';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Navigator from '@/components/survey-p/ui/navigator/Navigator';
+import { useForm } from '@/components/survey-p/hooks/useForm';
 import { useSurveysProgress, useSurveysResponse } from '@/services/surveys';
+import { loadInteractions } from '@/components/survey-p/funcs/session-storage';
 
-// component
+import Navigator from '@/components/survey-p/ui/navigator/Navigator';
+import Section from '@/components/survey-p/Section';
+import Farewell from '@/components/survey-p/farewell/Farewell';
+import Drawing from '@/components/survey-p/drawing/Drawing';
+
 export default function Page({ params }: { params: { surveyId: string } }) {
-  const nextRouter = useRouter();
   const { surveyId } = params;
+  const nextRouter = useRouter();
 
   const { data: survey } = useSurveysProgress(surveyId);
   const mutation = useSurveysResponse(surveyId);
-  const { history: initialHistory, responses: initialResponses } = loadInteractions(surveyId);
 
+  const { history: initialHistory, responses: initialResponses } = loadInteractions(surveyId);
   const { section, getResponse, getResponseDispatcher, navigator } = useForm({
     surveySections: survey?.sections,
     surveyQuestions: survey?.questions,
@@ -29,62 +28,87 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     initialResponses,
   });
 
-  const moveNext = () => {
-    const { ok, reason } = navigator.moveNext();
+  const [userResponse, setUserResponse] = useState<object | null>(null);
+  const [participantId, setParticipantId] = useState<string | null>(null);
 
-    if (ok) {
-      return;
-    }
+  // phase 1 : loading a survey
 
-    if (!reason) {
-      console.error('no not-ok reason provided?');
-      return;
-    }
+  if (!survey || !section) {
+    return <div>Hello form!</div>;
+  }
 
-    const { code, payload } = reason;
+  // phase 2 : user interacts with a survey
 
-    if (code === 'INCOMPLETE') {
-      const x = document.getElementById(payload as string);
-      x?.scrollIntoView();
-    }
+  if (!userResponse) {
+    const backText = navigator.isFirst() ? '처음으로' : '이전';
+    const backAction = navigator.isFirst() ? () => nextRouter.push(`/s/${surveyId}`) : navigator.moveBack;
 
-    if (code === 'SUBMIT') {
-      mutation.mutate(payload as object);
-    }
-  };
+    const nextAction = () => {
+      const { ok, reason } = navigator.moveNext();
+      if (ok || !reason) {
+        if (!ok) console.error('no failure reason provided');
+        return;
+      }
 
-  if (!survey || !section) return <div>Hello form!</div>;
+      const { code, payload } = reason;
+      switch (code) {
+        case 'INCOMPLETE':
+          document.getElementById(payload as string)?.scrollIntoView();
+          break;
+        case 'SUBMIT':
+          setUserResponse(payload as object);
+          break;
+        default:
+      }
+    };
 
-  return (
-    <>
-      <SectionBlock title={section.title} description={section.description}>
-        {section.questions.map((question) => {
-          const { id, title, description, isRequired, isAllowOther, type, choices } = question;
-          return (
-            <Question
-              key={id}
-              id={id}
-              title={title}
-              description={description}
-              isRequired={isRequired}
-              isAllowOther={isAllowOther}
-              type={type}
-              choices={choices}
-              response={getResponse(id, false)}
-              dispatcher={getResponseDispatcher(id)}
-            />
-          );
-        })}
-      </SectionBlock>
-      <Navigator
-        exit={() => nextRouter.push(`/s/${surveyId}`)}
-        isFirst={navigator.isFirst()}
-        moveBack={navigator.moveBack}
-        moveNext={moveNext}
-      />
-      {mutation.isPending && <p>제출 중입니다...</p>}
-      {mutation.isSuccess && <p>제출 완료. {mutation.data.participantId}</p>}
-      {mutation.isError && <p>제출에 문제가 발생했습니다. {mutation.failureReason?.name}</p>}
-    </>
-  );
+    return (
+      <>
+        <Section
+          title={section.title}
+          description={section.description}
+          questions={section.questions}
+          getResponse={getResponse}
+          getResponseDispatcher={getResponseDispatcher}
+        />
+        <Navigator backText={backText} backAction={backAction} nextText="다음" nextAction={nextAction} />
+      </>
+    );
+  }
+
+  // phase 3 : ready to submit
+
+  if (userResponse && !participantId) {
+    const onSubmit = () => {
+      if (!userResponse) return;
+      mutation.mutate(userResponse, {
+        onSuccess: (data) => {
+          setParticipantId(data.participantId);
+        },
+        onError: (error) => {
+          console.error(error);
+          alert('에러가 발생했습니다. 다시 시도해주세요.');
+        },
+      });
+    };
+
+    return (
+      <>
+        <Farewell message={survey.finishMessage} />
+        <Navigator
+          backText="응답 수정"
+          backAction={() => setUserResponse(null)}
+          nextText="제출"
+          nextAction={onSubmit}
+          centered
+        />
+      </>
+    );
+  }
+
+  // phase 4 : show drawing board
+
+  if (participantId) {
+    return <Drawing surveyId={surveyId} participantId={participantId} />;
+  }
 }

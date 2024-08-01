@@ -1,0 +1,83 @@
+.board {
+  width: auto;
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  overflow-x: auto;
+
+  background-color: var(--gray-l);
+  padding: 24px 12px;
+  border: 1px solid var(--gray);
+}
+
+.ticket {
+  position: relative;
+
+  width: 48px;
+  height: 48px;
+
+  background-color: #fff;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.ticketContent {
+  width: 48px;
+  height: 48px;
+  line-height: 48px;
+  transform: rotate(90deg);
+}
+
+.ticketOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 48px;
+  height: 48px;
+
+  border: none;
+  border-radius: 8px;
+  border: 1px solid var(--gray);
+  transform: rotate(-90deg);
+
+  transition:
+    background-color 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ticket:hover > .ticketOverlay {
+  border-color: var(--primary);
+  background-color: var(--primary);
+  transform: rotate(0deg) translateY(-6px) scale(1.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ticket.selected > .ticketOverlay {
+  border-color: var(--primary-alt);
+  background-color: var(--primary-alt);
+  transform: rotate(0deg) translateY(-6px) scale(1.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ticket.selected .ticketContent,
+.ticket:hover .ticketContent {
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  transform: rotate(0deg) translateY(-6px) scale(1.1);
+}
+
+.selectedDisplay {
+  width: fit-content;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  text-align: center;
+  background-color: var(--gray-l);
+}

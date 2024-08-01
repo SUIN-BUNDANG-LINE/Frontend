@@ -1,0 +1,30 @@
+.container {
+  width: auto;
+  padding: 12px;
+  margin: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 12px;
+
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.field {
+  width: 100%;
+}
+
+.description {
+  display: block;
+  padding-bottom: 8px;
+}
+
+.cool {
+  padding: 16px 0;
+}
+
+.cool a {
+  color: var(--primary-alt);
+}

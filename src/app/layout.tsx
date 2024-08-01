@@ -3,6 +3,7 @@ import './globals.css';
 import Providers from '@/providers/Providers';
 import { cookies } from 'next/headers';
 import { User } from '@/providers/auth/types';
+import { decodeBase64 } from '@/utils/misc';
 
 export const metadata: Metadata = {
   title: '설문이용',
@@ -11,9 +12,20 @@ export const metadata: Metadata = {
 
 export default async function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
   const cookieStore = cookies();
-  const user = cookieStore.has('user-profile')
-    ? (JSON.parse(cookieStore.get('user-profile')!.value) as User)
-    : undefined;
+  let user: undefined | User;
+
+  if (cookieStore.has('user-profile')) {
+    try {
+      const { value } = cookieStore.get('user-profile')!;
+      const data = JSON.parse(decodeBase64(value));
+      if (typeof data !== 'object') throw new Error();
+      if (!data.nickname || typeof data.nickname !== 'string') throw new Error();
+      if (!data.id || typeof data.id !== 'string') throw new Error();
+      user = { nickname: data.nickname, id: data.id } as User;
+    } catch (e) {
+      user = undefined;
+    }
+  }
 
   return (
     <Providers init={{ user }}>

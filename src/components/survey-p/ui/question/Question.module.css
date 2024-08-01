@@ -12,28 +12,32 @@
 
 .head {
   font-size: 20px;
+  line-height: 1.2;
 }
 
 .required {
   display: inline-block;
-
-  font-size: 20px;
-  text-align: center;
-  width: 56px;
-  height: 20px;
+  width: auto;
+  height: auto;
   overflow: hidden;
-  color: var(--primary);
-  padding-right: 4px;
+  vertical-align: bottom;
+  text-align: center;
 
-  transition:
-    width 0.5s,
-    padding-right 0.5s;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #fff;
+
+  padding: 2px 4px;
+  margin-right: 4px;
+  border-radius: 4px;
+  background-color: var(--primary-alt);
+
+  transition: opacity 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .required.complete {
-  width: 0;
-  padding-right: 0;
+  opacity: 0.4;
 }
 
 .description {
