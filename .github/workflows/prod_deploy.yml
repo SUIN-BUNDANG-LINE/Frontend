@@ -1,0 +1,27 @@
+name: Frontend 프로덕션 서버 EC2 배포
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: 배포 작업
+    runs-on: ubuntu-latest
+    steps:
+    - name: 코드 체크아웃
+      uses: actions/checkout@v2
+
+    - name: EC2에 배포
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.FRONTEND_EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.PRODUCTION_EC2_KEY }}
+        script: |
+          cd /Frontend
+          git pull origin main
+          npm install
+          npm run build
+          pm2 start npm --name "sulmun2yong" -- run start
