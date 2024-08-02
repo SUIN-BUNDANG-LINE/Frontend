@@ -22,13 +22,23 @@
   color: var(--gray-md);
 }
 
+.hr {
+  width: 100%;
+  margin: 12px 12px;
+  border: none;
+  height: 1px;
+  background-color: var(--gray-ml);
+}
+
 .cool {
   width: 100%;
   padding: 16px 0;
   text-align: right;
+  color: var(--gray);
 }
 
 .cool a {
+  text-decoration: none;
   color: var(--primary-alt);
 }
 

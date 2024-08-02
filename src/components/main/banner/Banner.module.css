@@ -49,15 +49,19 @@
   font-size: 20px;
 }
 
-.hello > button {
+.create {
   padding: 1rem 1.5rem;
-  margin: 1rem;
+  margin: 1rem 0 0 0;
 
   border: none;
   border-radius: 36px;
+  font-size: 24px;
+
   background-color: #000;
   color: #fff;
-  font-size: 24px;
+
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .stats {
@@ -111,15 +115,15 @@
     background-color: #fff;
   }
 
-  .hello > button {
+  .create {
     width: 100%;
     background-color: unset;
+    border-radius: 8px;
     color: #000;
     text-align: right;
     font-size: 24px;
-    padding-right: 0.5rem;
+    padding-right: 1rem;
     margin: 0;
-    margin-bottom: 1rem;
   }
 
   .stats {
@@ -130,5 +134,9 @@
 
   .stat {
     margin-right: 2rem;
+  }
+
+  .create:hover {
+    background-color: var(--gray-l);
   }
 }

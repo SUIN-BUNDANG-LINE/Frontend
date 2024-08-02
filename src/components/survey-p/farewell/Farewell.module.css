@@ -3,21 +3,41 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+}
 
-  margin-top: 12px;
+.container h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.creator {
+  border-radius: 4px;
+  background-color: var(--gray-l);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  width: 100%;
+  padding: 8px;
+}
+
+.title {
+  padding: 8px;
+  margin-bottom: 8px;
 }
 
 .message {
-  width: 320px;
-
-  border: 1px solid var(--gray);
-  border-radius: 4px;
   padding: 8px;
-  background-color: #fff;
-
-  margin: 4px 0;
 }
 
-.message > span {
-  line-height: 1.2;
+.submit {
+  padding-top: 16px;
 }

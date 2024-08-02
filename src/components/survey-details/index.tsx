@@ -63,7 +63,7 @@ export default function DetailsViewer({ data, surveyId }: { data: SurveysDetails
                 참여하기
               </Button>
               <div>
-                <Link href="/">로그인하고 참여하기</Link>
+                <Link href="/">설문이용 메인으로</Link>
               </div>
             </div>
             <hr className={styles.hr} />

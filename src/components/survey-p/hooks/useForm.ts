@@ -11,19 +11,23 @@ interface Params {
 }
 
 const historyMapper = (sections: Section[], history: string[]) => {
+  if (!sections) return [];
+
   if (history.length === 0 || history.some((i) => !sections.find((s) => s.id === i))) {
     return [sections[0]];
   }
+
   return history.map((i) => sections.find((s) => s.id === i)!);
 };
 
 export const useForm = ({ surveySections, surveyQuestions, initialHistory, initialResponses }: Params) => {
   const [responses, setResponses] = useState<Responses>(initialResponses);
-  const [sections, setSections] = useState<Section[]>(historyMapper(surveySections || [], initialHistory));
+  const [sections, setSections] = useState<Section[]>([]);
 
   useEffect(() => {
-    if (surveySections) setSections([surveySections[0]]);
-  }, [surveySections]);
+    if (!surveySections) return;
+    setSections(surveySections ? historyMapper(surveySections, initialHistory) : [surveySections[0]]);
+  }, [initialHistory, surveySections]);
 
   const getQuestion = useCallback(
     (qid: string): Question | null => surveyQuestions?.find((i) => i.id === qid) || null,
@@ -187,5 +191,7 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
     getResponseDispatcher,
     navigator,
     writeInteractionsResult,
+    responses,
+    sections,
   };
 };
