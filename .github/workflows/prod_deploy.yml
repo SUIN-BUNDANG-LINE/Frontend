@@ -20,7 +20,7 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.PRODUCTION_EC2_KEY }}
         script: |
-          cd /Frontend
+          cd ~/Frontend
           git pull origin main
           npm install
           npm run build
