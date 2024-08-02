@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSearchParams, type ReadonlyURLSearchParams } from 'next/navigation';
 import { replaceURLSearchParams } from '@/utils/url-search-params';
 import { useSurveysList } from '@/services/surveys';
+import Loading from '@/components/ui/loading/Loading';
 import List from './list/List';
 import Customize from './control/Customize';
 import Pagination from './control/Pagination';
@@ -24,11 +25,7 @@ export default function SurveyFinder() {
 
   const { data, isLoading } = useSurveysList(sort, page);
 
-  if (!data || isLoading) {
-    return <div>loading...</div>;
-  }
-
-  const { pageCount, surveys } = data;
+  const { pageCount, surveys } = data || { pageCount: 1, surveys: [] };
 
   const setSortHandler = (value: string) => {
     setSort(value);
@@ -40,6 +37,16 @@ export default function SurveyFinder() {
     setPage(value);
     replaceURLSearchParams('page', value);
   };
+
+  if (!data || isLoading) {
+    return (
+      <>
+        <Customize sort={sort} setSortHandler={setSortHandler} sortOptions={SORT_OPTIONS} />
+        <Loading message="데이터를 불러오는 중..." />
+        <Pagination page={page} setPageHandler={setPageHandler} maxPage={pageCount} />
+      </>
+    );
+  }
 
   return (
     <>

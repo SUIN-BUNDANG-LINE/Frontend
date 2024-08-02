@@ -1,3 +1,14 @@
 .wrapper {
   margin-top: auto; /* stick to bottom */
 }
+
+.container {
+  margin: 16px 0;
+  padding: 8px;
+  background-color: #fff;
+}
+
+.container a {
+  color: var(--primary);
+  text-decoration: none;
+}

@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 12px 0;
+  padding-top: 12px;
   background-color: #fff;
 }
 
@@ -15,7 +15,6 @@
   display: grid;
   grid-template-columns: 100px 1fr;
   align-items: center;
-  height: 60px;
   row-gap: 4px;
 }
 
@@ -51,6 +50,7 @@
   max-width: 360px;
   background-color: var(--gray-l);
   padding: 16px 32px;
+  margin-top: 16px;
 }
 
 .tos > li {

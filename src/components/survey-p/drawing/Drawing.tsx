@@ -18,7 +18,7 @@ interface Props {
 export default function Drawing({ surveyId, participantId }: Props) {
   const nextRouter = useRouter();
 
-  const { data: drawingInfo, isLoading, isError } = useDrawingInfo(surveyId);
+  const { data: drawingInfo, isLoading, isError, refetch } = useDrawingInfo(surveyId);
   const mutation = useDrawingDraw(participantId);
 
   const [phone, setPhone] = useState<string>('');
@@ -54,6 +54,7 @@ export default function Drawing({ surveyId, participantId }: Props) {
           }
         },
         onError(err) {
+          refetch();
           if (err.message.includes('400')) {
             setError('이미 참여한 사용자입니다.');
           } else {
@@ -84,7 +85,7 @@ export default function Drawing({ surveyId, participantId }: Props) {
           </span>
           <Phone phone={phone} setPhone={setPhone} />
         </div>
-        <span style={{ fontSize: '32px', color: 'var(--gray)' }}>⋮</span>
+        <hr className={styles.hr} />
         <div className={styles.submit}>
           {error && <div className={styles.error}>⚠️ {error}</div>}
           <Button
@@ -98,8 +99,8 @@ export default function Drawing({ surveyId, participantId }: Props) {
           </Button>
         </div>
         <div className={styles.cool}>
-          <span>리워드에 관심이 없다면... </span>
-          <Link href={`/s/${surveyId}`}>그냥 돌아가기</Link>
+          <span>리워드에 관심이 없다면 </span>
+          <Link href={`/s/${surveyId}`}>그냥 종료하기</Link>
         </div>
       </div>
     </Wrapper>

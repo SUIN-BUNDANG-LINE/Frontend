@@ -2,16 +2,17 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from '@/components/survey-p/hooks/useForm';
 import { useSurveysProgress, useSurveysResponse } from '@/services/surveys';
-import { loadInteractions } from '@/components/survey-p/funcs/session-storage';
+import { loadInteractions, storeInteractions } from '@/components/survey-p/funcs/session-storage';
 
 import Navigator from '@/components/survey-p/ui/navigator/Navigator';
 import Section from '@/components/survey-p/Section';
 import Farewell from '@/components/survey-p/farewell/Farewell';
 import Drawing from '@/components/survey-p/drawing/Drawing';
+import Loading from '@/components/ui/loading/Loading';
 
 export default function Page({ params }: { params: { surveyId: string } }) {
   const { surveyId } = params;
@@ -20,8 +21,11 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const { data: survey } = useSurveysProgress(surveyId);
   const mutation = useSurveysResponse(surveyId);
 
-  const { history: initialHistory, responses: initialResponses } = loadInteractions(surveyId);
-  const { section, getResponse, getResponseDispatcher, navigator } = useForm({
+  const { history: initialHistory, responses: initialResponses } = useMemo(() => {
+    return loadInteractions(surveyId);
+  }, [surveyId]);
+
+  const { section, getResponse, getResponseDispatcher, navigator, sections, responses } = useForm({
     surveySections: survey?.sections,
     surveyQuestions: survey?.questions,
     initialHistory,
@@ -31,10 +35,19 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const [userResponse, setUserResponse] = useState<object | null>(null);
   const [participantId, setParticipantId] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!survey) return;
+    console.log(
+      'sections :',
+      sections.map((i) => i.id)
+    );
+    storeInteractions(surveyId, responses, sections ? sections.map((i) => i.id) : []);
+  }, [survey, responses, sections, surveyId]);
+
   // phase 1 : loading a survey
 
   if (!survey || !section) {
-    return <div>Hello form!</div>;
+    return <Loading message="폼을 불러오는 중..." />;
   }
 
   // phase 2 : user interacts with a survey
