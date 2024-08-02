@@ -1,0 +1,17 @@
+.list {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+}
+
+@media screen and (min-width: 1080px) {
+  .list {
+    flex-direction: row;
+    justify-content: center;
+    column-gap: 1rem;
+    row-gap: 2rem;
+    flex-wrap: wrap;
+    padding: 2rem 0;
+  }
+}

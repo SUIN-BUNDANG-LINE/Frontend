@@ -1,0 +1,14 @@
+.content {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+@media screen and (pointer: fine) {
+  .content:hover {
+    background-color: var(--gray-l);
+    cursor: pointer;
+  }
+}

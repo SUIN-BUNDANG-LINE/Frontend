@@ -1,0 +1,11 @@
+.navigator {
+  width: 320px;
+  padding: 12px;
+  display: flex;
+  column-gap: 8px;
+}
+
+.navigator.centered {
+  width: auto;
+  justify-content: center;
+}

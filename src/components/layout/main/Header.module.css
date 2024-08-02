@@ -1,0 +1,63 @@
+.header {
+  height: 5rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+
+  max-width: var(--container-width);
+  margin: 1rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container > * {
+  text-decoration: none;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  height: 100%;
+
+  color: var(--primary-alt);
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.login {
+  height: 100%;
+  padding: 0 12px;
+
+  display: flex;
+  align-items: center;
+
+  font-size: 18px;
+  text-decoration: none;
+  color: #000;
+
+  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+@media screen and (pointer: fine) {
+  .login:hover {
+    background-color: var(--gray-l);
+  }
+}

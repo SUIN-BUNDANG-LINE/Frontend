@@ -1,20 +1,42 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+@import 'normalize.css';
+
+html,
+body {
+  background-color: var(--background);
+}
 
 :root {
-  --background-rgb: #fff;
-  --foreground-rgb: #000;
-}
+  --container-width: 1080px;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background-rgb: #000;
-    --foreground-rgb: #fff;
-  }
-}
+  --gray-l: #f3f4f6; /* Light gray */
+  --gray-ml: #e5e7eb; /* Medium light gray */
+  --gray: #9ca3af; /* Medium gray */
+  --gray-md: #6b7280; /* Medium dark gray */
+  --gray-d: #374151; /* Dark gray */
 
-body {
-  background-color: var(--background-rgb);
-  color: var(--foreground-rgb);
+  --primary: #ffbc49;
+  --primary-alt: #ffa347;
+  --secondary: #e8dfd0;
+  --secondary-alt: #ead7bf;
+  --background: #f8f8f8;
+
+  width: 100%;
+  min-width: 320px;
+
+  font-family:
+    'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    'Helvetica Neue',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    sans-serif;
 }

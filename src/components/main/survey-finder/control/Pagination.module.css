@@ -1,0 +1,39 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  font-size: 28px;
+  text-align: center;
+}
+
+.pagination > div {
+  width: 300px;
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+}
+
+.button {
+  background-color: #fff;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+
+  -webkit-box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 8px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover:not(:disabled) {
+  cursor: pointer;
+}
+
+.indicator > span:nth-child(1) {
+  padding-right: 8px;
+}
+
+.indicator > span:nth-child(2) {
+  font-size: 16px;
+}

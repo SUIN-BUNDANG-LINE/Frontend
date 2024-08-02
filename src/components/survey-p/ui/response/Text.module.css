@@ -1,0 +1,21 @@
+.input {
+  width: 50%;
+  min-width: 172px;
+  padding: 6px 4px;
+
+  border: none;
+  border-bottom: 1px solid var(--gray);
+  background: none;
+
+  transition:
+    border-color 0.2s,
+    width 0.2s;
+
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.input:focus {
+  width: 80%;
+  border-color: var(--primary-alt);
+  outline: none;
+}

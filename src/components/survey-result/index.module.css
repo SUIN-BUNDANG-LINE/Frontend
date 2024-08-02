@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.container div {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+.container a {
+  margin-top: 10px;
+  text-decoration: none;
+  color: #0070f3;
+  font-size: 16px;
+}
+
+.container a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,38 @@
+.container {
+  padding: 24px 12px 0;
+}
+
+.header {
+  background-color: var(--secondary);
+
+  display: grid;
+  grid-template-columns: 52px 1fr;
+
+  border-radius: 8px 8px 0 0;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.title_and_description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 0;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.description {
+  font-size: 14px;
+}
+
+.content {
+  width: 100%;
+}

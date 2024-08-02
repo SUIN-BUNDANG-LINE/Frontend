@@ -1,0 +1,142 @@
+.banner {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+
+  background-image: url('/assets/survey-doragon.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position-y: -8rem;
+}
+
+.image {
+  position: fixed;
+  top: -6rem;
+  left: 4rem;
+  z-index: -1;
+}
+
+.hello {
+  width: auto;
+  padding: 1rem;
+
+  background-color: #fff;
+
+  text-align: center;
+}
+
+.hello > div:nth-child(1) {
+  font-weight: 700;
+  font-size: 48px;
+  margin: 4px 0;
+  white-space: break-spaces;
+}
+
+.hello > div:nth-child(1) > .highlight {
+  display: inline-block;
+  margin: 0;
+  color: #f28142;
+}
+
+.hello > div:nth-child(2) {
+  padding: 1rem 0;
+  font-size: 20px;
+}
+
+.create {
+  padding: 1rem 1.5rem;
+  margin: 1rem 0 0 0;
+
+  border: none;
+  border-radius: 36px;
+  font-size: 24px;
+
+  background-color: #000;
+  color: #fff;
+
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
+  padding: 2rem 0;
+
+  font-weight: 400;
+}
+
+.stat > span {
+  display: block;
+}
+
+.stat > span:nth-child(1) {
+  width: 128px;
+}
+
+.stat > span:nth-child(2) {
+  font-size: 1.75rem;
+}
+
+@media screen and (min-width: 768px) {
+  .innerBox {
+    display: grid;
+    grid-template-columns: 484px 1fr;
+
+    width: 100%;
+    max-width: var(--container-width);
+    min-height: 420px;
+
+    display: flex;
+    flex-direction: row;
+  }
+
+  .hello {
+    min-width: 200px;
+    max-width: 320px;
+    padding: 1rem;
+    padding-bottom: 0;
+    margin-left: 1rem;
+    margin-top: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    text-align: left;
+    background-color: #fff;
+  }
+
+  .create {
+    width: 100%;
+    background-color: unset;
+    border-radius: 8px;
+    color: #000;
+    text-align: right;
+    font-size: 24px;
+    padding-right: 1rem;
+    margin: 0;
+  }
+
+  .stats {
+    width: 100%;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .stat {
+    margin-right: 2rem;
+  }
+
+  .create:hover {
+    background-color: var(--gray-l);
+  }
+}
