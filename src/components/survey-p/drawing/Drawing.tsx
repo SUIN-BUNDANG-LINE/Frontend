@@ -5,6 +5,7 @@ import { useDrawingDraw, useDrawingInfo } from '@/services/drawing';
 import Button from '@/components/ui/button/Button';
 import Wrapper from '@/components/layout/Wrapper';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Board from './Board';
 import Phone from './Phone';
 import styles from './Drawing.module.css';
@@ -15,11 +16,14 @@ interface Props {
 }
 
 export default function Drawing({ surveyId, participantId }: Props) {
+  const nextRouter = useRouter();
+
   const { data: drawingInfo, isLoading, isError } = useDrawingInfo(surveyId);
   const mutation = useDrawingDraw(participantId);
 
   const [phone, setPhone] = useState<string>('');
   const [selected, setSelected] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   if (isLoading) {
     return <div>loading board...</div>;
@@ -29,9 +33,12 @@ export default function Drawing({ surveyId, participantId }: Props) {
     return <div>failed.</div>;
   }
 
+  const validPhone = phone.length === 11;
+  const validSelected = selected !== null;
+
   const onSubmit = () => {
-    if (phone.length !== 11) return;
-    if (selected === null) return;
+    if (!validPhone || !validSelected) return;
+    setError(null);
 
     mutation.mutate(
       {
@@ -40,7 +47,18 @@ export default function Drawing({ surveyId, participantId }: Props) {
       },
       {
         onSuccess(data) {
-          console.log(data);
+          if (data.isWon) {
+            nextRouter.push(`/s/${surveyId}/result?reward=${encodeURIComponent(data.rewardName)}`);
+          } else {
+            nextRouter.push(`/s/${surveyId}/result`);
+          }
+        },
+        onError(err) {
+          if (err.message.includes('400')) {
+            setError('이미 참여한 사용자입니다.');
+          } else {
+            setError('추첨에 오류가 발생했습니다.');
+          }
         },
       }
     );
@@ -67,10 +85,18 @@ export default function Drawing({ surveyId, participantId }: Props) {
           <Phone phone={phone} setPhone={setPhone} />
         </div>
         <span style={{ fontSize: '32px', color: 'var(--gray)' }}>⋮</span>
-        <span>준비가 되었다면</span>
-        <Button variant="primary" width="100%" height="48px" style={{ maxWidth: '360px' }} onClick={onSubmit}>
-          추첨 참여하기
-        </Button>
+        <div className={styles.submit}>
+          {error && <div className={styles.error}>⚠️ {error}</div>}
+          <Button
+            variant="primary"
+            width="100%"
+            height="48px"
+            style={{ maxWidth: '360px' }}
+            onClick={onSubmit}
+            disabled={!validPhone || !validSelected}>
+            추첨 참여하기
+          </Button>
+        </div>
         <div className={styles.cool}>
           <span>리워드에 관심이 없다면... </span>
           <Link href={`/s/${surveyId}`}>그냥 돌아가기</Link>

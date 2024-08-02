@@ -81,3 +81,8 @@
   text-align: center;
   background-color: var(--gray-l);
 }
+
+.ticket.gone {
+  opacity: 0.3;
+  pointer-events: none;
+}
