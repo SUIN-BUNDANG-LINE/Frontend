@@ -15,7 +15,7 @@ function Button({ variant, width, height, children, ...props }: React.PropsWithC
 
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <button {...props} type="button" className={classes.join(' ')} style={{ width, height }}>
+    <button {...props} type="button" className={classes.join(' ')} style={{ width, height, ...props.style }}>
       {children}
     </button>
   );

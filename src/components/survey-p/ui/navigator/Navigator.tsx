@@ -3,28 +3,22 @@ import Wrapper from '@/components/layout/Wrapper';
 import styles from './Navigator.module.css';
 
 interface Props {
-  isFirst: boolean;
-  exit: () => void;
-  moveBack: () => void;
-  moveNext: () => void;
+  backAction: () => void;
+  nextAction: () => void;
+  backText: string;
+  nextText: string;
+  centered?: true;
 }
 
-export default function Navigator({ isFirst, exit, moveBack, moveNext }: Props) {
+export default function Navigator({ backAction, nextAction, backText, nextText, centered }: Props) {
   return (
     <Wrapper>
-      <div className={styles.navigator}>
-        {isFirst && (
-          <Button variant="primary" onClick={exit}>
-            처음으로
-          </Button>
-        )}
-        {!isFirst && (
-          <Button variant="primary" onClick={moveBack} width={72}>
-            이전
-          </Button>
-        )}
-        <Button variant="primary" onClick={moveNext} width={96}>
-          다음
+      <div className={`${styles.navigator} ${centered ? styles.centered : ''}`}>
+        <Button variant="primary" onClick={backAction} width={96}>
+          {backText}
+        </Button>
+        <Button variant="primary" onClick={nextAction} width={96}>
+          {nextText}
         </Button>
       </div>
     </Wrapper>

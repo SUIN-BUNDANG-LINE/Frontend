@@ -33,7 +33,7 @@ export default function Question({
     <div className={styles.question} id={id}>
       <legend className={styles.legend}>
         <div className={styles.head}>
-          {isRequired && <span className={`${styles.required} ${complete && styles.complete}`}>* 필수</span>}
+          {isRequired && <span className={`${styles.required} ${complete && styles.complete}`}>필수</span>}
           <span className={styles.title}>{title}</span>
         </div>
         {description && description.trim().length !== 0 && <div className={styles.description}>{description}</div>}

@@ -4,3 +4,8 @@
   display: flex;
   column-gap: 8px;
 }
+
+.navigator.centered {
+  width: auto;
+  justify-content: center;
+}

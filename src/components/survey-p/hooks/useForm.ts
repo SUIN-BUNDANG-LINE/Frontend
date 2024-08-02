@@ -137,8 +137,9 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
       if (incompleteQuestion) return { ok: false, reason: { code: 'INCOMPLETE', payload: incompleteQuestion.id } };
 
       if (router.type === 'FIXED') {
-        if (router.nextSection === null)
+        if (router.nextSection === null) {
           return { ok: false, reason: { code: 'SUBMIT', payload: writeInteractionsResult() } };
+        }
 
         const newSection = surveySections!.find((i) => i.id === (router.nextSection as string));
         if (!newSection) return { ok: false, reason: { code: 'FATAL', payload: 'fixed-new-section not found' } };
