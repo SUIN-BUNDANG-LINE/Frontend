@@ -25,3 +25,4 @@ jobs:
           npm install
           npm run build
           pm2 start npm --name "sulmun2yong" -- run start
+      timeout-minutes: 40
