@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react';
+import { forwardRef, type ForwardedRef, type Dispatch, type SetStateAction } from 'react';
 import styles from './Phone.module.css';
 
 interface Props {
@@ -6,7 +6,7 @@ interface Props {
   setPhone: Dispatch<SetStateAction<string>>;
 }
 
-export default function Phone({ phone, setPhone }: Props) {
+const Phone = forwardRef(function Phone({ phone, setPhone }: Props, ref: ForwardedRef<HTMLInputElement>) {
   const sanitize = (p: string) => {
     const t = p.replace(/\D/g, '');
     return t.slice(0, 11);
@@ -22,6 +22,7 @@ export default function Phone({ phone, setPhone }: Props) {
           id="phone"
           pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
           className={styles.input}
+          ref={ref}
           value={phone}
           onChange={(e) => setPhone(sanitize(e.target.value))}
           placeholder="010 1234 5678"
@@ -42,4 +43,6 @@ export default function Phone({ phone, setPhone }: Props) {
       </ul>
     </div>
   );
-}
+});
+
+export default Phone;

@@ -1,9 +1,11 @@
 /* eslint-disable no-console, jsx-a11y/control-has-associated-label */
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDrawingDraw, useDrawingInfo } from '@/services/drawing';
+import Loading from '@/components/ui/loading/Loading';
 import Button from '@/components/ui/button/Button';
 import Wrapper from '@/components/layout/Wrapper';
+import type { ErrorCause } from '@/services/ky-wrapper';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Board from './Board';
@@ -25,12 +27,14 @@ export default function Drawing({ surveyId, participantId }: Props) {
   const [selected, setSelected] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const phoneRef = useRef<HTMLInputElement>(null);
+
   if (isLoading) {
-    return <div>loading board...</div>;
+    return <Loading message="추첨 페이지를 로드하는 중..." />;
   }
 
   if (!drawingInfo || isError) {
-    return <div>failed.</div>;
+    return <div>문제가 발생했습니다.</div>;
   }
 
   const validPhone = phone.length === 11;
@@ -54,11 +58,22 @@ export default function Drawing({ surveyId, participantId }: Props) {
           }
         },
         onError(err) {
-          refetch();
-          if (err.message.includes('400')) {
-            setError('이미 참여한 사용자입니다.');
-          } else {
-            setError('추첨에 오류가 발생했습니다.');
+          const { code, message } = err.cause as ErrorCause;
+
+          console.log(code, message);
+
+          switch (code) {
+            case 'DT0001': // 유효하지 않은 전화번호입니다.
+              phoneRef.current?.focus();
+              setError(message);
+              break;
+            case 'DR0004': // 이미 선택된 티켓입니다.
+              setSelected(null);
+              setError(message);
+              refetch();
+              break;
+            default:
+              setError(message || '알 수 없는 문제가 발생했습니다.');
           }
         },
       }
@@ -83,7 +98,7 @@ export default function Drawing({ surveyId, participantId }: Props) {
           <span className={styles.description}>
             입력한 전화번호로 리워드가 지급되게 되므로, 사용하는 전화번호를 입력해주세요.
           </span>
-          <Phone phone={phone} setPhone={setPhone} />
+          <Phone phone={phone} setPhone={setPhone} ref={phoneRef} />
         </div>
         <hr className={styles.hr} />
         <div className={styles.submit}>
