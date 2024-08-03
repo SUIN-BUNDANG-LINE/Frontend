@@ -24,5 +24,6 @@ jobs:
           git pull origin main
           npm install
           npm run build
+          pm2 delete sulmun2yong
           pm2 start npm --name "sulmun2yong" -- run start
       timeout-minutes: 40
