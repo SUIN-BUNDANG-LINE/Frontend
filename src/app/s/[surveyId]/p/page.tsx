@@ -11,8 +11,8 @@ import { loadInteractions, storeInteractions } from '@/components/survey-p/funcs
 import Navigator from '@/components/survey-p/ui/navigator/Navigator';
 import Section from '@/components/survey-p/Section';
 import Farewell from '@/components/survey-p/farewell/Farewell';
-import Drawing from '@/components/survey-p/drawing/Drawing';
 import Loading from '@/components/ui/loading/Loading';
+import type { ErrorCause } from '@/services/ky-wrapper';
 
 export default function Page({ params }: { params: { surveyId: string } }) {
   const { surveyId } = params;
@@ -33,7 +33,6 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   });
 
   const [userResponse, setUserResponse] = useState<object | null>(null);
-  const [participantId, setParticipantId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!survey) return;
@@ -91,16 +90,15 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
   // phase 3 : ready to submit
 
-  if (userResponse && !participantId) {
+  if (userResponse) {
     const onSubmit = () => {
       if (!userResponse) return;
       mutation.mutate(userResponse, {
         onSuccess: (data) => {
-          setParticipantId(data.participantId);
+          nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
         },
         onError: (error) => {
-          console.error(error);
-          alert('에러가 발생했습니다. 다시 시도해주세요.');
+          alert((error.cause as ErrorCause).message);
         },
       });
     };
@@ -117,11 +115,5 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         />
       </>
     );
-  }
-
-  // phase 4 : show drawing board
-
-  if (participantId) {
-    return <Drawing surveyId={surveyId} participantId={participantId} />;
   }
 }
