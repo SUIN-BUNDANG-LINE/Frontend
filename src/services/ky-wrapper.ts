@@ -45,6 +45,9 @@ class KyWrapper {
     try {
       return await this.kyInstance.get(URL, options).json<T>();
     } catch (e) {
+      if (e instanceof HTTPError) {
+        throw e;
+      }
       throw new Error('서버와의 통신에 실패했습니다.', {
         cause: { code: undefined, errors: undefined, message: '서버와의 통신에 실패했습니다.' },
       });
@@ -55,6 +58,9 @@ class KyWrapper {
     try {
       return await this.kyInstance.post(URL, options).json<T>();
     } catch (e) {
+      if (e instanceof HTTPError) {
+        throw e;
+      }
       throw new Error('서버와의 통신에 실패했습니다.', {
         cause: { code: undefined, errors: undefined, message: '서버와의 통신에 실패했습니다.' },
       });

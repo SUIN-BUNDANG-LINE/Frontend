@@ -2,6 +2,9 @@
   max-width: 320px;
   min-width: 280px;
 
+  overflow-wrap: normal;
+  word-break: break-all;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
