@@ -7,9 +7,14 @@ interface Props {
 }
 
 const Phone = forwardRef(function Phone({ phone, setPhone }: Props, ref: ForwardedRef<HTMLInputElement>) {
-  const sanitize = (p: string) => {
-    const t = p.replace(/\D/g, '');
-    return t.slice(0, 11);
+  const formatPhone = (p: string) => {
+    const a = p.replace(/\D/g, '');
+    const b = [a.slice(0, 3), a.slice(3, 7), a.slice(7, 11)].filter((i) => !!i);
+    return b.join('-').trim();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(formatPhone(e.target.value));
   };
 
   return (
@@ -24,8 +29,8 @@ const Phone = forwardRef(function Phone({ phone, setPhone }: Props, ref: Forward
           className={styles.input}
           ref={ref}
           value={phone}
-          onChange={(e) => setPhone(sanitize(e.target.value))}
-          placeholder="010 1234 5678"
+          onChange={handleChange}
+          placeholder="010-1234-5678"
         />
         <span />
         <span className={styles.tip}>* 숫자만 입력해주세요.</span>

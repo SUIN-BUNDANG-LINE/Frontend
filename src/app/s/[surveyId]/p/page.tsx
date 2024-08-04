@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-alert */
+/* eslint-disable no-alert */
 
 'use client';
 
@@ -6,20 +6,28 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from '@/components/survey-p/hooks/useForm';
 import { useSurveysProgress, useSurveysResponse } from '@/services/surveys';
-import { loadInteractions, storeInteractions } from '@/components/survey-p/funcs/session-storage';
+import {
+  clearInteractions,
+  getSurveyState,
+  loadInteractions,
+  setSurveyState,
+  storeInteractions,
+} from '@/components/survey-p/funcs/storage';
 
 import Navigator from '@/components/survey-p/ui/navigator/Navigator';
 import Section from '@/components/survey-p/Section';
 import Farewell from '@/components/survey-p/farewell/Farewell';
 import Loading from '@/components/ui/loading/Loading';
 import type { ErrorCause } from '@/services/ky-wrapper';
+import Error from '@/components/ui/error/Error';
 
 export default function Page({ params }: { params: { surveyId: string } }) {
   const { surveyId } = params;
   const nextRouter = useRouter();
 
-  const { data: survey } = useSurveysProgress(surveyId);
+  const { data: survey, isLoading, isError, refetch } = useSurveysProgress(surveyId);
   const mutation = useSurveysResponse(surveyId);
+  const [surveyState] = useState(getSurveyState(surveyId));
 
   const { history: initialHistory, responses: initialResponses } = useMemo(() => {
     return loadInteractions(surveyId);
@@ -36,17 +44,38 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
   useEffect(() => {
     if (!survey) return;
-    console.log(
-      'sections :',
-      sections.map((i) => i.id)
-    );
     storeInteractions(surveyId, responses, sections ? sections.map((i) => i.id) : []);
   }, [survey, responses, sections, surveyId]);
 
   // phase 1 : loading a survey
 
-  if (!survey || !section) {
-    return <Loading message="폼을 불러오는 중..." />;
+  if (surveyState === '$') {
+    return (
+      <Error
+        message="이미 참여한 설문조사입니다."
+        buttons={[{ text: '나가기', fn: () => nextRouter.push(`/s/${surveyId}`) }]}
+      />
+    );
+  }
+
+  if (surveyState) {
+    nextRouter.push(`/s/${surveyId}/draw?pid=${surveyState}`);
+  }
+
+  if (isLoading) {
+    return <Loading message="내용을 불러오는 중..." />;
+  }
+
+  if (isError || !survey || !section) {
+    return (
+      <Error
+        message="내용을 불러오지 못했습니다."
+        buttons={[
+          { text: '뒤로', fn: () => nextRouter.push(`/s/${surveyId}`) },
+          { text: '재시도', fn: refetch },
+        ]}
+      />
+    );
   }
 
   // phase 2 : user interacts with a survey
@@ -66,6 +95,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
       switch (code) {
         case 'INCOMPLETE':
           document.getElementById(payload as string)?.scrollIntoView();
+          document.getElementById(payload as string)?.dispatchEvent(new CustomEvent('blink'));
           break;
         case 'SUBMIT':
           setUserResponse(payload as object);
@@ -93,8 +123,11 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   if (userResponse) {
     const onSubmit = () => {
       if (!userResponse) return;
+
       mutation.mutate(userResponse, {
         onSuccess: (data) => {
+          clearInteractions(surveyId);
+          setSurveyState(surveyId, data.participantId);
           nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
         },
         onError: (error) => {

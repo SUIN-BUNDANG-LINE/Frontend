@@ -1,7 +1,7 @@
 import { useQuery, keepPreviousData, useMutation } from '@tanstack/react-query';
 import { fetchSurveysList, fetchSurveysDetails, fetchSurveysProgress, fetchSurveysResponse } from './fetch';
 import { toSurvey } from './select';
-import type { SurveysListParams } from './types';
+import type { SurveysListParams, SurveysProgressResponse } from './types';
 
 const queryKeys = {
   root: ['surveys'],
@@ -35,7 +35,7 @@ const useSurveysProgress = (surveyId: string) => {
   return useQuery({
     queryKey: queryKeys.progress(surveyId),
     queryFn: () => fetchSurveysProgress({ surveyId }),
-    select: (data) => toSurvey(data),
+    select: (data) => toSurvey(data as SurveysProgressResponse),
   });
 };
 

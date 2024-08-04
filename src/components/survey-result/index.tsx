@@ -13,8 +13,9 @@ export default function SurveyResult({ surveyId, reward }: Props) {
       <div className={styles.container}>
         {!reward && <div>아쉽게도 낙첨되셨습니다.</div>}
         {reward && <div>{reward} 당첨!</div>}
+        <hr />
         <Link href={`/s/${surveyId}`}>설문조사 첫 페이지로</Link>
-        <Link href="/">홈으로</Link>
+        <Link href="/">설문이용 메인으로</Link>
       </div>
     </Wrapper>
   );

@@ -9,7 +9,6 @@ const fetchDrawingInfo = async (surveyId: string) => {
 };
 
 const fetchDrawingDraw = async (params: DrawingDrawParams) => {
-  console.log(params);
   return kyWrapper.post<DrawingDrawResponse>(makeUrl(['drawing-board', 'draw']), { json: params });
 };
 

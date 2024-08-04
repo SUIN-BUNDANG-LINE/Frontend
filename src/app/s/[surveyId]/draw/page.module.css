@@ -53,7 +53,7 @@
 
 .error {
   width: fit-content;
-  background-color: hsl(0, 100%, 93%);
+  color: var(--error);
   padding: 12px;
   margin-bottom: 12px;
 }
