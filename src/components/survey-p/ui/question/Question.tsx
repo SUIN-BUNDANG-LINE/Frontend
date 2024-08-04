@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { isValidResponse } from '../../funcs';
 import type { Response } from '../../types/interaction';
 import type { Question as QuestionType } from '../../types/survey';
@@ -28,12 +29,33 @@ export default function Question({
   dispatcher,
 }: Props) {
   const complete = isValidResponse(type, response);
+  const [animate, setAnimate] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const handleAnimation = () => {
+      if (timeoutRef.current) {
+        return;
+      }
+      setAnimate(true);
+      timeoutRef.current = setTimeout(() => {
+        setAnimate(false);
+        timeoutRef.current = null;
+      }, 500);
+    };
+    document.getElementById(id)?.addEventListener('blink', handleAnimation);
+    return () => document.getElementById(id)?.addEventListener('blink', handleAnimation);
+  }, [id]);
 
   return (
     <div className={styles.question} id={id}>
       <legend className={styles.legend}>
         <div className={styles.head}>
-          {isRequired && <span className={`${styles.required} ${complete && styles.complete}`}>필수</span>}
+          {isRequired && (
+            <span className={`${styles.required} ${complete && styles.complete} ${animate && styles.animate}`}>
+              필수
+            </span>
+          )}
           <span className={styles.title}>{title}</span>
         </div>
         {description && description.trim().length !== 0 && <div className={styles.description}>{description}</div>}

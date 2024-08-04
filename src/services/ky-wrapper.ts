@@ -31,7 +31,9 @@ class KyWrapper {
         Accept: 'application/json;charset=UTF-8',
       },
       credentials: 'include',
-      retry: 1,
+      retry: {
+        limit: 1,
+      },
       hooks: {
         beforeError: [beforeError],
       },

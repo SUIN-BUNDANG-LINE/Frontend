@@ -18,7 +18,21 @@ const storeInteractions = (surveyId: string, responses: Responses, history: stri
 const loadInteractions = (surveyId: string): Interactions => {
   const t = sessionStorage.getItem(`survey.${surveyId}`);
   if (!t) return getDefaultInteractions();
-  return JSON.parse(t);
+  const res = JSON.parse(t);
+  if (!res.responses || !res.history) return getDefaultInteractions();
+  return res;
 };
 
-export { storeInteractions, loadInteractions };
+const clearInteractions = (surveyId: string) => {
+  sessionStorage.removeItem(`survey.${surveyId}`);
+};
+
+const setSurveyState = (surveyId: string, state: '$' | string) => {
+  localStorage.setItem(`survey.${surveyId}`, state);
+};
+
+const getSurveyState = (surveyId: string) => {
+  return localStorage.getItem(`survey.${surveyId}`);
+};
+
+export { storeInteractions, loadInteractions, clearInteractions, setSurveyState, getSurveyState };

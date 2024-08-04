@@ -23,7 +23,13 @@ const statusReader = (status: string) => {
   }
 };
 
-export default function DetailsViewer({ data, surveyId }: { data: SurveysDetailsResponse; surveyId: string }) {
+interface Props {
+  data: SurveysDetailsResponse;
+  surveyId: string;
+  state: string;
+}
+
+export default function DetailsViewer({ data, surveyId, state }: Props) {
   const router = useRouter();
 
   const { title, description, status, finishedAt, currentParticipants, targetParticipants, rewards, thumbnail } = data;
@@ -59,8 +65,13 @@ export default function DetailsViewer({ data, surveyId }: { data: SurveysDetails
         <div className={styles.contentsWrapper}>
           <div className={styles.contents}>
             <div className={styles.participate}>
-              <Button variant="primary" width="100%" height="46px" onClick={() => participate()}>
-                참여하기
+              <Button
+                variant="primary"
+                width="100%"
+                height="46px"
+                onClick={() => participate()}
+                disabled={state === '$'}>
+                {state === '$' ? '참여 완료' : '참여하기'}
               </Button>
               <div>
                 <Link href="/">설문이용 메인으로</Link>
