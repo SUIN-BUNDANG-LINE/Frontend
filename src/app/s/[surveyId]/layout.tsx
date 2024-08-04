@@ -28,7 +28,6 @@ export default function SurveyLayout({
             { text: '뒤로', fn: nextRouter.back },
             { text: '재시도', fn: refetch },
           ]}
-          margin="18"
         />
       );
     }
