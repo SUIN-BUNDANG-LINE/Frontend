@@ -26,7 +26,7 @@ const statusReader = (status: string) => {
 interface Props {
   data: SurveysDetailsResponse;
   surveyId: string;
-  state: string;
+  state: string | null;
 }
 
 export default function DetailsViewer({ data, surveyId, state }: Props) {
