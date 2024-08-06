@@ -9,6 +9,10 @@ jobs:
   deploy:
     name: 배포 작업
     runs-on: ubuntu-latest
+
+    env:
+      CONTAINER_NAME: sulmun2yong_frontend_prod
+    
     steps:
     - name: 코드 체크아웃
       uses: actions/checkout@v2
@@ -20,10 +24,13 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.PRODUCTION_EC2_KEY }}
         script: |
+          # 스크립트 실패 시 workflow도 실패하도록 설정
+          set -e
           cd ~/Frontend
           git pull origin main
-          npm install
-          npm run build
-          pm2 delete sulmun2yong
-          pm2 start npm --name "sulmun2yong" -- run start
-      timeout-minutes: 40
+          echo "${{ secrets.FRONTEND_PROD_ENV_CONTENT }}" > .env.local
+          docker stop ${{ env.CONTAINER_NAME }} || true
+          docker rm ${{ env.CONTAINER_NAME }} || true
+          docker build -t ${{ env.CONTAINER_NAME }}:latest . 
+          docker run -d -p 3000:3000 --name ${{ env.CONTAINER_NAME }} ${{ env.CONTAINER_NAME }}:latest
+          docker image prune -af

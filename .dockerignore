@@ -1,0 +1,8 @@
+# 빌드 캐시와 불필요한 파일/디렉토리
+.next
+node_modules
+
+# 개발 환경 설정 파일
+.husky
+.github
+.git
