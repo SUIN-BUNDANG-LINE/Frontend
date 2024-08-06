@@ -7,31 +7,30 @@ interface Props {
 }
 
 const Phone = forwardRef(function Phone({ phone, setPhone }: Props, ref: ForwardedRef<HTMLInputElement>) {
-  const formatPhone = (p: string) => {
-    const a = p.replace(/\D/g, '');
-    const b = [a.slice(0, 3), a.slice(3, 7), a.slice(7, 11)].filter((i) => !!i);
-    return b.join('-').trim();
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhone(formatPhone(e.target.value));
+    setPhone(e.target.value.replace(/\D/g, '').slice(0, 8));
   };
 
   return (
     <div className={styles.container}>
-      <label htmlFor="phone" className={styles.phone}>
+      <label htmlFor="phone" className={styles.phoneLabel}>
         <span className={styles.label}>전화번호</span>
-        <input
-          required
-          type="tel"
-          id="phone"
-          pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"
-          className={styles.input}
-          ref={ref}
-          value={phone}
-          onChange={handleChange}
-          placeholder="010-1234-5678"
-        />
+        <div className={styles.phone}>
+          <button type="button" className={styles.phonePrefix}>
+            010
+          </button>
+          <input
+            required
+            className={styles.phoneSuffix}
+            type="text"
+            pattern="[0-9]{8}"
+            value={phone}
+            onChange={handleChange}
+            id="phone"
+            ref={ref}
+            placeholder="1234 5678"
+          />
+        </div>
         <span />
         <span className={styles.tip}>* 숫자만 입력해주세요.</span>
       </label>

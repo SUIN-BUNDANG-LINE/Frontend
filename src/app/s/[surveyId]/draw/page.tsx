@@ -55,7 +55,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     return <Error message="추첨 페이지를 불러오지 못했습니다." buttons={[{ text: '재시도', fn: refetch }]} />;
   }
 
-  const validPhone = phone.length === 13;
+  const validPhone = phone.length === 8;
   const validSelected = selected !== null;
 
   const onSubmit = () => {
@@ -66,7 +66,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
     mutation.mutate(
       {
-        phoneNumber: phone,
+        phoneNumber: `010${phone}`,
         selectedNumber: selected,
       },
       {
@@ -122,9 +122,8 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         <div className={styles.submit}>
           <Button
             variant="primary"
-            width="100%"
             height="48px"
-            style={{ maxWidth: '360px' }}
+            style={{ width: '100%', maxWidth: '360px' }}
             onClick={onSubmit}
             disabled={!validPhone || !validSelected || submitting}>
             {submitting ? '결과를 기다리는 중...' : '추첨 참여하기'}

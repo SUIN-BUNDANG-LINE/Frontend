@@ -51,13 +51,6 @@
     transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.ticket:hover > .ticketOverlay {
-  border-color: var(--primary);
-  background-color: var(--primary);
-  transform: rotate(0deg) translateY(-6px) scale(1.1);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 .ticket.selected > .ticketOverlay {
   border-color: var(--primary-alt);
   background-color: var(--primary-alt);
@@ -65,8 +58,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.ticket.selected .ticketContent,
-.ticket:hover .ticketContent {
+.ticket.selected .ticketContent {
   color: #fff;
   font-weight: bold;
   font-size: 18px;
@@ -85,4 +77,20 @@
 .ticket.gone {
   opacity: 0.3;
   pointer-events: none;
+}
+
+@media screen and (hover: hover) and (pointer: fine) {
+  .ticket:hover > .ticketOverlay {
+    border-color: var(--primary);
+    background-color: var(--primary);
+    transform: rotate(0deg) translateY(-6px) scale(1.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ticket:hover .ticketContent {
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    transform: rotate(0deg) translateY(-2px) scale(1.1);
+  }
 }
