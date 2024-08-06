@@ -31,19 +31,40 @@ class KyWrapper {
         Accept: 'application/json;charset=UTF-8',
       },
       credentials: 'include',
-      retry: 1,
+      retry: {
+        limit: 1,
+        methods: ['get'],
+      },
       hooks: {
         beforeError: [beforeError],
       },
     });
   }
 
-  get<T>(URL: string, options?: Options) {
-    return this.kyInstance.get(URL, options).json<T>();
+  async get<T>(URL: string, options?: Options) {
+    try {
+      return await this.kyInstance.get(URL, options).json<T>();
+    } catch (e) {
+      if (e instanceof HTTPError) {
+        throw e;
+      }
+      throw new Error('서버와의 통신에 실패했습니다.', {
+        cause: { code: undefined, errors: undefined, message: '서버와의 통신에 실패했습니다.' },
+      });
+    }
   }
 
-  post<T>(URL: string, options?: Options) {
-    return this.kyInstance.post(URL, options).json<T>();
+  async post<T>(URL: string, options?: Options) {
+    try {
+      return await this.kyInstance.post(URL, options).json<T>();
+    } catch (e) {
+      if (e instanceof HTTPError) {
+        throw e;
+      }
+      throw new Error('서버와의 통신에 실패했습니다.', {
+        cause: { code: undefined, errors: undefined, message: '서버와의 통신에 실패했습니다.' },
+      });
+    }
   }
 }
 

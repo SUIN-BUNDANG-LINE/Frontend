@@ -20,6 +20,11 @@ body {
   --secondary-alt: #ead7bf;
   --background: #f8f8f8;
 
+  --error: #ff6060;
+  --error-alt: #fff4f4;
+
+  --box-shadow: 0 5px 6px rgba(0, 0, 0, 0.05);
+
   width: 100%;
   min-width: 320px;
 

@@ -5,7 +5,7 @@ interface Props {
   toggleContent: React.ReactNode;
   isOpen: boolean;
   dropdownRef: React.RefObject<HTMLDivElement>;
-  style: object;
+  style?: object;
 }
 
 export default function Dropdown({ fixedContent, toggleContent, isOpen, dropdownRef, style }: Props) {
