@@ -12,11 +12,9 @@ interface Props {
 
 export default function Board({ selected, setSelected, tickets }: Props) {
   const ticketMapper = ({ gone, id }: { gone: boolean; id: number }) => {
-    const className = [
-      styles.ticket,
-      gone ? styles.gone : undefined,
-      selected === id ? styles.selected : undefined,
-    ].join(' ');
+    const className = [styles.ticket, gone ? styles.gone : undefined, selected === id ? styles.selected : undefined]
+      .filter((i) => !!i)
+      .join(' ');
 
     const onClick = gone ? () => {} : () => setSelected(id);
 

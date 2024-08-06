@@ -1,4 +1,6 @@
 .container {
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,18 +10,40 @@
   background-color: #fff;
 }
 
-.phone {
+.phoneLabel {
   width: auto;
   max-width: 360px;
 
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 72px 1fr;
   align-items: center;
   row-gap: 4px;
 }
 
-.input {
-  min-width: 128px;
+.phone {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+}
+
+.phonePrefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  width: 52px;
+  padding: 12px;
+
+  background-color: #fff;
+  border: 1px solid var(--gray);
+  border-radius: 4px;
+
+  cursor: not-allowed;
+}
+
+.phoneSuffix {
+  width: 100%;
   font-size: 18px;
   border: 1px solid var(--gray);
   border-radius: 4px;
