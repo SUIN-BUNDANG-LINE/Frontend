@@ -60,6 +60,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
   if (surveyState) {
     nextRouter.push(`/s/${surveyId}/draw?pid=${surveyState}`);
+    return <Loading message="내용을 불러오는 중..." />;
   }
 
   if (isLoading) {
