@@ -82,8 +82,20 @@
   font-size: 12px;
 }
 
+.fullTos {
+  background: none;
+  border: none;
+  color: var(--gray-md);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
 @media (pointer: fine) {
   .option:hover {
     background-color: var(--gray-l);
+  }
+
+  .fullTos:hover {
+    color: #000;
   }
 }
