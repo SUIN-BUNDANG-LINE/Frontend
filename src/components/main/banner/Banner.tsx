@@ -13,7 +13,7 @@ export default function Banner() {
       return;
     }
 
-    showToast('info', <div>준비중입니다.</div>);
+    showToast('info', <div>준비 중인 기능입니다.</div>);
 
     // const { code, message } = err.cause as ErrorCause;
 
