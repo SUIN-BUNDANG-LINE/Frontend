@@ -101,13 +101,13 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
 
       if (question.type === 'TEXT') {
         if (response.content.trim().length > 0) {
-          res.push({ content: response.content.trim().slice(0, 10), isOther: false });
+          res.push({ content: response.content.trim().slice(0, 1000), isOther: false });
         }
       } else {
         response.selected.forEach((i) => {
           if (i === null) {
             if (response.content.trim().length > 0) {
-              res.push({ content: response.content.trim().slice(0, 10), isOther: true });
+              res.push({ content: response.content.trim().slice(0, 1000), isOther: true });
             }
           } else {
             res.push({ content: i, isOther: false });
