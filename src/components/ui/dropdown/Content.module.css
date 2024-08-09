@@ -1,5 +1,7 @@
 .content {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   width: 100%;
   box-sizing: border-box;
   padding: 8px;

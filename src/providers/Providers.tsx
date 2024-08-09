@@ -2,7 +2,8 @@
 
 import AuthProvider from './auth/AuthProvider';
 import type { User } from './auth/types';
-import ReactQueryClientProvider from './query/ReactQueryClientProvider';
+import ToastProvider from './ToastProvider';
+import ReactQueryClientProvider from './ReactQueryClientProvider';
 
 interface Props {
   init: {
@@ -15,7 +16,9 @@ export default function Providers({ children, init }: React.PropsWithChildren<Pr
 
   return (
     <ReactQueryClientProvider>
-      <AuthProvider init={user}>{children}</AuthProvider>
+      <AuthProvider init={user}>
+        <ToastProvider>{children}</ToastProvider>
+      </AuthProvider>
     </ReactQueryClientProvider>
   );
 }

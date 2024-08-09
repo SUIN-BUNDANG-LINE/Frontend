@@ -1,6 +1,6 @@
-.container {
+.container,
+.fixedContent {
   position: relative;
-  width: fit-content;
 }
 
 .toggleContent {

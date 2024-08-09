@@ -2,8 +2,8 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
-import styles from './Header.module.css';
 import User from './user/User';
+import styles from './Header.module.css';
 
 export default function Header() {
   const { user } = useAuth();
