@@ -13,6 +13,7 @@ export default function TextResponse({ content, dispatcher }: Props) {
       placeholder="답변을 입력해주세요."
       value={content}
       onChange={(e) => dispatcher(e.target.value)}
+      maxLength={1000}
     />
   );
 }

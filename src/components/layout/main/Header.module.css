@@ -52,6 +52,9 @@
   font-size: 18px;
   text-decoration: none;
   color: #000;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 
   transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }

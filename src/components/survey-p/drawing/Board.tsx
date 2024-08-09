@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react';
+import { useCallback, useMemo, type Dispatch, type SetStateAction } from 'react';
 import styles from './Board.module.css';
 
 interface Props {
@@ -11,28 +11,50 @@ interface Props {
 }
 
 export default function Board({ selected, setSelected, tickets }: Props) {
-  const ticketMapper = ({ gone, id }: { gone: boolean; id: number }) => {
-    const className = [styles.ticket, gone ? styles.gone : undefined, selected === id ? styles.selected : undefined]
-      .filter((i) => !!i)
-      .join(' ');
+  const ticketMapper = useCallback(
+    (ticket: { gone: boolean; id: number }) => {
+      const { gone, id } = ticket;
+      const className = [styles.ticket, gone ? styles.gone : undefined, selected === id ? styles.selected : undefined]
+        .filter((i) => !!i)
+        .join(' ');
 
-    const onClick = gone ? () => {} : () => setSelected(id);
+      const onClick = gone ? () => {} : () => setSelected(id);
 
-    return (
-      <button type="button" key={id} className={className} onClick={onClick}>
-        <div className={styles.ticketOverlay}>
-          <div className={styles.ticketContent}>{id + 1}</div>
-        </div>
-      </button>
-    );
-  };
+      return (
+        <button type="button" key={id} className={className} onClick={onClick}>
+          <div className={styles.ticketOverlay}>
+            <div className={styles.ticketContent}>{id + 1}</div>
+          </div>
+        </button>
+      );
+    },
+    [selected, setSelected]
+  );
+
+  const ticketRows = useMemo(() => {
+    const res: JSX.Element[][] = [];
+    const mappedTickets = tickets.map(ticketMapper);
+
+    const cols = Math.max(10, Math.ceil(tickets.length / 4));
+    for (let i = 0; i < Math.ceil(tickets.length / cols); i += 1) {
+      res.push(mappedTickets.slice(i * cols, i * cols + cols));
+    }
+    return res;
+  }, [ticketMapper, tickets]);
 
   return (
     <>
       <div className={styles.selectedDisplay}>
         {selected === null ? '추첨권을 선택해주세요.' : `${selected + 1}번 추첨권을 선택하셨습니다.`}
       </div>
-      <div className={styles.board}>{tickets.map(ticketMapper)}</div>
+      <div className={styles.board}>
+        {ticketRows.map((i) => (
+          <div key={i[0].key} className={styles.boardInner}>
+            {i}
+          </div>
+        ))}
+      </div>
+      <div className={styles.tip}>* 가로로 스크롤하면 더 많은 추첨권이 보입니다.</div>
     </>
   );
 }
