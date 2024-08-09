@@ -15,26 +15,31 @@ interface Props {
 }
 
 export default function Customize({ sort, setSortHandler, sortOptions }: Props) {
-  const { isOpen, toggleDropdown, dropdownRef } = useDropdown({ closeOnInnerClick: true });
+  const { isOpen, fn, dropdownRef } = useDropdown();
+
+  const fixedContent = (
+    <button type="button" className={styles.selector}>
+      <span>{sortOptions.find((i) => i.value === sort)?.label}</span>
+      <FaAngleDown className={`${styles.angle} ${isOpen ? styles.active : undefined}`} />
+    </button>
+  );
+
+  const toggleContent = sortOptions.map(({ value, label }) => {
+    return (
+      <Content key={value} clickHandler={() => setSortHandler(value)}>
+        <div className={styles.selectorItem}>{label}</div>
+      </Content>
+    );
+  });
 
   return (
     <Wrapper outerColor="#fff" zIndex={1}>
       <div className={styles.customize}>
         <div className={styles.sort}>
           <Dropdown
-            fixedContent={
-              <button type="button" className={styles.selector} onClick={toggleDropdown}>
-                <span>{sortOptions.find((i) => i.value === sort)?.label}</span>
-                <FaAngleDown className={`${styles.angle} ${isOpen ? styles.active : undefined}`} />
-              </button>
-            }
-            toggleContent={sortOptions.map(({ value, label }) => {
-              return (
-                <Content key={value} clickHandler={() => setSortHandler(value)}>
-                  <div className={styles.selectorItem}>{label}</div>
-                </Content>
-              );
-            })}
+            fixedContent={fixedContent}
+            toggleContent={toggleContent}
+            fn={fn}
             isOpen={isOpen}
             dropdownRef={dropdownRef}
             style={{ width: '172px', fontSize: '18px' }}

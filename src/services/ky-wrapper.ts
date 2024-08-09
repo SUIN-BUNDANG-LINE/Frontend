@@ -1,11 +1,5 @@
 import ky, { HTTPError, type KyInstance, type Options } from 'ky';
 
-export interface ErrorCause {
-  code: string;
-  message: string;
-  errors: { field: string; value: string; reason: string }[];
-}
-
 const beforeError = async (error: HTTPError) => {
   const res = error;
 
@@ -31,10 +25,7 @@ class KyWrapper {
         Accept: 'application/json;charset=UTF-8',
       },
       credentials: 'include',
-      retry: {
-        limit: 1,
-        methods: ['get'],
-      },
+      retry: 1,
       hooks: {
         beforeError: [beforeError],
       },
@@ -68,4 +59,10 @@ class KyWrapper {
   }
 }
 
-export default KyWrapper;
+export interface ErrorCause {
+  code: string;
+  message: string;
+  errors: { field: string; value: string; reason: string }[];
+}
+
+export const kyWrapper = new KyWrapper();

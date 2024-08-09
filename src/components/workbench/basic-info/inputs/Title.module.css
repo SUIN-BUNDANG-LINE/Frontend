@@ -16,6 +16,22 @@
   color: var(--gray);
 }
 
-.rewards {
-  display: grid;
+.title,
+.description {
+  border: none;
+  outline: none;
+  padding: 8px;
+  background-color: transparent;
+
+  transition: background-color 0.3s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.title:hover,
+.description:hover {
+  background-color: #fff;
+}
+
+.title {
+  font-size: 24px;
 }

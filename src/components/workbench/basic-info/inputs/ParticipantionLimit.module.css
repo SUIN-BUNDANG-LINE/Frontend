@@ -16,6 +16,18 @@
   color: var(--gray);
 }
 
-.rewards {
+.input {
+  padding: 9px;
+  border: none;
+  outline: none;
+}
+
+.inputWrapper {
   display: grid;
+  grid-template-columns: 1fr 96px;
+  align-items: center;
+}
+
+.inputWrapper > span {
+  padding-left: 8px;
 }

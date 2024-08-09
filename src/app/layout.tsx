@@ -28,10 +28,10 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
   }
 
   return (
-    <Providers init={{ user }}>
-      <html lang="ko">
-        <body>{children}</body>
-      </html>
-    </Providers>
+    <html lang="ko">
+      <body>
+        <Providers init={{ user }}>{children}</Providers>
+      </body>
+    </html>
   );
 }
