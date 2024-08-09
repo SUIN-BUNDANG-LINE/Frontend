@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { fetchCreate } from '@/services/workbench/fetch';
-import { ErrorCause } from '@/services/ky-wrapper';
+// import { ErrorCause } from '@/services/ky-wrapper';
 import { showToast } from '@/utils/toast';
 import styles from './Banner.module.css';
 
@@ -13,18 +13,20 @@ export default function Banner() {
       return;
     }
 
-    const { code, message } = err.cause as ErrorCause;
+    showToast('info', <div>준비중입니다.</div>);
 
-    switch (code) {
-      case 'GL0003':
-        showToast('error', <div>{message}</div>);
-        break;
-      case 'GL0004':
-        showToast('error', <div>{message}</div>);
-        break;
-      default:
-        showToast('error', <div>{message || '알 수 없는 문제가 발생했습니다.'}</div>);
-    }
+    // const { code, message } = err.cause as ErrorCause;
+
+    // switch (code) {
+    //   case 'GL0003':
+    //     showToast('error', <div>{message}</div>);
+    //     break;
+    //   case 'GL0004':
+    //     showToast('error', <div>{message}</div>);
+    //     break;
+    //   default:
+    //     showToast('error', <div>{message || '알 수 없는 문제가 발생했습니다.'}</div>);
+    // }
   };
 
   const onCreate = async () => {
