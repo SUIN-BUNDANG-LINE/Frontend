@@ -1,13 +1,17 @@
 import type { Metadata } from 'next';
-import './globals.css';
-import Providers from '@/providers/Providers';
 import { cookies } from 'next/headers';
-import { User } from '@/providers/auth/types';
+import { GoogleAnalytics } from '@next/third-parties/google';
+
 import { decodeBase64 } from '@/utils/misc';
+import Providers from '@/providers/Providers';
+import type { User } from '@/providers/auth/types';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   title: '설문이용',
   description: '설문 작성부터 홍보까지 한 방에!',
+  icons: { icon: '/assets/favicon.ico' },
 };
 
 export default async function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -32,6 +36,7 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
       <body>
         <Providers init={{ user }}>{children}</Providers>
       </body>
+      <GoogleAnalytics gaId="G-1LB0NWC7BT" />
     </html>
   );
 }

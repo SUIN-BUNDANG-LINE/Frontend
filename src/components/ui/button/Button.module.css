@@ -34,6 +34,6 @@
   background-color: var(--secondary);
 }
 
-.secondary:hover(:disabled) {
+.secondary:hover:not(:disabled) {
   background-color: var(--secondary-alt);
 }
