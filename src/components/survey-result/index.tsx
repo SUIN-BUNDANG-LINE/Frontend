@@ -26,7 +26,7 @@ export default function SurveyResult({ surveyId, reward }: Props) {
         <p>
           위 설문까지 답변해 주신 분들 중 세 분을 추첨해
           <br />
-          <strong>황금 올리브 순살 세트</strong> 기프티콘을 드립니다.
+          가장 많은 선택을 받은 <strong>치킨 기프티콘</strong>을 드립니다.
         </p>
       </div>
       <hr />

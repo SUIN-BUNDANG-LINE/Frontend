@@ -68,11 +68,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     return <Loading message="내용을 불러오는 중..." />;
   }
 
-  if (isLoading || visitorLoading) {
-    return <Loading message="내용을 불러오는 중..." />;
-  }
-
-  if (isError || visitorError || !survey || !section) {
+  if (isError || visitorError) {
     return (
       <Error
         message="내용을 불러오지 못했습니다."
@@ -82,6 +78,10 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         ]}
       />
     );
+  }
+
+  if (isLoading || visitorLoading || !survey || !section) {
+    return <Loading message="내용을 불러오는 중..." />;
   }
 
   // phase 2 : user interacts with a survey

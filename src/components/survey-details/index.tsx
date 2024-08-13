@@ -16,6 +16,8 @@ const statusReader = (status: string) => {
   switch (status) {
     case 'IN_PROGRESS':
       return ['응답 받는 중', '바로 참여할 수 있습니다.'];
+    case 'IN_MODIFICATION':
+      return ['편집 중', '편집 중인 설문조사는 참여할 수 없습니다.'];
     case 'CLOSED':
       return ['마감', '마감된 설문조사입니다.'];
     default:
@@ -70,7 +72,7 @@ export default function DetailsViewer({ data, surveyId, state }: Props) {
                 width="100%"
                 height="46px"
                 onClick={() => participate()}
-                disabled={state === '$'}>
+                disabled={state === '$' || status !== 'IN_PROGRESS'}>
                 {state === '$' ? '참여 완료' : '참여하기'}
               </Button>
               <div>
