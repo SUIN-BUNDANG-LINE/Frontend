@@ -1,9 +1,8 @@
-/* eslint-disable no-alert */
-
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react';
 import { useForm } from '@/components/survey-p/hooks/useForm';
 import { useSurveysProgress, useSurveysResponse } from '@/services/surveys';
 import {
@@ -20,6 +19,7 @@ import Farewell from '@/components/survey-p/farewell/Farewell';
 import Loading from '@/components/ui/loading/Loading';
 import type { ErrorCause } from '@/services/ky-wrapper';
 import Error from '@/components/ui/error/Error';
+import { showToast } from '@/utils/toast';
 
 export default function Page({ params }: { params: { surveyId: string } }) {
   const { surveyId } = params;
@@ -41,6 +41,11 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   });
 
   const [userResponse, setUserResponse] = useState<object | null>(null);
+  const {
+    isLoading: visitorLoading,
+    error: visitorError,
+    data: visitorData,
+  } = useVisitorData({ extendedResult: true }, { immediate: true });
 
   useEffect(() => {
     if (!survey) return;
@@ -60,13 +65,10 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
   if (surveyState) {
     nextRouter.push(`/s/${surveyId}/draw?pid=${surveyState}`);
-  }
-
-  if (isLoading) {
     return <Loading message="내용을 불러오는 중..." />;
   }
 
-  if (isError || !survey || !section) {
+  if (isError || visitorError) {
     return (
       <Error
         message="내용을 불러오지 못했습니다."
@@ -78,6 +80,10 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     );
   }
 
+  if (isLoading || visitorLoading || !survey || !section) {
+    return <Loading message="내용을 불러오는 중..." />;
+  }
+
   // phase 2 : user interacts with a survey
 
   if (!userResponse) {
@@ -87,7 +93,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     const nextAction = () => {
       const { ok, reason } = navigator.moveNext();
       if (ok || !reason) {
-        if (!ok) console.error('no failure reason provided');
+        // if (!ok) console.error('no failure reason provided');
         return;
       }
 
@@ -124,16 +130,21 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     const onSubmit = () => {
       if (!userResponse) return;
 
-      mutation.mutate(userResponse, {
-        onSuccess: (data) => {
-          clearInteractions(surveyId);
-          setSurveyState(surveyId, data.participantId);
-          nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
-        },
-        onError: (error) => {
-          alert((error.cause as ErrorCause).message);
-        },
-      });
+      const visitorId = visitorData?.visitorId || undefined;
+
+      mutation.mutate(
+        { ...userResponse, visitorId },
+        {
+          onSuccess: (data) => {
+            clearInteractions(surveyId);
+            setSurveyState(surveyId, data.participantId);
+            nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
+          },
+          onError: (error) => {
+            showToast('error', (error.cause as ErrorCause).message);
+          },
+        }
+      );
     };
 
     return (

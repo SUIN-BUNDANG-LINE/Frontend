@@ -1,8 +1,6 @@
-import KyWrapper from '../ky-wrapper';
+import { kyWrapper } from '../ky-wrapper';
 import { makeUrl } from '../utils';
 import type { User } from './types';
-
-const kyWrapper = new KyWrapper();
 
 const fetchUserProfile = async () => {
   try {

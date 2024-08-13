@@ -1,19 +1,35 @@
 .board {
-  width: auto;
-
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+
+  background-color: var(--gray-l);
+  padding: 24px 24px;
+  border: 1px solid var(--gray);
+
+  overflow-x: scroll;
+
+  box-shadow:
+    inset 5px 0px 5px -5px rgba(0, 0, 0, 0.1),
+    inset -5px 0px 5px -5px rgba(0, 0, 0, 0.1);
+}
+
+.boardInner {
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  overflow-x: auto;
+}
 
-  background-color: var(--gray-l);
-  padding: 24px 12px;
-  border: 1px solid var(--gray);
+.tip {
+  padding: 8px 0;
+  font-size: 14px;
 }
 
 .ticket {
+  flex: 0 0 auto;
+
   position: relative;
 
   width: 48px;

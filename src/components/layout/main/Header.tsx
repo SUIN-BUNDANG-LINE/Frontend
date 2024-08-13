@@ -2,11 +2,18 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
-import styles from './Header.module.css';
 import User from './user/User';
+import styles from './Header.module.css';
 
 export default function Header() {
   const { user } = useAuth();
+
+  const Login = <div />;
+  // const HiddenLogin = (
+  //   <Link href="/login" className={styles.login}>
+  //     로그인
+  //   </Link>
+  // );
 
   return (
     <div className={styles.header}>
@@ -14,11 +21,7 @@ export default function Header() {
         <Link href="/">
           <div className={styles.title}>설문이용</div>
         </Link>
-        {!user && (
-          <Link href="/login" className={styles.login}>
-            로그인
-          </Link>
-        )}
+        {!user && Login}
         {user && <User user={user} />}
       </div>
     </div>

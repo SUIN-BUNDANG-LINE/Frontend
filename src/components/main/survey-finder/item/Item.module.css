@@ -14,7 +14,7 @@
   text-decoration: none;
   color: inherit;
 
-  transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s;
 }
 
 .item::before {

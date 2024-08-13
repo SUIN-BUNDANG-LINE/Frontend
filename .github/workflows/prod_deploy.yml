@@ -11,26 +11,34 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      CONTAINER_NAME: sulmun2yong_frontend_prod
+      # AWS 관련
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ap-northeast-2
+      EC2_INSTANCE_ID: ${{ secrets.FRONTEND_EC2_INSTANCE_ID }}
+      # Docker 관련
+      CONTAINER_NAME: sulmun2yong-production-client
+      # Next.js 관련
+      ENV_CONTENT: ${{ secrets.FRONTEND_PRODUCTION_ENV_CONTENT }}
     
     steps:
-    - name: 코드 체크아웃
-      uses: actions/checkout@v2
-
-    - name: EC2에 배포
-      uses: appleboy/ssh-action@master
+    - name: AWS 로그인
+      uses: aws-actions/configure-aws-credentials@v4
       with:
-        host: ${{ secrets.FRONTEND_EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.PRODUCTION_EC2_KEY }}
-        script: |
-          # 스크립트 실패 시 workflow도 실패하도록 설정
-          set -e
-          cd ~/Frontend
-          git pull origin main
-          echo "${{ secrets.FRONTEND_PROD_ENV_CONTENT }}" > .env.local
-          docker stop ${{ env.CONTAINER_NAME }} || true
-          docker rm ${{ env.CONTAINER_NAME }} || true
-          docker build -t ${{ env.CONTAINER_NAME }}:latest . 
-          docker run -d -p 3000:3000 --name ${{ env.CONTAINER_NAME }} ${{ env.CONTAINER_NAME }}:latest
-          docker image prune -af
+        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: SSM으로 EC2에 배포
+      run: |
+        aws --no-cli-pager  ssm send-command \
+        --document-name "AWS-RunShellScript" \
+        --targets "Key=instanceIds, Values=${{ env.EC2_INSTANCE_ID}}" \
+        --parameters '{"workingDirectory": ["/home/ubuntu/Frontend"],
+        "commands" : ["git pull origin main",
+        "echo \"${{ env.ENV_CONTENT }}\" > .env.local",
+        "docker stop ${{ env.CONTAINER_NAME }} || true",
+        "docker rm ${{ env.CONTAINER_NAME }} || true",
+        "docker build -t ${{ env.CONTAINER_NAME }}:latest . ",
+        "docker run -d -p 3000:3000 --name ${{ env.CONTAINER_NAME }} ${{ env.CONTAINER_NAME }}:latest",
+        "docker image prune -af"]}'

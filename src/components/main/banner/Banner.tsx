@@ -1,10 +1,41 @@
-/* eslint-disable no-alert */
-
+import { useRouter } from 'next/navigation';
+import { fetchCreate } from '@/services/workbench/fetch';
+// import { ErrorCause } from '@/services/ky-wrapper';
+import { showToast } from '@/utils/toast';
 import styles from './Banner.module.css';
 
 export default function Banner() {
-  const onCreate = () => {
-    alert('준비중입니다.');
+  const nextRouter = useRouter();
+
+  const rejectHandler = (err: unknown) => {
+    if (!err || typeof err !== 'object' || !('cause' in err)) {
+      showToast('error', <div>알 수 없는 문제가 발생했습니다.</div>);
+      return;
+    }
+
+    showToast('info', <div>준비 중인 기능입니다.</div>);
+
+    // const { code, message } = err.cause as ErrorCause;
+
+    // switch (code) {
+    //   case 'GL0003':
+    //     showToast('error', <div>{message}</div>);
+    //     break;
+    //   case 'GL0004':
+    //     showToast('error', <div>{message}</div>);
+    //     break;
+    //   default:
+    //     showToast('error', <div>{message || '알 수 없는 문제가 발생했습니다.'}</div>);
+    // }
+  };
+
+  const onCreate = async () => {
+    try {
+      const data = await fetchCreate();
+      nextRouter.push(`/workbench/${data.surveyId}`);
+    } catch (err) {
+      rejectHandler(err);
+    }
   };
 
   return (

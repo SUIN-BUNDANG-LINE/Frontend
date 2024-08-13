@@ -60,6 +60,7 @@ export default function Option({ type, label, active, dispatcher, content, other
         value={content}
         onChange={setContent}
         onMouseDown={clickInputHandler}
+        maxLength={1000}
       />
     </button>
   );
