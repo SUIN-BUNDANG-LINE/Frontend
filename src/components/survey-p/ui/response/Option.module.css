@@ -1,13 +1,17 @@
 .option {
   width: 100%;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  text-align: left;
   align-items: center;
 
   background: none;
   border: none;
-  height: 40px;
+  min-height: 40px;
   border-radius: 4px;
+
+  padding: 4px 0;
 
   transition: background-color 0.5s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -60,6 +64,9 @@
   height: 22px;
   background-color: #fff;
   box-shadow: 0 0 0 6px var(--primary) inset;
+}
+
+.label {
 }
 
 .input {
