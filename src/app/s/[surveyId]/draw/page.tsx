@@ -22,7 +22,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const pid = searchParams.get('pid') ? decodeURIComponent(searchParams.get('pid')!) : null;
   const [surveyState] = useState(getSurveyState(surveyId));
 
-  const { data: drawingInfo, isLoading, isError, refetch } = useDrawingInfo(surveyId);
+  const { data: drawingInfo, isLoading, error: drawingError, isError, refetch } = useDrawingInfo(surveyId);
   const mutation = useDrawingDraw(pid || '');
 
   const [phone, setPhone] = useState<string>('');
@@ -52,7 +52,8 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   }
 
   if (isError || !drawingInfo) {
-    return <Error message="추첨 페이지를 불러오지 못했습니다." buttons={[{ text: '재시도', fn: refetch }]} />;
+    const t = (drawingError?.cause as ErrorCause).message || '추첨 페이지를 불러오지 못했습니다.';
+    return <Error message={t} buttons={[{ text: '재시도', fn: refetch }]} />;
   }
 
   const validPhone = phone.length === 8;
