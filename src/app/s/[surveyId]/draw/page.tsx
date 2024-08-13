@@ -91,7 +91,6 @@ export default function Page({ params }: { params: { surveyId: string } }) {
               refetch();
               break;
             case 'DR0005': // 이미 마감된 추첨입니다.
-              nextRouter.refresh();
               window.location.reload();
               break;
             default:
