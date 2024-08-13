@@ -25,7 +25,7 @@ export default function Option({ type, label, active, dispatcher, content, other
           {type === 'RADIO' && <div className={`${styles.radio} ${active ? styles.active : ''}`} />}
           {type === 'CHECKBOX' && <div className={`${styles.checkbox} ${active ? styles.active : ''}`} />}
         </div>
-        <div>{label}</div>
+        <div className={styles.label}>{label}</div>
       </button>
     );
   }
