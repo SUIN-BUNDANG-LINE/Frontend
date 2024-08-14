@@ -20,6 +20,30 @@ function dateParser(dateString: string) {
   return { valid: true, sign, dayDiff, hourDiff, minuteDiff };
 }
 
+function convertToKst(dateString: string) {
+  const inputDate = new Date(dateString);
+
+  if (Number.isNaN(inputDate.getTime())) {
+    return {
+      year: 'invalid',
+      month: 'invalid',
+      date: 'invalid',
+      hour: 'invalid',
+      minute: 'invalid',
+    };
+  }
+
+  const kstDate = new Date(inputDate.toLocaleString('en-US', { timeZone: 'Asia/Seoul' }));
+
+  return {
+    year: kstDate.getFullYear(),
+    month: kstDate.getMonth() + 1,
+    date: kstDate.getDate(),
+    hour: kstDate.getHours(),
+    minute: kstDate.getMinutes(),
+  };
+}
+
 function yymmdd(dateString: string): string {
   const inputDate = new Date(dateString);
 
@@ -47,4 +71,4 @@ function dateReader(dateString: string): string {
   return `마감된 설문`;
 }
 
-export { dateParser, yymmdd, dateReader };
+export { dateParser, yymmdd, dateReader, convertToKst };
