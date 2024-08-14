@@ -11,11 +11,13 @@ const getDefaultInteractions = (): Interactions => ({
 });
 
 const storeInteractions = (surveyId: string, responses: Responses, history: string[]) => {
+  if (typeof window === 'undefined') return;
   const t = JSON.stringify({ responses, history });
   sessionStorage.setItem(`survey.${surveyId}`, t);
 };
 
 const loadInteractions = (surveyId: string): Interactions => {
+  if (typeof window === 'undefined') return getDefaultInteractions();
   const t = sessionStorage.getItem(`survey.${surveyId}`);
   if (!t) return getDefaultInteractions();
   const res = JSON.parse(t);
@@ -24,6 +26,7 @@ const loadInteractions = (surveyId: string): Interactions => {
 };
 
 const clearInteractions = (surveyId: string) => {
+  if (typeof window === 'undefined') return;
   sessionStorage.removeItem(`survey.${surveyId}`);
 };
 
