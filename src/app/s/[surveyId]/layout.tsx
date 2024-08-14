@@ -7,29 +7,26 @@ import Loading from '@/components/ui/loading/Loading';
 import Error from '@/components/ui/error/Error';
 import styles from './layout.module.css';
 
-type Props = {
-  params: { surveyId: string };
+const defaultMetadata = {
+  title: '설문이용',
+  description: '설문 작성부터 홍보까지 한 방에!',
+  thumbnail: '/assets/survey-doragon.png',
 };
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: { params: { surveyId: string } },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const { surveyId } = params;
-  const survey = await fetchSurveysDetails({ surveyId }).catch(() => null);
+  const { title, description, thumbnail } = await fetchSurveysDetails({ surveyId }).catch(() => defaultMetadata);
 
-  // optionally access and extend (rather than replace) parent metadata
   const previousImages = (await parent).openGraph?.images || [];
 
-  if (!survey) {
-    return {
-      title: '설문이용',
-      description: '설문 작성부터 홍보까지 한 방에!',
-    };
-  }
-
   return {
-    title: survey.title,
+    title,
     openGraph: {
-      description: survey.description,
-      images: [survey.thumbnail, ...previousImages],
+      description,
+      images: [thumbnail, ...previousImages],
     },
   };
 }
