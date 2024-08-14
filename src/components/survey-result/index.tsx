@@ -12,9 +12,9 @@ export default function SurveyResult({ surveyId, reward }: Props) {
       <h3>추첨 결과</h3>
       {!reward && <div>아쉽게도 낙첨되셨습니다.</div>}
       {reward && <div>{reward} 당첨!</div>}
-      {reward && (
+      {reward && surveyId === 'c7b29789-54e9-46b6-a896-5ab29e5a30a6' && (
         <div>
-          📅 <strong>2024년 8월 18일</strong>까지 리워드를 지급할 예정입니다.
+          📅 <strong>2024년 8월 19일</strong>까지 리워드를 지급할 예정입니다.
         </div>
       )}
       <hr />

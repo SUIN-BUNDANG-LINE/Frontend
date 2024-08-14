@@ -28,6 +28,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const { data: survey, isLoading, isError, refetch } = useSurveysProgress(surveyId);
   const mutation = useSurveysResponse(surveyId);
   const [surveyState] = useState(getSurveyState(surveyId));
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { history: initialHistory, responses: initialResponses } = useMemo(() => {
     return loadInteractions(surveyId);
@@ -131,6 +132,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
       if (!userResponse) return;
 
       const visitorId = visitorData?.visitorId || undefined;
+      setIsSubmitting(true);
 
       mutation.mutate(
         { ...userResponse, visitorId },
@@ -142,6 +144,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
           },
           onError: (error) => {
             showToast('error', (error.cause as ErrorCause).message);
+            setIsSubmitting(false);
           },
         }
       );
@@ -153,10 +156,13 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         <Navigator
           backText="응답 수정"
           backAction={() => setUserResponse(null)}
-          nextText="제출"
+          nextText={isSubmitting ? '제출 중...' : '제출'}
           nextAction={onSubmit}
+          disablePrev={isSubmitting}
+          disableNext={isSubmitting}
           centered
         />
+        {isSubmitting}
       </>
     );
   }
