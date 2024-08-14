@@ -28,10 +28,12 @@ const clearInteractions = (surveyId: string) => {
 };
 
 const setSurveyState = (surveyId: string, state: '$' | string) => {
+  if (typeof window === 'undefined') return;
   localStorage.setItem(`survey.${surveyId}`, state);
 };
 
 const getSurveyState = (surveyId: string) => {
+  if (typeof window === 'undefined') return null;
   return localStorage.getItem(`survey.${surveyId}`);
 };
 

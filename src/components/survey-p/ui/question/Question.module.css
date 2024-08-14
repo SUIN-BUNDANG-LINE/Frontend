@@ -1,5 +1,5 @@
 .question {
-  padding: 24px;
+  padding: 24px 12px;
   background-color: #fff;
 }
 
@@ -11,8 +11,8 @@
 }
 
 .head {
-  font-size: 20px;
-  line-height: 1.2;
+  font-size: 18px;
+  line-height: 1.1;
 }
 
 .required {
@@ -92,4 +92,10 @@
 .description {
   font-size: 14px;
   color: var(--gray-d);
+}
+
+@media screen and (min-width: 768px) {
+  .question {
+    padding: 24px;
+  }
 }
