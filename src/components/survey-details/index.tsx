@@ -7,7 +7,7 @@ import Wrapper from '@/components/layout/Wrapper';
 import Button from '@/components/ui/button/Button';
 import Tooltip from '@/components/ui/tooltip/Tooltip';
 import type { SurveysDetailsResponse } from '@/services/surveys/types';
-import { yymmdd } from '@/utils/dates';
+import { convertToKst } from '@/utils/dates';
 import { writeClipboard } from '@/utils/misc';
 import styles from './index.module.css';
 
@@ -34,7 +34,18 @@ interface Props {
 export default function DetailsViewer({ data, surveyId, state }: Props) {
   const router = useRouter();
 
-  const { title, description, status, finishedAt, currentParticipants, targetParticipants, rewards, thumbnail } = data;
+  const {
+    title,
+    description,
+    status,
+    finishedAt: rawFinishedAt,
+    currentParticipants,
+    targetParticipants,
+    rewards,
+    thumbnail,
+  } = data;
+
+  const finishedAt = convertToKst(rawFinishedAt);
 
   const copyUrl = () => {
     writeClipboard(window.location.href);
@@ -50,6 +61,7 @@ export default function DetailsViewer({ data, surveyId, state }: Props) {
     <>
       <Wrapper outerColor="#fff">
         <div className={styles.image_headline}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className={styles.image} src={thumbnail} alt="" width={180} height={180} />
           <div className={styles.headline}>
             <h1 className={styles.title}>{title}</h1>
@@ -92,7 +104,9 @@ export default function DetailsViewer({ data, surveyId, state }: Props) {
               </div>
               <div>
                 <FaCalendarAlt />
-                <div>{yymmdd(finishedAt)} 자동 마감</div>
+                <div>
+                  {finishedAt.year}년 {finishedAt.month}월 {finishedAt.date}일 {finishedAt.hour}시 자동 마감
+                </div>
               </div>
               <div>
                 <FaUserGroup />
