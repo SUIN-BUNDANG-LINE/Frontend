@@ -17,8 +17,6 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ap-northeast-2
       EC2_INSTANCE_ID: ${{ secrets.FRONTEND_EC2_INSTANCE_ID }}
-      # Docker 관련
-      CONTAINER_NAME: sulmun2yong-production-client
       # Next.js 관련
       ENV_CONTENT: ${{ secrets.FRONTEND_PRODUCTION_ENV_CONTENT }}
     
@@ -36,10 +34,4 @@ jobs:
         --document-name "AWS-RunShellScript" \
         --targets "Key=instanceIds, Values=${{ env.EC2_INSTANCE_ID}}" \
         --parameters '{"workingDirectory": ["/home/ubuntu/Frontend"],
-        "commands" : ["git pull origin main",
-        "echo \"${{ env.ENV_CONTENT }}\" | base64 -d > .env.local",
-        "docker stop ${{ env.CONTAINER_NAME }} || true",
-        "docker rm ${{ env.CONTAINER_NAME }} || true",
-        "docker build -t ${{ env.CONTAINER_NAME }}:latest . ",
-        "docker run -d -p 3000:3000 --name ${{ env.CONTAINER_NAME }} ${{ env.CONTAINER_NAME }}:latest",
-        "docker image prune -af"]}'
+        "commands" : ["ENV_CONTENT='${{ env.ENV_CONTENT }}' bash ./.github/workflows/prod_deploy.sh"]}'
