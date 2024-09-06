@@ -87,6 +87,7 @@ interface SurveysResponseParams {
 
 interface SurveysResponseResponse {
   participantId: string;
+  isImmediateDraw: boolean;
 }
 
 export type {

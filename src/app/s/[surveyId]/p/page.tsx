@@ -132,8 +132,13 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         {
           onSuccess: (data) => {
             clearInteractions(surveyId);
-            setSurveyState(surveyId, data.participantId);
-            nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
+            if (data.isImmediateDraw) {
+              setSurveyState(surveyId, data.participantId);
+              nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
+            } else {
+              setSurveyState(surveyId, '$');
+              nextRouter.push(`/s/${surveyId}`);
+            }
           },
           onError: (error) => {
             showToast('error', (error.cause as ErrorCause).message);
