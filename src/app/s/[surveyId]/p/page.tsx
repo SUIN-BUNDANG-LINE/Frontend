@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react';
 import { useForm } from '@/components/survey-p/hooks/useForm';
 import { useSurveysProgress, useSurveysResponse } from '@/services/surveys';
 import {
@@ -42,11 +41,6 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   });
 
   const [userResponse, setUserResponse] = useState<object | null>(null);
-  const {
-    isLoading: visitorLoading,
-    error: visitorError,
-    data: visitorData,
-  } = useVisitorData({ extendedResult: true }, { immediate: true });
 
   useEffect(() => {
     if (!survey) return;
@@ -69,7 +63,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     return <Loading message="내용을 불러오는 중..." />;
   }
 
-  if (isError || visitorError) {
+  if (isError) {
     return (
       <Error
         message="내용을 불러오지 못했습니다."
@@ -81,7 +75,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     );
   }
 
-  if (isLoading || visitorLoading || !survey || !section) {
+  if (isLoading || !survey || !section) {
     return <Loading message="내용을 불러오는 중..." />;
   }
 
@@ -131,11 +125,10 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     const onSubmit = () => {
       if (!userResponse) return;
 
-      const visitorId = visitorData?.visitorId || undefined;
       setIsSubmitting(true);
 
       mutation.mutate(
-        { ...userResponse, visitorId },
+        { ...userResponse },
         {
           onSuccess: (data) => {
             clearInteractions(surveyId);
