@@ -1,0 +1,236 @@
+/* Field */
+.field {
+  background-color: #fff;
+  border-radius: 4px;
+  margin-top: 12px;
+  width: 100%;
+}
+
+.field.firstField {
+  margin-top: 0;
+}
+
+.field input,
+.field textarea {
+  transition: all 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.field > div {
+  padding: 0 24px;
+}
+
+.active.field {
+  box-shadow: inset 6px 0 0 0 #ffd521;
+}
+
+/* Drag Handle */
+.dragHandle {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dragHandle > * {
+  display: none;
+}
+
+.field:hover .dragHandle > * {
+  display: block;
+}
+
+/* Title */
+.title {
+  display: flex;
+  line-height: 24px;
+  margin: 6px 0;
+}
+
+.active .title {
+  line-height: 42px;
+}
+
+.title .requiredTag {
+  display: flex;
+  background-color: orange;
+  color: #fff;
+  padding: 2px 4px;
+  margin: 2px 4px 0 0;
+  line-height: 20px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 4px;
+}
+
+.active .title .requiredTag {
+  margin-top: 12px;
+}
+
+.title input {
+  flex: 1;
+  border: none;
+  font-size: 18px;
+  line-height: 24px;
+  outline: none;
+  padding-left: 0;
+}
+
+.active .title input {
+  padding-left: 8px;
+  height: 42px;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #5f6368;
+}
+
+/* Description */
+.description {
+  display: flex;
+  margin: 4px 0;
+}
+
+.active .description {
+  height: auto;
+}
+
+.description textarea {
+  width: 100%;
+  height: 36px;
+  border: none;
+  font-size: 14px;
+  padding-left: 0;
+  outline: none;
+  color: #5f6368;
+  resize: none;
+}
+
+.active .description textarea {
+  padding: 8px;
+  height: 64px;
+  background-color: #f3f3f3;
+}
+
+/* Response */
+.response {
+}
+
+/* Text Response */
+.textResponse {
+  margin: 12px 0;
+}
+
+.textResponse .input {
+  font-size: 14px;
+  padding-left: 8px;
+  max-width: 128px;
+  height: 32px;
+  line-height: 32px;
+  border: none;
+  background-color: transparent;
+  color: #5f6368;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+/* Radio Response */
+.selectableResponse {
+  margin: 12px 0;
+  display: grid;
+  row-gap: 8px;
+}
+
+.selectableResponseItem {
+  display: grid;
+  grid-template-columns: 30px 1fr 36px;
+  height: 36px;
+  align-items: center;
+}
+
+.selectableResponseItem input {
+  border: none;
+  padding-left: 4px;
+  height: 28px;
+  outline: none;
+  font-size: 14px;
+}
+
+.selectableResponseItem button {
+  display: none;
+}
+
+.active .selectableResponseItem button {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 4px;
+  transition: background-color 0.1s;
+}
+
+.active .selectableResponseItem button:hover {
+  background-color: #d9d9d9;
+}
+
+.active .selectableResponseItem input:focus,
+.active .selectableResponseItem input:hover {
+  box-shadow: inset 0 -2px 0 0 #ffd521;
+}
+
+.selectableResponse .addOption {
+  width: 128px;
+  height: 32px;
+  border: none;
+  border-radius: 4px;
+  color: #5f6368;
+  cursor: pointer;
+}
+
+.selectableResponse .addOption:hover {
+  color: #000;
+}
+
+.radioIndicator {
+  width: 24px;
+  height: 24px;
+  box-shadow: inset 0 0 0 6px #d9d9d9;
+  border-radius: 50%;
+}
+
+.checkboxIndicator {
+  width: 24px;
+  height: 24px;
+  box-shadow: inset 0 0 0 6px #d9d9d9;
+  border-radius: 4px;
+}
+
+/* Menu */
+.menu {
+  display: flex;
+  height: 42px;
+  justify-content: space-between;
+}
+
+.menuGroup {
+  display: flex;
+  height: 100%;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 72px;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  color: #5f6368;
+}
+
+.menuItem:hover {
+  background-color: #f3f3f3;
+}
