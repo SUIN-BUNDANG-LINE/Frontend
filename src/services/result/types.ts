@@ -12,4 +12,19 @@ interface Response {
   count: number;
 }
 
-export type { Results };
+interface SurveysResultParams {
+  surveyId: string;
+  resultFilter: ResultFilter;
+}
+
+interface ResultFilter {
+  questionFilters: QuestionFilter[];
+}
+
+interface QuestionFilter {
+  questionId: string;
+  contents: string[];
+  isPositive: boolean;
+}
+
+export type { Results, SurveysResultParams, ResultFilter };
