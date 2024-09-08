@@ -27,4 +27,4 @@ interface QuestionFilter {
   isPositive: boolean;
 }
 
-export type { Results, SurveysResultParams, ResultFilter };
+export type { Results, SurveysResultParams, ResultFilter, Result, Response, QuestionFilter };

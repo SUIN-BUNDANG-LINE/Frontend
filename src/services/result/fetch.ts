@@ -1,10 +1,10 @@
 import { kyWrapper } from '../ky-wrapper';
 import { makeUrl } from '../utils';
-import type { Results } from './types';
+import type { Results, SurveysResultParams } from './types';
 
-const getResults = async ({ surveyId }: { surveyId: string }) => {
+const getResults = async ({ surveyId, resultFilter }: SurveysResultParams) => {
   const URL = makeUrl(['surveys', 'result', surveyId]);
-  return kyWrapper.get<Results>(URL);
+  return kyWrapper.post<Results>(URL, { json: resultFilter });
 };
 
 export { getResults };
