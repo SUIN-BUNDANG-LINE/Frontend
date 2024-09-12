@@ -20,6 +20,17 @@
   height: 96px;
 }
 
+.menuItem {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.menuItem:hover {
+  background-color: #fff;
+}
+
 .first {
   position: relative;
   display: flex;

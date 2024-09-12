@@ -2,12 +2,8 @@
 .field {
   background-color: #fff;
   border-radius: 4px;
-  margin-top: 12px;
+  margin: 6px 0;
   width: 100%;
-}
-
-.field.firstField {
-  margin-top: 0;
 }
 
 .field input,
@@ -153,24 +149,27 @@
   font-size: 14px;
 }
 
-.selectableResponseItem button {
+.deleteSelectableResponseItem {
+  /* hide if not focused */
   display: none;
 }
 
-.active .selectableResponseItem button {
-  display: block;
-  width: 28px;
-  height: 28px;
+.active .deleteSelectableResponseItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 4px;
   border-radius: 50%;
   background-color: transparent;
   border: none;
   cursor: pointer;
-  margin-left: 4px;
   transition: background-color 0.1s;
 }
 
 .active .selectableResponseItem button:hover {
-  background-color: #d9d9d9;
+  background-color: #f3f3f3;
 }
 
 .active .selectableResponseItem input:focus,
@@ -207,6 +206,8 @@
 
 /* Menu */
 .menu {
+  position: relative;
+  border-top: 1px solid #f3f3f3;
   display: flex;
   height: 42px;
   justify-content: space-between;
@@ -222,7 +223,7 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  width: 72px;
+  min-width: 72px;
   height: 100%;
   border: none;
   background-color: transparent;
@@ -233,4 +234,66 @@
 
 .menuItem:hover {
   background-color: #f3f3f3;
+}
+
+/* actions */
+
+.fieldActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 4px 8px 0;
+  gap: 4px;
+  color: #5f6368;
+}
+
+.fieldAction {
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.1s ease-in-out;
+  color: #5f6368;
+}
+
+.fieldAction:hover {
+  background-color: #f3f3f3;
+  color: #000;
+}
+
+/* type selector */
+
+.typeSelector {
+  position: absolute;
+  right: 24px;
+  bottom: 48px;
+  display: flex;
+  background-color: #fff;
+  padding: 8px;
+  gap: 4px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.typeSelector button {
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.1s ease-in-out;
+  color: #5f6368;
+}
+
+.typeSelector button:hover {
+  background-color: #f3f3f3;
+  color: #000;
 }

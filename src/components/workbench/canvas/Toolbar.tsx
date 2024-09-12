@@ -1,5 +1,5 @@
 import { Draggable, Droppable } from '@hello-pangea/dnd';
-import Svg from './Svg';
+import Svg from '../misc/Svg';
 import styles from './Toolbar.module.css';
 
 function Toolbar() {
@@ -38,6 +38,7 @@ function Toolbar() {
                         transform: snapshot.isDragging
                           ? provided.draggableProps.style?.transform
                           : 'translate(0px, 0px)',
+                        transitionDuration: '0.001s',
                       }}>
                       <Svg path={field.path} size="32px" />
                     </div>

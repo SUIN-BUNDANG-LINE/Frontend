@@ -1,5 +1,5 @@
-import { kyWrapper } from '../ky-wrapper';
-import { makeUrl } from '../utils';
+import { kyWrapper } from '@/services/ky-wrapper';
+import { makeUrl } from '@/services/utils';
 import { SurveyResponse } from './types';
 
 const fetchCreate = async () => {

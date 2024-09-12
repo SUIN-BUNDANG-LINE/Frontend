@@ -2,10 +2,11 @@
 
 import { Draggable } from '@hello-pangea/dnd';
 import { v4 as uuidv4 } from 'uuid';
-import type { Field, RadioField } from '@/store/types';
-import { useSurveyStore } from '@/store';
+import React from 'react';
+import type { Field, RadioField } from '../types';
+import { useSurveyStore } from '../store';
 import styles from './Field.module.css'; // Import styles
-import Svg from './Svg';
+import Svg from '../misc/Svg';
 
 type Props = {
   index: number;
@@ -25,7 +26,7 @@ function RenderTitle({ required, title, handleEdit, active }: TitleProps) {
       {required && <span className={styles.requiredTag}>필수</span>}
       <input
         type="text"
-        value={active || title !== '' ? title : '제목 없음'}
+        value={active || title !== '' ? title : '제목 없는 질문'}
         onChange={(e) => handleEdit({ title: e.target.value })}
         placeholder="질문을 입력해주세요."
       />
@@ -43,7 +44,7 @@ function RenderDescription({ description, handleEdit, active }: DescriptionProps
   return (
     <div className={styles.description}>
       <textarea
-        value={active || description !== '' ? description : '설명 없음'}
+        value={active || description !== '' ? description : '질문 설명이 없습니다.'}
         onChange={(e) => handleEdit({ description: e.target.value })}
         placeholder="설명을 입력해주세요."
       />
@@ -95,8 +96,9 @@ function RenderSelectableResponse({ type, options, handleEdit, active, other }: 
             onChange={(e) => handleContentEdit(id, e.target.value)}
             placeholder="선택지를 입력해주세요."
           />
-          <button type="button" onClick={() => handleDelete(id)}>
-            X
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+          <button type="button" onClick={() => handleDelete(id)} className={styles.deleteSelectableResponseItem}>
+            <Svg path="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
           </button>
         </div>
       ))}
@@ -112,36 +114,70 @@ function RenderSelectableResponse({ type, options, handleEdit, active, other }: 
       {other && (
         <div className={styles.selectableResponseItem}>
           <div className={indicatorClass} />
-          <input type="text" value="" placeholder="기타 응답..." />
+          <input type="text" value="" placeholder="기타 응답" readOnly />
         </div>
       )}
     </div>
   );
 }
 
+function RenderTypeSelector({ handleEdit }: { handleEdit: (updates: Partial<Field>) => void }) {
+  const items = [
+    {
+      path: 'M480-280q83 0 141.5-58.5T680-480q0-83-58.5-141.5T480-680q-83 0-141.5 58.5T280-480q0 83 58.5 141.5T480-280Zm0 200q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z',
+      label: '단일 선택',
+      id: 'radio',
+    },
+    {
+      path: 'm424-312 282-282-56-56-226 226-114-114-56 56 170 170ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0-560v560-560Z',
+      label: '다중 선택',
+      id: 'checkbox',
+    },
+    {
+      path: 'M280-160v-520H80v-120h520v120H400v520H280Zm360 0v-320H520v-120h360v120H760v320H640Z',
+      label: '텍스트',
+      id: 'text',
+    },
+  ] as const;
+
+  return (
+    <div className={styles.typeSelector}>
+      {items.map((item) => (
+        <button type="button" onClick={() => handleEdit({ type: item.id })} key={item.id}>
+          <Svg path={item.path} size="16px" />
+          <div>{item.label}</div>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// ===== ===== MAIN COMPONENT ===== =====
+
 function FieldComponent({ index, field }: Props) {
   const active = useSurveyStore((state) => state.activeField) === field.fieldId;
   const setActiveField = useSurveyStore((state) => state.setActiveField);
   const editField = useSurveyStore((state) => state.editField);
-  const addField = useSurveyStore((state) => state.addField);
-  const setFields = useSurveyStore((state) => state.setFields);
-  const fields = useSurveyStore((state) => state.fields);
+  const copyField = useSurveyStore((state) => state.copyField);
+  const deleteField = useSurveyStore((state) => state.deleteField);
+  const [showTypeSelector, setShowTypeSelector] = React.useState<boolean>(false);
 
-  const handleEdit = (updates: Partial<Field>) => editField(field.fieldId, updates);
+  function handleActivate() {
+    setActiveField(field.fieldId);
+    setShowTypeSelector(false);
+  }
 
-  const handleActivate = () => setActiveField(field.fieldId);
-
-  const handleDelete = (fieldId: string) => {
-    setFields(fields.filter((f) => f.fieldId !== fieldId));
+  const handleEdit = (updates: Partial<Field>) => {
+    editField({ fieldId: field.fieldId, updates });
   };
 
-  const handleDuplicate = (oField: Field, oIndex: number) => {
-    addField({
-      field: oField,
-      index: oIndex,
-      sectionId: field.sectionId,
-    });
-  };
+  function handleDelete() {
+    deleteField({ fieldId: field.fieldId });
+  }
+
+  function handleCopy() {
+    copyField({ sectionId: field.sectionId, index, field });
+  }
 
   return (
     <Draggable key={field.fieldId} draggableId={field.fieldId} index={index}>
@@ -155,14 +191,34 @@ function FieldComponent({ index, field }: Props) {
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
-            className={`${styles.field} ${active ? styles.active : ''} ${index === 0 ? styles.firstField : ''}`}
+            className={`${styles.field} ${active ? styles.active : ''}`}
             onClick={handleActivate}>
             <div className={styles.dragHandle} {...provided.dragHandleProps}>
-              <Svg
-                path="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"
-                size="20px"
-                fill="#a0a0a0"
-              />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960" width="20px" height="20px">
+                <g xmlns="http://www.w3.org/2000/svg" transform="matrix(0 1 -1 0 0 -0)">
+                  <path
+                    fill="#a0a0a0"
+                    d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z"
+                  />
+                </g>
+              </svg>
+            </div>
+
+            <div className={styles.fieldActions}>
+              <button type="button" className={styles.fieldAction} onClick={handleCopy}>
+                <Svg
+                  size="16px"
+                  path="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"
+                />
+                <div>복제</div>
+              </button>
+              <button type="button" className={styles.fieldAction} onClick={handleDelete}>
+                <Svg
+                  size="16px"
+                  path="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                />
+                <div>삭제</div>
+              </button>
             </div>
 
             <RenderTitle required={field.required} title={field.title} handleEdit={handleEdit} active={active} />
@@ -202,18 +258,18 @@ function FieldComponent({ index, field }: Props) {
                   </button>
                 )}
               </div>
+              {showTypeSelector && active && <RenderTypeSelector handleEdit={handleEdit} />}
               <div className={styles.menuGroup}>
-                <button type="button" className={styles.menuItem} onClick={() => {}}>
-                  <Svg path="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-                  <div>유형</div>
-                </button>
-                <button type="button" className={styles.menuItem} onClick={() => handleDuplicate(field, index)}>
-                  <Svg path="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z" />
-                  <div>복제</div>
-                </button>
-                <button type="button" className={styles.menuItem} onClick={() => handleDelete(field.fieldId)}>
-                  <Svg path="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                  <div>삭제</div>
+                <button
+                  type="button"
+                  className={styles.menuItem}
+                  onClick={(e) => {
+                    if (!active) handleActivate();
+                    e.stopPropagation();
+                    setShowTypeSelector((p) => !p);
+                  }}>
+                  <Svg path="M480-160q-134 0-227-93t-93-227q0-134 93-227t227-93q69 0 132 28.5T720-690v-110h80v280H520v-80h168q-32-56-87.5-88T480-720q-100 0-170 70t-70 170q0 100 70 170t170 70q77 0 139-44t87-116h84q-28 106-114 173t-196 67Z" />
+                  <div>유형 변경</div>
                 </button>
               </div>
             </div>

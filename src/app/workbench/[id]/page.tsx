@@ -1,117 +1,53 @@
 'use client';
 
-import { DragDropContext, DropResult } from '@hello-pangea/dnd';
-import { useSurveyStore } from '@/store';
-import { Field } from '@/store/types';
-import Toolbar from '@/components/workbench/Toolbar';
-import Canvas from '@/components/workbench/Canvas';
+import Header from '@/components/workbench/ui/Header';
 import React from 'react';
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+import { replaceURLSearchParams } from '@/utils/url-search-params';
+import { useWorkbenchSurvey } from '@/components/workbench/service';
 import Loading from '@/components/ui/loading/Loading';
-import styles from './page.module.css';
+import { useSurveyStore } from '@/components/workbench/store';
+import { cin } from '@/components/workbench/func';
+import styles from './layout.module.css';
+import Tab1 from './tab1';
+import Tab0 from './tab0';
 
-function Main() {
-  const [isClient, setIsClient] = React.useState(false);
+const getTabFromSearchParams = (searchParams: ReadonlyURLSearchParams) => {
+  const arg = Number(searchParams.get('tab'));
+  if (!Number.isNaN(arg) && arg >= 0 && arg < 4) return arg;
+  return 0;
+};
+
+export default function Page({ params }: { params: { id: string } }) {
+  const { id } = params;
+
+  const searchParams = useSearchParams();
+  const [tab, setTab] = React.useState(getTabFromSearchParams(searchParams));
+  const { data, isLoading } = useWorkbenchSurvey(id);
+
+  const initStore = useSurveyStore((state) => state.initStore);
 
   React.useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (!data) return;
+    initStore({ store: cin(data) });
+  }, [data, initStore]);
 
-  const sections = useSurveyStore((state) => state.sections);
-  const fields = useSurveyStore((state) => state.fields);
-  const setSections = useSurveyStore((state) => state.setSections);
-  const setFields = useSurveyStore((state) => state.setFields);
-  const addField = useSurveyStore((state) => state.addField);
-
-  const filterById = (data: Field[], sectionId: string | string[]) => {
-    if (Array.isArray(sectionId)) return data.filter((f) => sectionId.some((i) => i === f.sectionId));
-    return data.filter((f) => f.sectionId === sectionId);
+  const tabHandler = (newTab: number) => {
+    setTab(newTab);
+    replaceURLSearchParams('tab', newTab);
   };
 
-  const filterById2 = (data: Field[], sectionId: string | string[]) => {
-    if (Array.isArray(sectionId)) return data.filter((f) => sectionId.every((i) => i !== f.sectionId));
-    return data.filter((f) => f.sectionId !== sectionId);
-  };
-
-  const onDragField = (result: DropResult) => {
-    const { source: src, destination: dst } = result;
-    if (!dst) return;
-
-    const srcId = src.droppableId;
-    const dstId = dst.droppableId;
-
-    const related = filterById(fields, [srcId, dstId]);
-    const others = filterById2(fields, [srcId, dstId]);
-
-    if (srcId === 'toolbar') {
-      // index in toolbar
-      const indexToType = ['radio', 'checkbox', 'text'] as const;
-
-      addField({
-        type: indexToType[src.index],
-        index: dst.index,
-        sectionId: dst.droppableId,
-      });
-      return;
-    }
-
-    if (srcId !== dstId) {
-      const here = filterById(related, srcId);
-      const there = filterById(related, dstId);
-
-      there.splice(dst.index, 0, {
-        ...here.splice(src.index, 1)[0],
-        sectionId: dstId,
-      });
-
-      setFields([...others, ...here, ...there]);
-    } else {
-      related.splice(dst.index, 0, related.splice(src.index, 1)[0]);
-      setFields([...others, ...related]);
-    }
-  };
-
-  const onDragSection = (result: DropResult) => {
-    const { source, destination } = result;
-    if (!destination) return;
-
-    const replica = structuredClone(sections);
-    const [target] = replica.splice(source.index, 1);
-    replica.splice(destination.index, 0, target);
-
-    setSections(replica);
-  };
-
-  const onDragEnd = (result: DropResult) => {
-    const { type } = result;
-
-    if (result.destination?.droppableId === 'toolbar') return;
-
-    switch (type) {
-      case 'section':
-        onDragSection(result);
-        break;
-      case 'field':
-        onDragField(result);
-        break;
-      default:
-    }
-  };
+  let content = <Loading message="설문지를 불러오는 중..." />;
+  if (!isLoading) {
+    if (tab === 0) content = <Tab0 />;
+    if (tab === 1) content = <Tab1 />;
+  }
 
   return (
-    <div className={styles.main}>
-      <div className={styles.container}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {isClient && (
-            <>
-              <Toolbar />
-              <Canvas />
-            </>
-          )}
-          {!isClient && <Loading message="불러오는 중..." />}
-        </DragDropContext>
-      </div>
+    <div className={styles.app}>
+      <Header tab={tab} tabHandler={tabHandler} />
+      {/* <textarea rows={30} cols={30} value={JSON.stringify(data || {}, null, 2)} readOnly /> */}
+      {content}
     </div>
   );
 }
-
-export default Main;
