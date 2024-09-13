@@ -1,0 +1,8 @@
+.canvas {
+  height: calc(100vh - 108px);
+  width: 100%;
+  min-width: 480px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}

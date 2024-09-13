@@ -1,0 +1,114 @@
+/* modal */
+.desc {
+  padding-bottom: 12px;
+  font-size: 16px;
+  color: var(--gray-d);
+  border-bottom: 1px solid var(--gray-l);
+  margin-bottom: 16px;
+}
+
+.opts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.opts select {
+  border: none;
+}
+
+.opt {
+  background-color: #f9f9f9;
+  border: 1px solid var(--gray-l);
+  border-radius: 8px;
+  text-align: left;
+  padding: 16px;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.opt:hover {
+  background-color: #f0faff;
+}
+
+.opt.active {
+  background-color: #e6f4ff;
+}
+
+.optTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.optDesc {
+  font-size: 14px;
+  color: var(--gray-d);
+  line-height: 1.6;
+}
+
+.optInteract {
+  padding-top: 12px;
+  margin-top: 12px;
+  color: var(--gray-d);
+  border-top: 1px solid var(--gray-l);
+  padding-left: 16px;
+}
+
+.optInteract select {
+  font-size: 14px;
+  padding: 8px;
+  margin-top: 8px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 4px;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
+}
+
+.optInteract select:focus {
+  outline: none;
+  box-shadow: 0 0 4px var(--seconday);
+}
+
+.optBranches {
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.optBranches select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  color: var(--error-color, red); /* Use a CSS variable for color if possible */
+  font-size: 14px;
+  padding: 4px;
+  border: 1px solid var(--error-color, red);
+  border-radius: 4px;
+  background-color: #fdd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.errorIcon {
+  font-size: 18px;
+}

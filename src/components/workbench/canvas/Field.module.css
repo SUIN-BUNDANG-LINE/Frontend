@@ -1,0 +1,299 @@
+/* Field */
+.field {
+  background-color: #fff;
+  border-radius: 4px;
+  margin: 6px 0;
+  width: 100%;
+}
+
+.field input,
+.field textarea {
+  transition: all 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.field > div {
+  padding: 0 24px;
+}
+
+.active.field {
+  box-shadow: inset 6px 0 0 0 #ffd521;
+}
+
+/* Drag Handle */
+.dragHandle {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dragHandle > * {
+  display: none;
+}
+
+.field:hover .dragHandle > * {
+  display: block;
+}
+
+/* Title */
+.title {
+  display: flex;
+  line-height: 24px;
+  margin: 6px 0;
+}
+
+.active .title {
+  line-height: 42px;
+}
+
+.title .requiredTag {
+  display: flex;
+  background-color: orange;
+  color: #fff;
+  padding: 2px 4px;
+  margin: 2px 4px 0 0;
+  line-height: 20px;
+  height: 20px;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 4px;
+}
+
+.active .title .requiredTag {
+  margin-top: 12px;
+}
+
+.title input {
+  flex: 1;
+  border: none;
+  font-size: 18px;
+  line-height: 24px;
+  outline: none;
+  padding-left: 0;
+}
+
+.active .title input {
+  padding-left: 8px;
+  height: 42px;
+  background-color: #f3f3f3;
+  border-bottom: 1px solid #5f6368;
+}
+
+/* Description */
+.description {
+  display: flex;
+  margin: 4px 0;
+}
+
+.active .description {
+  height: auto;
+}
+
+.description textarea {
+  width: 100%;
+  height: 36px;
+  border: none;
+  font-size: 14px;
+  padding-left: 0;
+  outline: none;
+  color: #5f6368;
+  resize: none;
+}
+
+.active .description textarea {
+  padding: 8px;
+  height: 64px;
+  background-color: #f3f3f3;
+}
+
+/* Response */
+.response {
+}
+
+/* Text Response */
+.textResponse {
+  margin: 12px 0;
+}
+
+.textResponse .input {
+  font-size: 14px;
+  padding-left: 8px;
+  max-width: 128px;
+  height: 32px;
+  line-height: 32px;
+  border: none;
+  background-color: transparent;
+  color: #5f6368;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+/* Radio Response */
+.selectableResponse {
+  margin: 12px 0;
+  display: grid;
+  row-gap: 8px;
+}
+
+.selectableResponseItem {
+  display: grid;
+  grid-template-columns: 30px 1fr 36px;
+  height: 36px;
+  align-items: center;
+}
+
+.selectableResponseItem input {
+  border: none;
+  padding-left: 4px;
+  height: 28px;
+  outline: none;
+  font-size: 14px;
+}
+
+.deleteSelectableResponseItem {
+  /* hide if not focused */
+  display: none;
+}
+
+.active .deleteSelectableResponseItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  margin-left: 4px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+
+.active .selectableResponseItem button:hover {
+  background-color: #f3f3f3;
+}
+
+.active .selectableResponseItem input:focus,
+.active .selectableResponseItem input:hover {
+  box-shadow: inset 0 -2px 0 0 #ffd521;
+}
+
+.selectableResponse .addOption {
+  width: 128px;
+  height: 32px;
+  border: none;
+  border-radius: 4px;
+  color: #5f6368;
+  cursor: pointer;
+}
+
+.selectableResponse .addOption:hover {
+  color: #000;
+}
+
+.radioIndicator {
+  width: 24px;
+  height: 24px;
+  box-shadow: inset 0 0 0 6px #d9d9d9;
+  border-radius: 50%;
+}
+
+.checkboxIndicator {
+  width: 24px;
+  height: 24px;
+  box-shadow: inset 0 0 0 6px #d9d9d9;
+  border-radius: 4px;
+}
+
+/* Menu */
+.menu {
+  position: relative;
+  border-top: 1px solid #f3f3f3;
+  display: flex;
+  height: 42px;
+  justify-content: space-between;
+}
+
+.menuGroup {
+  display: flex;
+  height: 100%;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 72px;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  color: #5f6368;
+}
+
+.menuItem:hover {
+  background-color: #f3f3f3;
+}
+
+/* actions */
+
+.fieldActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 8px 4px 8px 0;
+  gap: 4px;
+  color: #5f6368;
+}
+
+.fieldAction {
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.1s ease-in-out;
+  color: #5f6368;
+}
+
+.fieldAction:hover {
+  background-color: #f3f3f3;
+  color: #000;
+}
+
+/* type selector */
+
+.typeSelector {
+  position: absolute;
+  right: 24px;
+  bottom: 48px;
+  display: flex;
+  background-color: #fff;
+  padding: 8px;
+  gap: 4px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.typeSelector button {
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.1s ease-in-out;
+  color: #5f6368;
+}
+
+.typeSelector button:hover {
+  background-color: #f3f3f3;
+  color: #000;
+}
