@@ -11,10 +11,7 @@ import Field from './Field';
 import styles from './Section.module.css'; // Import styles
 import Svg from '../misc/Svg';
 import RouteModal from './RouteModal';
-
-// $other
-// $submit
-// $placeholder
+import { Submit } from '../misc/Route';
 
 type Props = {
   section: Section;
@@ -23,6 +20,8 @@ type Props = {
 };
 
 function SectionComponent({ section, index, isDraggingOver }: Props) {
+  const { sectionId } = section;
+
   const [fold, setFold] = React.useState(false);
   const [routeBtn, setRouteBtn] = React.useState('');
 
@@ -36,79 +35,104 @@ function SectionComponent({ section, index, isDraggingOver }: Props) {
   const addSection = useSurveyStore((state) => state.addSection);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    editSection({ sectionId: section.sectionId, updates: { title: e.target.value } });
+    editSection({ sectionId, updates: { title: e.target.value } });
   };
 
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    editSection({ sectionId: section.sectionId, updates: { description: e.target.value } });
+    editSection({ sectionId, updates: { description: e.target.value } });
   };
 
   const handleDuplicate = () => copySection({ index, section });
 
-  const handleDelete = () => deleteSection({ sectionId: section.sectionId });
+  const handleDelete = () => deleteSection({ sectionId });
 
   const handleFold = () => setFold((pre) => !pre);
 
   const handleSave = (newStrat: RouteStrategy) => {
-    editSection({ sectionId: section.sectionId, updates: { routeStrategy: newStrat } });
+    editSection({ sectionId, updates: { routeStrategy: newStrat } });
   };
 
   React.useEffect(() => {
-    const { type, detail } = section.routeStrategy;
-
-    if (type === 'error') return;
-
-    const error = () => {
-      editSection({ sectionId: section.sectionId, updates: { routeStrategy: { type: 'error', detail: null } } });
-      setRouteBtn('⚠ 오류');
+    const normalize = () => {
+      editSection({ sectionId, updates: { routeStrategy: { type: 'sequential', detail: null } } });
+      return { type: 'sequential' as const, detail: null };
     };
 
-    switch (type) {
-      case 'sequential': {
-        setRouteBtn('순서대로');
-        return;
+    /**
+     * Updates the route strategy if necessary and returns the result.
+     * Otherwise, returns the current strategy as is.
+     * @returns {RouteStrategy} The updated strategy
+     */
+
+    const refreshRouteStrategy = (): RouteStrategy => {
+      const currentStrat = section.routeStrategy;
+      const { type, detail } = currentStrat;
+
+      switch (type) {
+        case 'manual': {
+          if (detail !== Submit && !sections.find((i) => i.sectionId === detail)) return normalize();
+          return currentStrat;
+        }
+
+        case 'conditional': {
+          const keyField = fields.find((f) => f.fieldId === detail.key);
+          if (!keyField || keyField.type !== 'radio' || !keyField.required) return normalize();
+
+          const updateRequired =
+            detail.router.some((i) => keyField.options.every((j) => j.id !== i.id)) ||
+            keyField.options.some((i) => detail.router.every((j) => j.id !== i.id));
+          if (!updateRequired) return currentStrat;
+
+          // 삭제한 옵션은 라우터에서도 제외
+          const newRouter = detail.router.filter((i) => keyField.options.some((j) => j.id === i.id));
+
+          // 생성된 옵션은 다음 섹션으로 설정
+          const sectionIndex = sections.findIndex((i) => i.sectionId === sectionId);
+          const nextSectionId = 1 + sectionIndex < sections.length ? sections.at(1 + sectionIndex)!.sectionId : Submit;
+          newRouter.push(
+            ...keyField.options
+              .filter((i) => newRouter.every((j) => j.id !== i.id))
+              .map(({ id, content }) => ({ id, content, next: nextSectionId }))
+          );
+
+          const newRouteStrategy = { type: 'conditional' as const, detail: { key: detail.key, router: newRouter } };
+
+          editSection({
+            sectionId,
+            updates: { routeStrategy: newRouteStrategy },
+          });
+
+          return newRouteStrategy;
+        }
+
+        case 'sequential':
+        default:
+          return currentStrat;
       }
+    };
 
-      case 'manual': {
-        if (detail === '$submit') {
-          setRouteBtn('제출');
-          return;
+    const getButtonContent = (strat: RouteStrategy) => {
+      const { type, detail } = strat;
+
+      switch (type) {
+        case 'manual': {
+          return detail === Submit ? '제출' : sections.find((i) => i.sectionId === detail)?.title || '제목 없는 섹션';
         }
-
-        const nextSection = sections.find((i) => i.sectionId === detail);
-        if (!nextSection) {
-          error();
-          return;
+        case 'sequential': {
+          return '순서대로';
         }
-
-        setRouteBtn(nextSection.title || '제목 없는 섹션');
-        return;
+        case 'conditional': {
+          return `질문 "${fields.find((i) => i.fieldId === detail.key)?.title || '제목 없는 질문'}"에 따라 분기`;
+        }
+        default: {
+          return '알 수 없음';
+        }
       }
+    };
 
-      case 'conditional': {
-        const keyField = fields.find((f) => f.fieldId === detail.key);
-        if (!keyField || keyField.type !== 'radio' || !keyField.required) {
-          error();
-          return;
-        }
-
-        const tempRouter = detail.router.filter((i) => keyField.options.some((j) => j.id === i.id));
-        if (keyField.options.some((i) => tempRouter.every((j) => j.id !== i.id))) {
-          error();
-          return;
-        }
-
-        let slicedTitle = keyField.title.slice(0, 12);
-        if (keyField.title !== slicedTitle) slicedTitle += '...';
-
-        setRouteBtn(`“${slicedTitle || '제목 없는 질문'}”의 답변에 따라 결정`);
-        return;
-      }
-
-      default:
-        error();
-    }
-  }, [fields, sections, editSection, section.routeStrategy, section.sectionId]);
+    setRouteBtn(getButtonContent(refreshRouteStrategy()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fields, sectionId, sections]);
 
   return (
     <>

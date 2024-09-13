@@ -1,3 +1,5 @@
+import { RewardConfig } from './shared';
+
 type Store = {
   // for FE
   activeField: string | null;
@@ -6,25 +8,17 @@ type Store = {
   title: string;
   description: string;
   thumbnail: string | null;
+  publishedAt: string | null;
   finishMessage: string;
   status: 'NOT_STARTED' | 'IN_PROGRESS' | 'IN_MODIFICATION' | 'CLOSED';
-  rewards: { name: string; category: string; count: number }[];
   isVisible: boolean;
-  finishedAt: string;
-  publishedAt: string | null;
 
-  // support drawing board
-  legacyMode: boolean;
-  targetParticipantCount: number;
+  // reward
+  rewardConfig: RewardConfig;
 
   // canvas
   sections: Section[];
   fields: Field[];
-};
-
-type Error = {
-  type: 'error';
-  detail: null;
 };
 
 type Sequential = {
@@ -49,7 +43,7 @@ type Conditional = {
   };
 };
 
-type RouteStrategy = Sequential | Manual | Conditional | Error;
+type RouteStrategy = Sequential | Manual | Conditional;
 
 type Section = {
   sectionId: string;

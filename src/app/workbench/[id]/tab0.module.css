@@ -1,24 +1,46 @@
-.formContainer {
-  padding: 20px;
+.container {
+  box-sizing: border-box;
   border-radius: 8px;
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
+  padding: 12px;
 }
 
-.formGroup {
-  margin-bottom: 20px;
+.container div,
+.container label,
+.container input,
+.container textarea {
+  box-sizing: border-box;
+}
+
+.groupInfo span {
+  color: var(--gray-md);
+}
+
+.group {
+  width: 100%;
+  margin-bottom: 16px;
 }
 
 .label {
+  width: 100%;
   font-size: 14px;
   color: #333;
   margin-bottom: 6px;
   display: block;
 }
 
+.label span {
+  display: block;
+  margin-bottom: 4px;
+}
+
 .input,
 .textarea,
+.select,
 .inputFile {
+  display: block;
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
@@ -32,7 +54,7 @@
 .inputFile:focus {
   border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+  box-shadow: 0 0 5px var(--primary);
 }
 
 .textarea {
@@ -51,17 +73,117 @@
   margin-right: 10px;
 }
 
-.submitButton {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+/* reward */
+
+.rewardContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.submitButton:hover {
-  background-color: #0056b3;
+.rewardItemLeft {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 20px 1fr;
+}
+
+.rewardItem {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.rewardItemContent {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  padding-top: 6px;
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.rewardName {
+  width: 100%;
+  font-size: 14px;
+  text-align: left;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.rewardCategory {
+  color: var(--gray-md);
+  padding: 2px;
+  border-radius: 2px;
+  font-size: 12px;
+  flex-grow: 1;
+  margin-right: 16px;
+}
+
+.rewardCount {
+  font-size: 14px;
+  color: var(--gray-darker);
+  font-weight: bold;
+  flex-grow: 0;
+  padding: 0 8px;
+}
+
+.rewardDelete {
+  background: none;
+  border: none;
+  color: var(--gray-darker);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding-left: 12px;
+}
+
+.rewardDelete:hover {
+  color: var(--primary);
+}
+
+.rewardDelete:active {
+  color: var(--primary-dark);
+}
+
+.newReward {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  background-color: #fff;
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+}
+
+.newReward input {
+  box-sizing: border-box;
+  margin-top: 4px;
+}
+
+.newReward .inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.addButton {
+  padding: 10px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.addButton:hover {
+  background-color: var(--primary-dark);
 }

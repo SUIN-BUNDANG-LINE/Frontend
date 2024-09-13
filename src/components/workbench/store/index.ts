@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { v4 as uuid } from 'uuid';
-import type { Field, Section, Store, TextField, CheckboxField, RadioField } from '../types';
+import type { Field, Section, Store, TextField, CheckboxField, RadioField, RewardConfig } from '../types';
 
 function getDefaultSection(): Section {
   return {
@@ -41,13 +41,15 @@ const DEFAULT_STORE: Store = {
   thumbnail: null,
   finishMessage: '',
   status: 'NOT_STARTED' as const,
-  rewards: [],
   isVisible: true,
-  finishedAt: '',
   publishedAt: null,
 
-  legacyMode: false,
-  targetParticipantCount: 0,
+  rewardConfig: {
+    type: 'NO_REWARD',
+    rewards: [],
+    targetParticipantCount: null,
+    finishedAt: null,
+  },
 
   sections: [],
   fields: [],
@@ -59,6 +61,7 @@ type Actions = {
   initStore: ({ store }: { store: Store }) => void;
 
   setter: ({ key, value }: { key: string; value: unknown }) => void;
+  rewardSetter: ({ updates }: { updates: Partial<RewardConfig> }) => void;
 
   setSections: ({ sections }: { sections: Section[] }) => void;
   setFields: ({ fields }: { fields: Field[] }) => void;
@@ -90,6 +93,12 @@ const useSurveyStore = create(
     setter: ({ key, value }) => {
       set((state) => {
         Object.assign(state, { [key]: value });
+      });
+    },
+
+    rewardSetter: ({ updates }) => {
+      set((state) => {
+        Object.assign(state.rewardConfig, updates);
       });
     },
 

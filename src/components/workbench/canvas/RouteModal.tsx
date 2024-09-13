@@ -4,11 +4,6 @@ import { Conditional, Field, RadioField, RouteStrategy, Section } from '../types
 import styles from './RouteModal.module.css'; // Import styles
 import { Other, Placeholder, Submit } from '../misc/Route';
 
-const getStrat = (strat: Section['routeStrategy']): RouteStrategy => {
-  if (strat.type === 'sequential' || strat.type === 'error') return { type: 'sequential', detail: null };
-  return strat;
-};
-
 type Props = {
   section: Section;
   sections: Section[];
@@ -19,7 +14,7 @@ type Props = {
 };
 
 export default function RouteModal({ section, sections, fields, oldStrategy, handleSave, closeModal }: Props) {
-  const [strat, setStrat] = React.useState<RouteStrategy>(getStrat(oldStrategy));
+  const [strat, setStrat] = React.useState<RouteStrategy>(oldStrategy);
   const [error, setError] = React.useState<string>();
 
   const handleSelectType = (newType: RouteStrategy['type']) => {

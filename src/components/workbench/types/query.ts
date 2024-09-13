@@ -1,20 +1,20 @@
-type Survey = {
+import type { RewardConfig } from './shared';
+
+type OutgoingSurvey = Omit<ImportedSurvey, 'publishedAt' | 'status'>;
+
+type ImportedSurvey = {
   title: string;
   description: string;
   thumbnail: string | null;
   publishedAt: string | null;
-  finishedAt: string;
   status: Status;
   finishMessage: string;
-  targetParticipantCount: number | null;
   isVisible: boolean;
-  rewards: Reward[];
+  rewardSetting: RewardConfig;
   sections: Section[];
 };
 
 type Status = 'NOT_STARTED' | 'IN_PROGRESS' | 'IN_MODIFICATION' | 'CLOSED';
-
-type Reward = { name: string; category: string; count: number };
 
 type Section = {
   sectionId: string;
@@ -62,4 +62,4 @@ type Question = {
 
 type QuestionType = 'TEXT_RESPONSE' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
 
-export type { Survey };
+export type { ImportedSurvey, OutgoingSurvey, RouteDetails, Question };

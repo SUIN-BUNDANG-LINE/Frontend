@@ -7,6 +7,7 @@ import Providers from '@/providers/Providers';
 import type { User } from '@/providers/auth/types';
 
 import './globals.css';
+import 'react-datetime/css/react-datetime.css';
 
 export const metadata: Metadata = {
   title: '설문이용',

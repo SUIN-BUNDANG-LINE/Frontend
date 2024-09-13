@@ -1,5 +1,7 @@
 import styles from './Header.module.css';
 import Svg from '../misc/Svg';
+import { useSurveyStore } from '../store';
+import { cout } from '../func';
 
 type Props = {
   tab: number;
@@ -7,6 +9,13 @@ type Props = {
 };
 
 function Header({ tab, tabHandler }: Props) {
+  const store = useSurveyStore((state) => state);
+
+  const testSubmit = () => {
+    const data = cout(store);
+    console.log(data);
+  };
+
   const tabData = [
     {
       label: '기초 정보',
@@ -50,7 +59,7 @@ function Header({ tab, tabHandler }: Props) {
           </div>
         </div>
         <div className={styles.third}>
-          <button type="button" className={styles.button}>
+          <button type="button" className={styles.button} onClick={testSubmit}>
             <div>저장</div>
             <div>@ 3분 전</div>
           </button>
