@@ -6,6 +6,7 @@ import Button from '@/components/ui/button/Button';
 import Modal from '@/components/ui/modal/Modal';
 import useModal from '@/hooks/useModal';
 import { Reward } from '@/components/workbench/types';
+import moment from 'moment';
 import Datetime from 'react-datetime';
 import 'moment/locale/ko';
 import styles from './tab0.module.css';
@@ -275,10 +276,13 @@ function Tab0() {
         {rewardConfig.type !== 'NO_REWARD' && (
           <div className={styles.group}>
             <div className={styles.label}>
-              <span>마감 시각</span>
+              <span>마감 일정</span>
               <Datetime
+                input={false}
+                isValidDate={(current) => current.isAfter(moment().subtract(1, 'day'))}
                 inputProps={{ className: styles.input }}
                 locale="ko-KR"
+                timeFormat="MMMM Do YYYY, h"
                 timeConstraints={{ minutes: { min: 0, max: 0, step: 1 } }}
                 value={new Date(rewardConfig.finishedAt)}
                 onChange={(v) => rewardSetter({ updates: { finishedAt: v.toString() } })}
