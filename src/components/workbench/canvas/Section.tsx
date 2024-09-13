@@ -76,7 +76,8 @@ function SectionComponent({ section, index, isDraggingOver }: Props) {
 
         case 'conditional': {
           const keyField = fields.find((f) => f.fieldId === detail.key);
-          if (!keyField || keyField.type !== 'radio' || !keyField.required) return normalize();
+          if (!keyField || keyField.sectionId !== section.sectionId || keyField.type !== 'radio' || !keyField.required)
+            return normalize();
 
           const updateRequired =
             detail.router.some((i) => keyField.options.every((j) => j.id !== i.id)) ||

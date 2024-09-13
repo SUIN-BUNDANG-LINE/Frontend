@@ -170,6 +170,7 @@ const useSurveyStore = create(
       set((state) => {
         state.sections = state.sections.filter((s: Section) => s.sectionId !== sectionId);
         state.fields = state.fields.filter((f: Field) => f.sectionId !== sectionId);
+        if (state.sections.length === 0) state.sections.push(getDefaultSection());
       }),
 
     // Add, edit, delete a field
