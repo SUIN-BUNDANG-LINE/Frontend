@@ -29,12 +29,16 @@ export default function ListItem({ survey }: { survey: Survey }) {
           </div>
         </div>
         <div className={styles.feasibility}>
-          <div>
-            <FaGift /> {rewardCount}
-          </div>
-          <div>
-            <FaArrowUp /> {targetParticipants}
-          </div>
+          {rewardCount > 0 && (
+            <div>
+              <FaGift /> {rewardCount}
+            </div>
+          )}
+          {targetParticipants !== null && (
+            <div>
+              <FaArrowUp /> {targetParticipants}
+            </div>
+          )}
         </div>
       </div>
     </Link>

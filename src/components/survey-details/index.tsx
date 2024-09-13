@@ -108,24 +108,28 @@ export default function DetailsViewer({ data, surveyId, state }: Props) {
                   {finishedAt.year}년 {finishedAt.month}월 {finishedAt.date}일 {finishedAt.hour}시 자동 마감
                 </div>
               </div>
-              <div>
-                <FaUserGroup />
-                <div className={styles.participants}>
-                  <div>{currentParticipants}명 응답 완료</div>
-                  <div>/ 최대 {targetParticipants}명 응답 가능</div>
+              {targetParticipants != null && (
+                <div>
+                  <FaUserGroup />
+                  <div className={styles.participants}>
+                    <div>{currentParticipants}명 응답 완료</div>
+                    <div>/ 최대 {targetParticipants}명 응답 가능</div>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <FaGift />
-                <div className={styles.rewards}>
-                  {rewards.map((reward) => (
-                    <div className={styles.reward} key={`${reward.item}`}>
-                      <div className={styles.item}>{reward.item}</div>
-                      <div className={styles.count}>x {reward.count}</div>
-                    </div>
-                  ))}
+              )}
+              {rewards.length > 0 && (
+                <div>
+                  <FaGift />
+                  <div className={styles.rewards}>
+                    {rewards.map((reward) => (
+                      <div className={styles.reward} key={`${reward.item}`}>
+                        <div className={styles.item}>{reward.item}</div>
+                        <div className={styles.count}>x {reward.count}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
               <ul className={styles.clause}>
                 <li>* 설문 조사자가 지급을 약속한 리워드와 수량입니다.</li>
                 <li>* 리워드는 추첨을 퉁해 지급되며, 낙첨된 경우 지급되지 않습니다.</li>
