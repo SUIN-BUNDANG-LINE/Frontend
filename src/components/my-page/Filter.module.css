@@ -35,3 +35,14 @@
   font-weight: bold;
   font-size: 16px;
 }
+
+
+.iconAndSelect {
+  display: flex;
+  align-items: center; /* 아이콘과 셀렉트박스 수직 중앙 정렬 */
+  gap: 8px; /* 아이콘과 드롭다운 사이의 간격 */
+}
+
+.icon {
+  font-size: 16px;
+}
