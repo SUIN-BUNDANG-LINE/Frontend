@@ -1,6 +1,6 @@
 'use client';
 
-import Header from '@/components/workbench/ui/Header';
+import Header from '@/components/workbench/ui/header';
 import React from 'react';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { replaceURLSearchParams } from '@/utils/url-search-params';

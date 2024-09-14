@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffe6e6; /* Light error background */
+  padding: 16px;
+  border-left: 4px solid #ff5c5c; /* Red error highlight */
+  margin-bottom: 16px;
+}
+
+.location {
+  color: var(--gray); /* Use gray color for the location text */
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.reason {
+  font-size: 16px;
+}
