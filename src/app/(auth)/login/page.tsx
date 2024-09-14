@@ -5,17 +5,17 @@ import Button from '@/components/social-login/Button';
 
 const providers = [
   {
-    href: `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/google`,
+    href: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/login/oauth/google?redirect_path=/`,
     name: '구글',
     provider: 'google',
   },
   {
-    href: `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/naver`,
+    href: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/login/oauth/google?redirect_path=/`,
     name: '네이버',
     provider: 'naver',
   },
   {
-    href: `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/kakao`,
+    href: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/login/oauth/google?redirect_path=/`,
     name: '카카오',
     provider: 'kakao',
   },
