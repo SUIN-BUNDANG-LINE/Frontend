@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/hooks/useAuth';
 import Link from 'next/link';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import User from './user/User';
 import styles from './Header.module.css';
 
@@ -21,7 +22,14 @@ export default function Header() {
           <div className={styles.title}>설문이용</div>
         </Link>
         {!user && Login}
-        {user && <User user={user} />}
+        {user && (
+          <div className={styles.userMenu}>
+            <Link href="/my-page" className={styles.myPage}>
+              <FaExternalLinkAlt className={styles.myPageIcon} /> {' 마이페이지'}
+            </Link>
+            <User user={user} />
+          </div>
+        )}
       </div>
     </div>
   );
