@@ -1,10 +1,12 @@
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 import { showToast } from '@/utils/toast';
 // import { fetchCreate } from '@/services/workbench/fetch';
 // import { ErrorCause } from '@/services/ky-wrapper';
 import styles from './Banner.module.css';
 
 export default function Banner() {
+  const { user } = useAuth();
   const nextRouter = useRouter();
 
   const rejectHandler = (err: unknown) => {
@@ -29,10 +31,13 @@ export default function Banner() {
     // }
   };
 
-  const onCreate = async () => {
+  const tryPushToMyPage = async () => {
     try {
-      const data = await fetchCreate();
-      nextRouter.push(`/workbench/${data.surveyId}`);
+      if (user != null) nextRouter.push(`/my-page`);
+      else {
+        alert('로그인이 필요합니다!');
+        nextRouter.push(`/login`);
+      }
     } catch (err) {
       rejectHandler(err);
     }
@@ -46,7 +51,7 @@ export default function Banner() {
             <p className={styles.highlight}>설문이용</p>에서 설문조사를 시작해보세요!
           </div>
           <div>설문이용은 설문조사 제작자와 참여자가 함께하는 장소입니다. </div>
-          <button className={styles.create} type="button" onClick={onCreate}>
+          <button className={styles.create} type="button" onClick={tryPushToMyPage}>
             설문조사 만들기 →
           </button>
         </div>
