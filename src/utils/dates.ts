@@ -71,4 +71,16 @@ function dateReader(dateString: string): string {
   return `마감된 설문`;
 }
 
-export { dateParser, yymmdd, dateReader, convertToKst };
+function dateReaderForMyPage(dateString: string): string {
+  const { valid, sign, dayDiff, hourDiff, minuteDiff } = dateParser(dateString);
+
+  if (!valid) return 'invalid date';
+  if (sign === 0) return '마감된 설문';
+  if (dayDiff > 0) return `마감 ${dayDiff}일 전`;
+  if (hourDiff > 0) return `마감 ${hourDiff}시간 전`;
+  if (minuteDiff > 0) return `마감 ${minuteDiff}분 전`;
+
+  return `마감된 설문`;
+}
+
+export { dateParser, yymmdd, dateReader, convertToKst, dateReaderForMyPage };
