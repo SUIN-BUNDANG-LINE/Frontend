@@ -8,12 +8,11 @@ import styles from './Header.module.css';
 export default function Header() {
   const { user } = useAuth();
 
-  const Login = <div />;
-  // const HiddenLogin = (
-  //   <Link href="/login" className={styles.login}>
-  //     로그인
-  //   </Link>
-  // );
+  const Login = (
+    <Link href="/login" className={styles.login}>
+      로그인
+    </Link>
+  );
 
   return (
     <div className={styles.header}>
