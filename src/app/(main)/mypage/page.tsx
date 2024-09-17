@@ -1,16 +1,16 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { MySurveys, SurveyStatus, MySurvey } from '@/services/my-page/types';
-import { getMySurveys } from '@/services/my-page/fetch';
-import { StatusForFilter, SortType } from '@/services/my-page/types';
+import type { MySurveys, SurveyStatus, MySurvey } from '@/services/mypage/types';
+import { getMySurveys } from '@/services/mypage/fetch';
+import { StatusForFilter, SortType } from '@/services/mypage/types';
 import { useAuth } from '@/hooks/useAuth';
 import { dateReaderForMyPage, yymmdd } from '@/utils/dates';
 import Link from 'next/link';
-import Header from '@/components/my-page/Header';
-import Table from '@/components/my-page/Table';
-import Field from '@/components/my-page/Field';
-import Filter from '@/components/my-page/Filter'; // 필터 컴포넌트 임포트
+import Header from '@/components/mypage/Header';
+import Table from '@/components/mypage/Table';
+import Field from '@/components/mypage/Field';
+import Filter from '@/components/mypage/Filter'; // 필터 컴포넌트 임포트
 import Image from 'next/image';
 
 type MyPageSurveyInfo = {
@@ -26,7 +26,7 @@ const createdMapper = (arg: MyPageSurveyInfo) => {
   return (
     <>
       <Link
-        href={arg.status in ['제작 중', '수정 중', '마감'] ? `/workbench/${arg.id}` : `/management/${arg.id}`}
+        href={['제작 중', '수정 중', '마감'].includes(arg.status) ? `/workbench/${arg.id}` : `/management/${arg.id}`}
         style={{ textDecoration: 'none', color: 'inherit' }}>
         <span style={{ display: 'flex', alignItems: 'center' }}>
           <Image

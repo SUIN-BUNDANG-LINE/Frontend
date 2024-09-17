@@ -11,7 +11,7 @@ export default function SurveyCreateButton() {
   }
 
   return (
-    <Button variant="primary" height="35px" onClick={() => createNewSurvey}>
+    <Button variant="primary" height="35px" onClick={() => createNewSurvey()}>
       <span style={{ color: '#fff' }}>새로운 설문 만들기 →</span>
     </Button>
   );

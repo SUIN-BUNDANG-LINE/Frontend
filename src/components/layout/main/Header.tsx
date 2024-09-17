@@ -24,7 +24,7 @@ export default function Header() {
         {!user && Login}
         {user && (
           <div className={styles.userMenu}>
-            <Link href="/my-page" className={styles.myPage}>
+            <Link href="/mypage" className={styles.myPage}>
               <FaExternalLinkAlt className={styles.myPageIcon} /> {' 마이페이지'}
             </Link>
             <User user={user} />

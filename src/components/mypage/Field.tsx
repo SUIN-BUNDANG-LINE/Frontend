@@ -1,5 +1,5 @@
 import Wrapper from '@/components/layout/Wrapper';
-import SurveyCreateButton from '@/components/my-page/SurveyCreateButton';
+import SurveyCreateButton from '@/components/mypage/SurveyCreateButton';
 import styles from './Field.module.css';
 
 interface Props {

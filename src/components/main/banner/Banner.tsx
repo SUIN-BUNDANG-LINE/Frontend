@@ -33,7 +33,7 @@ export default function Banner() {
 
   const tryPushToMyPage = async () => {
     try {
-      if (user != null) nextRouter.push(`/my-page`);
+      if (user != null) nextRouter.push(`/mypage`);
       else {
         alert('로그인이 필요합니다!');
         nextRouter.push(`/login`);

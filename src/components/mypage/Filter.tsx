@@ -1,4 +1,4 @@
-import { StatusForFilter, SortType } from '@/services/my-page/types';
+import { StatusForFilter, SortType } from '@/services/mypage/types';
 import { FaFilter, FaSort } from 'react-icons/fa';
 import styles from './Filter.module.css'; // 별도의 CSS 모듈을 사용할 수도 있습니다.
 
