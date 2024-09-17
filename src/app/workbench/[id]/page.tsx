@@ -11,6 +11,7 @@ import { cin } from '@/components/workbench/func';
 import styles from './layout.module.css';
 import Tab1 from './tab1';
 import Tab0 from './tab0';
+import Tab2 from './tab2';
 
 const getTabFromSearchParams = (searchParams: ReadonlyURLSearchParams) => {
   const arg = Number(searchParams.get('tab'));
@@ -41,6 +42,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (!isLoading) {
     if (tab === 0) content = <Tab0 />;
     if (tab === 1) content = <Tab1 />;
+    if (tab === 2) content = <Tab2 />;
   }
 
   return (
