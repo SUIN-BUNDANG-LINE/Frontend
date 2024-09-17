@@ -76,9 +76,9 @@ function dateReaderForMyPage(dateString: string): string {
 
   if (!valid) return 'invalid date';
   if (sign === 0) return '마감된 설문';
-  if (dayDiff > 0) return `마감 ${dayDiff}일 전`;
-  if (hourDiff > 0) return `마감 ${hourDiff}시간 전`;
-  if (minuteDiff > 0) return `마감 ${minuteDiff}분 전`;
+  if (dayDiff > 0) return `${dayDiff}일 후 마감`;
+  if (hourDiff > 0) return `${hourDiff}시간 후 마감`;
+  if (minuteDiff > 0) return `${minuteDiff}분 후 마감`;
 
   return `마감된 설문`;
 }
