@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { fetchSurvey } from './fetch';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { fetchSurvey, fetchCreate } from './fetch';
 
 const queryKeys = {
   root: ['workbench'],
@@ -13,4 +13,10 @@ const useWorkbenchSurvey = (surveyId: string) => {
   });
 };
 
-export { useWorkbenchSurvey };
+const useCreateSurvey = () => {
+  return useMutation({
+    mutationFn: () => fetchCreate(),
+  });
+};
+
+export { useWorkbenchSurvey, useCreateSurvey };

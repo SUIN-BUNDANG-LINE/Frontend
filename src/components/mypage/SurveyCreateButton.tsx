@@ -1,13 +1,25 @@
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/button/Button';
-import { fetchCreate } from '@/components/workbench/service/fetch';
+import { useCreateSurvey } from '@/components/workbench/service/index';
+import type { ErrorCause } from '@/services/ky-wrapper';
+import { showToast } from '@/utils/toast';
 
 export default function SurveyCreateButton() {
   const nextRouter = useRouter();
+  const mutation = useCreateSurvey();
 
   async function createNewSurvey() {
-    const data = await fetchCreate();
-    nextRouter.push(`/workbench/${data.surveyId}`);
+    mutation.mutate(
+      {},
+      {
+        onSuccess: (data) => {
+          nextRouter.push(`/workbench/${data.surveyId}`);
+        },
+        onError: (error) => {
+          showToast('error', (error.cause as ErrorCause).message);
+        },
+      }
+    );
   }
 
   return (
