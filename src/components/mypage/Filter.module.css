@@ -1,0 +1,48 @@
+/* 필터를 감싸는 컨테이너 */
+.filterContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 8px;
+  gap: 20px; /* 필터 아이템 간격 */
+}
+
+/* 각 필터 아이템 */
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 라벨과 선택 상자 사이의 간격 */
+}
+
+/* Select 태그 스타일을 위한 클래스 */
+.select {
+  padding: 4px 8px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.select:hover {
+  border-color: #888;
+}
+
+/* 라벨 스타일 */
+.label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+.iconAndSelect {
+  display: flex;
+  align-items: center; /* 아이콘과 셀렉트박스 수직 중앙 정렬 */
+  gap: 8px; /* 아이콘과 드롭다운 사이의 간격 */
+}
+
+.icon {
+  font-size: 16px;
+}
