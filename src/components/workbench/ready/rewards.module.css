@@ -1,0 +1,62 @@
+.rewardsContainer {
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 700px;
+  margin: 12px auto;
+}
+
+.title {
+  font-size: 18px;
+  color: var(--gray-d);
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--gray);
+}
+
+.summary {
+  color: var(--gray-d);
+  padding: 12px 0;
+}
+
+.list {
+  padding: 0;
+}
+
+.listItem {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  column-gap: 8px;
+  list-style-type: disc;
+  height: 20px;
+  line-height: 20px;
+  font-size: 15px;
+  color: var(--gray-md);
+  padding: 3px 0;
+}
+
+.listHeader {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--gray-d);
+}
+
+.listItem > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+.about {
+  color: var(--gray-d);
+  padding: 8px 0;
+}
+
+.warning {
+  background-color: var(--gray-ml);
+  padding: 8px;
+  text-align: center;
+  color: var(--gray-d);
+  font-style: italic;
+}
