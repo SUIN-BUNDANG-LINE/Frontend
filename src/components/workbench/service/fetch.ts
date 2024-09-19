@@ -117,19 +117,12 @@ const fetchCreate = async () => {
   return kyWrapper.post<{ surveyId: string }>(makeUrl(['surveys', 'workbench', 'create']));
 };
 
-const fetchSurvey = async ({
-  surveyId,
-  survey,
-  method,
-}: {
-  surveyId: string;
-  method: 'PUT' | 'GET';
-  survey?: OutgoingSurvey;
-}) => {
-  if (method === 'PUT') {
-    return kyWrapper.put(makeUrl(['surveys', 'workbench', surveyId]), { json: survey });
-  }
+const fetchSurveyPut = async ({ surveyId, survey }: { surveyId: string; survey: OutgoingSurvey }) => {
+  return kyWrapper.put(makeUrl(['surveys', 'workbench', surveyId]), { json: survey });
+};
+
+const fetchSurveyGet = async ({ surveyId }: { surveyId: string }) => {
   return kyWrapper.get<ImportedSurvey>(makeUrl(['surveys', 'workbench', surveyId]));
 };
 
-export { fetchCreate, fetchSurvey };
+export { fetchCreate, fetchSurveyGet, fetchSurveyPut };
