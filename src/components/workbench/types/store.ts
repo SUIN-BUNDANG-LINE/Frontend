@@ -1,9 +1,6 @@
 import { RewardConfig } from './shared';
 
 type Store = {
-  // for FE
-  activeField: string | null;
-
   // about survey
   title: string;
   description: string;

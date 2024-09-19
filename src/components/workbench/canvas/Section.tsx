@@ -17,9 +17,10 @@ type Props = {
   section: Section;
   index: number;
   isDraggingOver: boolean;
+  activeState: [string | null, React.Dispatch<React.SetStateAction<string | null>>];
 };
 
-function SectionComponent({ section, index, isDraggingOver }: Props) {
+function SectionComponent({ section, index, isDraggingOver, activeState }: Props) {
   const { sectionId } = section;
 
   const [fold, setFold] = React.useState(false);
@@ -244,6 +245,7 @@ function SectionComponent({ section, index, isDraggingOver }: Props) {
                                 key={field.fieldId}
                                 index={fields.filter((f) => f.sectionId === section.sectionId).indexOf(field)}
                                 field={field}
+                                activeState={activeState}
                               />
                             );
                           })}

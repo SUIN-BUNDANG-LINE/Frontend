@@ -35,11 +35,12 @@ export default function Toc({
       </div>
       {toc.map(({ section, fields }) => (
         <div key={section.sectionId} className={styles.section}>
-          <h2 className={styles.sectionTitle}>{section.title}</h2>
+          <h2 className={styles.sectionTitle}>{section.title || '제목 없는 섹션'}</h2>
           <ul className={styles.fieldList}>
             {fields.map((field) => (
               <li key={field.fieldId} className={styles.fieldItem}>
-                {icon(field.type)} {field.title}
+                {icon(field.type)} {field.title || '제목 없는 질문'}{' '}
+                {field.required && <span style={{ color: 'red' }}>*</span>}
               </li>
             ))}
           </ul>

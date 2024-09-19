@@ -1,13 +1,10 @@
+'use client';
+
 import React from 'react';
-import useModal from '@/hooks/useModal';
-import Modal from '@/components/ui/modal/Modal';
-import { v4 as uuid } from 'uuid';
 import Svg from '../misc/Svg';
 import { useSurveyStore } from '../store';
-import { cout, validate } from '../func';
 import styles from './header.module.css';
 import { ErrorDescriptor } from '../types';
-import ErrorItem from './error-item';
 import Submit from './submit';
 
 const tabData = [
@@ -45,35 +42,15 @@ function Menu({ tab, tabHandler }: { tab: number; tabHandler: (newTab: number) =
 type Props = {
   tab: number;
   tabHandler: (newTab: number) => void;
+  errors: ErrorDescriptor[];
+  handleSubmit: () => void;
 };
 
-function Header({ tab, tabHandler }: Props) {
-  const store = useSurveyStore((state) => state);
+function Header({ tab, tabHandler, errors, handleSubmit }: Props) {
   const title = useSurveyStore((state) => state.title);
-  const [errors /* , setErrors */] = React.useState<ErrorDescriptor[]>([
-    { location: ['제목 없는 섹션'], reason: '섹션에 질문이 없습니다.' },
-    { location: ['제목 없는 섹션', '리선족의 뜻을 아시나요?'], reason: '중복된 선택지가 있습니다.' },
-    { reason: '즉시 추첨인데 리워드가 없음' },
-  ]);
-  const { isOpen, openModal, closeModal } = useModal();
-
-  const handleSubmit = () => {
-    if (errors.length !== 0) openModal();
-    if (!validate()) return;
-    const data = cout(store);
-    console.log(data);
-  };
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={closeModal} title={`저장 실패 사유 (${errors.length})`}>
-        <h3>다음 문제를 모두 해결해야 저장할 수 있습니다.</h3>
-        <div>
-          {errors.map(({ reason, location }) => (
-            <ErrorItem key={uuid()} reason={reason} location={location} />
-          ))}
-        </div>
-      </Modal>
       <div className={styles.maxUI}>
         <div className={styles.header}>
           <div className={styles.leave}>

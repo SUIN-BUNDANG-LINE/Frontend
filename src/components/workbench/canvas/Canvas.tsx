@@ -9,6 +9,7 @@ import Section from './Section';
 import styles from './Canvas.module.css';
 
 function Canvas() {
+  const activeState = React.useState<string | null>(null);
   const sections = useSurveyStore((state) => state.sections);
 
   return (
@@ -22,6 +23,7 @@ function Canvas() {
                 key={section.sectionId}
                 index={index}
                 isDraggingOver={snapshot.isDraggingOver}
+                activeState={activeState}
               />
             );
           })}

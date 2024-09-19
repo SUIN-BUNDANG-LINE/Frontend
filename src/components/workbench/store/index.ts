@@ -204,7 +204,14 @@ const useSurveyStore = create(
         const field = state.fields.find((f: Field) => f.fieldId === fieldId);
         if (!field) throw new Error('function editField failed: unknown field id');
 
-        if (updates.type && updates.type === 'text') field.other = false;
+        if (updates.type) {
+          if (updates.type === 'text') {
+            updates.other = false;
+          }
+          if ((updates.type === 'checkbox' || updates.type === 'radio') && field.options.length === 0) {
+            updates.options = [{ id: uuid(), content: '' }];
+          }
+        }
 
         Object.assign(field, updates);
       }),

@@ -1,8 +1,8 @@
 import { kyWrapper } from '@/services/ky-wrapper';
 import { makeUrl } from '@/services/utils';
-import { ImportedSurvey } from '../types';
+import { ImportedSurvey, OutgoingSurvey } from '../types';
 
-const DUMMY_SURVEY = {
+/* const DUMMY_SURVEY = {
   title: '카페 이용에 관한 설문조사',
   description: '우리 카페의 서비스와 품질을 개선하기 위해 여러분의 소중한 의견을 듣고자 합니다.',
   thumbnail: null,
@@ -15,12 +15,10 @@ const DUMMY_SURVEY = {
     rewards: [
       { name: '스타벅스 아메리카노 T', category: '커피', count: 1 },
       {
-        name: 'Lorem ipsum dolar sit amet, weiwefwefewfweofjiowejffewfwfefwefwefwefewfwefwefwijewjfoewjfiwejofw',
+        name: '하늘을 보니 구름이 천천히 흘러가며 바람이 살랑인다. 따스한 햇살이 창가를 비추며, 나뭇잎들이 바람에 흔들리고 있다.',
         category: '커피',
-        count: 1,
+        count: 10,
       },
-      { name: '스타벅스 아메리카노 T', category: '커피', count: 1 },
-      { name: '스타벅스 아메리카노 T', category: '커피', count: 1 },
     ],
     targetParticipantCount: null,
     finishedAt: '2024-09-27T00:00',
@@ -113,15 +111,25 @@ const DUMMY_SURVEY = {
       ],
     },
   ],
-} as ImportedSurvey;
+} as ImportedSurvey; */
 
 const fetchCreate = async () => {
   return kyWrapper.post<{ surveyId: string }>(makeUrl(['surveys', 'workbench', 'create']));
 };
 
-const fetchSurvey = async (surveyId: string) => {
-  // return kyWrapper.get<ImportedSurvey>(makeUrl(['surveys', 'workbench', surveyId]));
-  return { ...DUMMY_SURVEY, title: (DUMMY_SURVEY.title + surveyId[0]).slice(0, DUMMY_SURVEY.title.length) };
+const fetchSurvey = async ({
+  surveyId,
+  survey,
+  method,
+}: {
+  surveyId: string;
+  method: 'PUT' | 'GET';
+  survey?: OutgoingSurvey;
+}) => {
+  if (method === 'PUT') {
+    return kyWrapper.put(makeUrl(['surveys', 'workbench', surveyId]), { json: survey });
+  }
+  return kyWrapper.get<ImportedSurvey>(makeUrl(['surveys', 'workbench', surveyId]));
 };
 
 export { fetchCreate, fetchSurvey };

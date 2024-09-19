@@ -76,7 +76,6 @@ const cin = (survey: ImportedSurvey): Store => {
   return {
     fields,
     sections,
-    activeField: null,
     rewardConfig,
     ...surveyData, // Spread the remaining fields from surveyData
   };
@@ -120,7 +119,7 @@ const cout = (store: Store): OutgoingSurvey => {
             isRequired: j.required,
             type: ({ radio: 'SINGLE_CHOICE', checkbox: 'MULTIPLE_CHOICE', text: 'TEXT_RESPONSE' } as const)[j.type],
             choices: j.type === 'text' ? null : j.options.map((k) => k.content),
-            isAllowOther: j.other,
+            isAllowOther: j.type === 'text' ? false : j.other,
           }));
       })();
 
