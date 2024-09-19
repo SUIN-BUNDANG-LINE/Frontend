@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { fetchSurveyGet, fetchSurveyPut } from './fetch';
+import { fetchSurveyGet, fetchSurveyPut, fetchCreate } from './fetch';
 import { OutgoingSurvey } from '../types';
 
 const queryKeys = {
@@ -22,4 +22,10 @@ const usePutSurvey = (surveyId: string, onSuccess: () => void, onError: () => vo
   });
 };
 
-export { useGetSurvey, usePutSurvey };
+const useCreateSurvey = () => {
+  return useMutation({
+    mutationFn: () => fetchCreate(),
+  });
+};
+
+export { useGetSurvey, usePutSurvey, useCreateSurvey };
