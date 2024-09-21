@@ -1,9 +1,18 @@
-interface Results {
-  results: Result[];
+interface SurveyResult {
+  sectionResults: SectionResult[];
 }
 
-interface Result {
+interface SectionResult {
+  sectionId: string;
+  title: string;
+  questionResults: QuestionResult[];
+}
+
+interface QuestionResult {
   questionId: string;
+  title: string;
+  type: QuestionType;
+  participantCount: number;
   responses: Response[];
 }
 
@@ -27,4 +36,14 @@ interface QuestionFilter {
   isPositive: boolean;
 }
 
-export type { Results, SurveysResultParams, ResultFilter, Result, Response, QuestionFilter };
+type QuestionType = 'TEXT_RESPONSE' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
+
+export type {
+  SurveyResult,
+  SurveysResultParams,
+  ResultFilter,
+  SectionResult,
+  QuestionResult,
+  Response,
+  QuestionFilter,
+};
