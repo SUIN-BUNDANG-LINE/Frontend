@@ -36,6 +36,13 @@ interface QuestionFilter {
   isPositive: boolean;
 }
 
+interface QuestionResultInfo {
+  type: QuestionType;
+  title: string;
+  id: string;
+  contents: string[];
+}
+
 type QuestionType = 'TEXT_RESPONSE' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
 
 export type {
@@ -46,4 +53,6 @@ export type {
   QuestionResult,
   Response,
   QuestionFilter,
+  QuestionType,
+  QuestionResultInfo,
 };

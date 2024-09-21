@@ -13,3 +13,8 @@
 .container textarea {
   box-sizing: border-box;
 }
+
+.error {
+  display: flex;
+  justify-content: center;
+}
