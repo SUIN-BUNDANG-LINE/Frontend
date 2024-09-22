@@ -1,15 +1,15 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import type { QuestionFilter, QuestionResultInfo } from '@/services/result/types';
+import { FaTimes } from 'react-icons/fa';
+import styles from './QuestionFilterComponent.module.css';
 
 interface QuestionFilterComponentProps {
   filter: QuestionFilter;
   index: number;
-  onFilterChange: (index: number, field: keyof QuestionFilter, value: any) => void;
+  onFilterChange: (index: number, field: keyof QuestionFilter, value: string | boolean | string[]) => void;
   onRemoveFilter: (index: number) => void;
   resultInfo: QuestionResultInfo[];
+  isInvalid: boolean;
 }
 
 export default function QuestionFilterComponent({
@@ -18,15 +18,26 @@ export default function QuestionFilterComponent({
   onFilterChange,
   onRemoveFilter,
   resultInfo,
+  isInvalid,
 }: QuestionFilterComponentProps) {
-  // 선택된 질문 정보 찾기
   const selectedQuestion = resultInfo.find((info) => info.id === filter.questionId);
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-      <label>
-        질문 선택:
-        <select value={filter.questionId} onChange={(e) => onFilterChange(index, 'questionId', e.target.value)}>
+    <div className={`${styles.filterContainer} ${isInvalid ? styles.invalidFilter : ''}`}>
+      <button
+        type="button"
+        aria-label="필터 삭제"
+        className={styles.removeButton}
+        onClick={() => onRemoveFilter(index)}>
+        <FaTimes />
+      </button>
+
+      <div className={styles.field}>
+        <select
+          id={`question-select-${index}`}
+          className={styles.select}
+          value={filter.questionId}
+          onChange={(e) => onFilterChange(index, 'questionId', e.target.value)}>
           <option value="" disabled>
             질문을 선택하세요
           </option>
@@ -36,51 +47,57 @@ export default function QuestionFilterComponent({
             </option>
           ))}
         </select>
-      </label>
+        <span className={styles.inlineLabel}>에</span>
+      </div>
+
+      <div className={styles.field}>
+        <div className={styles.contentButtonContainer}>
+          {selectedQuestion ? (
+            selectedQuestion.contents.map((content) => (
+              <button
+                key={`content-${content}`}
+                className={`${styles.contentButton} ${
+                  filter.contents.includes(content) ? styles.selectedContentButton : ''
+                }`}
+                onClick={() =>
+                  onFilterChange(
+                    index,
+                    'contents',
+                    filter.contents.includes(content)
+                      ? filter.contents.filter((c) => c !== content)
+                      : [...filter.contents, content]
+                  )
+                }
+                title={content}
+                type="button">
+                {content}
+              </button>
+            ))
+          ) : (
+            <div className={styles.placeholderText}>질문을 먼저 선택해주세요.</div>
+          )}
+        </div>
+      </div>
 
       {selectedQuestion && (
-        <div>
-          <label>필터할 내용:</label>
-          <div>
-            {selectedQuestion.contents.map((content, contentIndex) => (
-              <div key={contentIndex}>
-                <input
-                  type="checkbox"
-                  checked={filter.contents.includes(content)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      // 체크박스가 체크되었을 때
-                      onFilterChange(index, 'contents', [...filter.contents, content]);
-                    } else {
-                      // 체크박스가 체크 해제되었을 때
-                      onFilterChange(
-                        index,
-                        'contents',
-                        filter.contents.filter((c) => c !== content)
-                      );
-                    }
-                  }}
-                />
-                {content}
-              </div>
-            ))}
-          </div>
+        <div className={styles.field}>
+          <span className={styles.inlineLabel}>라고</span>
+          <label htmlFor={`toggle-${index}`} className={styles.toggleSwitch}>
+            <input
+              id={`toggle-${index}`}
+              type="checkbox"
+              checked={filter.isPositive}
+              onChange={() => onFilterChange(index, 'isPositive', !filter.isPositive)}
+              aria-label="긍정 필터 여부 토글"
+            />
+            <div className={styles.switchSlider}>
+              <span className={styles.switchLabelLeft}>답변하지 않은</span>
+              <span className={styles.switchLabelRight}>답변한</span>
+            </div>
+          </label>
+          <span className={styles.inlineLabel}>참가자의 응답 보기</span>
         </div>
       )}
-
-      <label>
-        긍정 필터 여부:
-        <select
-          value={filter.isPositive ? 'true' : 'false'}
-          onChange={(e) => onFilterChange(index, 'isPositive', e.target.value === 'true')}>
-          <option value="true">포함</option>
-          <option value="false">제외</option>
-        </select>
-      </label>
-
-      <button type="button" onClick={() => onRemoveFilter(index)}>
-        필터 삭제
-      </button>
     </div>
   );
 }

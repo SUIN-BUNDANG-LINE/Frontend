@@ -1,8 +1,8 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import type { QuestionFilter, QuestionResultInfo } from '@/services/result/types';
 import QuestionFilterComponent from '@/components/management/result/QuestionFilterComponent';
+import { FaPlus, FaSearch } from 'react-icons/fa';
+import styles from './FilterManager.module.css';
 
 interface FilterManagerProps {
   onSearch: (filters: QuestionFilter[]) => void;
@@ -11,6 +11,7 @@ interface FilterManagerProps {
 
 export default function FilterManager({ onSearch, resultInfo }: FilterManagerProps) {
   const [tempFilters, setTempFilters] = useState<QuestionFilter[]>([]);
+  const [invalidFilterIndexes, setInvalidFilterIndexes] = useState<number[]>([]);
 
   const defaultQuestionFilter: QuestionFilter = {
     questionId: '',
@@ -26,33 +27,60 @@ export default function FilterManager({ onSearch, resultInfo }: FilterManagerPro
     setTempFilters((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handleFilterChange = (index: number, field: keyof QuestionFilter, value: any) => {
-    const updatedFilters = tempFilters.map((filter, i) => (i === index ? { ...filter, [field]: value } : filter));
-    setTempFilters(updatedFilters);
+  const handleFilterChange = (index: number, field: keyof QuestionFilter, value: string | boolean | string[]) => {
+    setTempFilters((prev) => {
+      const updatedFilters = prev.map((filter, i) => {
+        if (i === index) {
+          if (field === 'questionId' && filter.questionId !== value) {
+            return { ...filter, questionId: value as string, contents: [] };
+          }
+          return { ...filter, [field]: value };
+        }
+        return filter;
+      });
+      return updatedFilters;
+    });
+  };
+
+  const validateFilters = () => {
+    return tempFilters
+      .map((filter, index) => (!filter.questionId || filter.contents.length === 0 ? index : -1))
+      .filter((index) => index !== -1);
   };
 
   const handleSearch = () => {
-    onSearch(tempFilters);
+    const invalidIndexes = validateFilters();
+    if (invalidIndexes.length > 0) {
+      setInvalidFilterIndexes(invalidIndexes);
+      setTimeout(() => {
+        setInvalidFilterIndexes([]);
+      }, 500);
+    } else {
+      onSearch(tempFilters);
+    }
   };
 
   return (
-    <div>
+    <div className={styles.filterManagerContainer}>
+      <div className={styles.buttonGroup}>
+        <button type="button" onClick={handleAddFilter} className={styles.addButton}>
+          <FaPlus className={styles.buttonIcon} /> 필터 추가
+        </button>
+        <button type="button" onClick={handleSearch} className={styles.searchButton}>
+          <FaSearch className={styles.buttonIcon} /> 검색
+        </button>
+      </div>
       {tempFilters.map((filter, index) => (
         <QuestionFilterComponent
-          key={index}
+          key={filter.questionId}
           filter={filter}
           index={index}
           onFilterChange={handleFilterChange}
           onRemoveFilter={handleRemoveFilter}
           resultInfo={resultInfo}
+          isInvalid={invalidFilterIndexes.includes(index)}
         />
       ))}
-      <button type="button" onClick={handleAddFilter}>
-        필터 추가
-      </button>
-      <button type="button" onClick={handleSearch}>
-        검색
-      </button>
     </div>
   );
 }

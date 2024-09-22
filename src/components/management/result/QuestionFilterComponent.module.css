@@ -1,0 +1,176 @@
+.filterContainer {
+  position: relative;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 12px;
+  transition: background-color 0.5s; /* 배경색 변경 애니메이션 */
+}
+
+.invalidFilter {
+  background-color: rgba(255, 0, 0, 0.1); /* 유효하지 않은 필터의 배경색 */
+}
+
+.field {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.field:last-child {
+  margin-bottom: 0px;
+}
+
+.select {
+  flex-grow: 1;
+  max-width: calc(100% - 50px); /* 삭제 버튼과 "에"의 너비를 제외한 공간 */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 6px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.inlineLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.contentButtonContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 80px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.contentButton {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contentButton:hover {
+  border-color: rgb(255, 213, 33);
+}
+
+.selectedContentButton {
+  background-color: rgb(255, 213, 33);
+  border-color: rgb(255, 213, 33);
+}
+
+.placeholderText {
+  color: #888;
+  font-size: 14px;
+}
+
+.toggleSwitch {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 30px;
+  margin: 0 5px;
+  font-weight: 500;
+}
+
+.toggleSwitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switchSlider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 18px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: background-color 0.4s;
+}
+
+.switchSlider::before {
+  position: absolute;
+  content: '';
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  top: 4px;
+  background-color: white;
+  border-radius: 16px;
+  transition: transform 0.4s;
+}
+
+.toggleSwitch input:checked + .switchSlider::before {
+  transform: translateX(90px);
+}
+
+.switchLabelLeft,
+.switchLabelRight {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  pointer-events: none;
+  transition: opacity 0.4s; /* Smooth transition for showing and hiding */
+}
+
+.switchLabelLeft {
+  right: 10px;
+  text-align: right;
+  opacity: 1; /* Visible by default */
+}
+
+.switchLabelRight {
+  left: 10px;
+  text-align: left;
+  opacity: 1; /* Visible by default */
+}
+
+.toggleSwitch input:checked + .switchSlider .switchLabelLeft {
+  opacity: 0; /* Hide when toggle is on */
+}
+
+.toggleSwitch input:checked + .switchSlider .switchLabelRight {
+  opacity: 1; /* Show when toggle is on */
+}
+
+.toggleSwitch input:not(:checked) + .switchSlider .switchLabelLeft {
+  opacity: 1; /* Show when toggle is off */
+}
+
+.toggleSwitch input:not(:checked) + .switchSlider .switchLabelRight {
+  opacity: 0; /* Hide when toggle is off */
+}
+
+.toggleSwitch input:checked + .switchSlider {
+  background-color: rgb(255, 213, 33);
+}
+
+.removeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.removeButton:hover {
+  color: #555;
+}
