@@ -1,0 +1,53 @@
+.chartContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.pieChart {
+  width: 80%;
+  max-width: 400px;
+  max-height: 400px;
+  min-height: 250px;
+  flex-shrink: 0;
+}
+
+.legendContainer {
+  margin-left: 20px;
+  width: 20%;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  cursor: pointer;
+}
+
+.legendItem:hover .legendLabel {
+  overflow: visible;
+  white-space: normal;
+}
+
+.legendColorBox {
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legendLabel {
+  font-size: 14px;
+  flex-grow: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 0;
+}

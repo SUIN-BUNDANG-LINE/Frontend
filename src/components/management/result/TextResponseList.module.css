@@ -1,0 +1,14 @@
+.textResponseContainer {
+  padding-left: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.textResponseItem {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+}
