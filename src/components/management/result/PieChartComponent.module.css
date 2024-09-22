@@ -8,15 +8,14 @@
 .pieChart {
   width: 80%;
   max-width: 400px;
-  max-height: 400px;
-  min-height: 250px;
+  height: 250px;
   flex-shrink: 0;
 }
 
 .legendContainer {
   margin-left: 20px;
   width: 20%;
-  max-height: 400px;
+  max-height: 250px;
   overflow-y: auto;
 }
 
