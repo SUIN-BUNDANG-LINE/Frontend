@@ -27,7 +27,12 @@ export default function Tab0({ surveyId }: { surveyId: string }) {
     }));
   }
 
-  if (isLoading) return <Loading message="데이터를 불러오는 중..." />;
+  if (isLoading)
+    return (
+      <div className={styles.loading}>
+        <Loading message="데이터를 불러오는 중..." />
+      </div>
+    );
   if (isError)
     return (
       <div className={styles.error}>
@@ -37,15 +42,10 @@ export default function Tab0({ surveyId }: { surveyId: string }) {
 
   return (
     <div className={styles.container}>
-      {/* 필터 추가, 삭제 및 검색 관리 컴포넌트 */}
       <FilterManager onSearch={handleSearch} resultInfo={makeResultInfo()} />
-
-      {/* 설문 결과 */}
-      <div>
-        {data?.sectionResults.map((sectionResult: SectionResult) => (
-          <SectionResultViewer key={sectionResult.sectionId} sectionResult={sectionResult} />
-        ))}
-      </div>
+      {data?.sectionResults.map((sectionResult: SectionResult) => (
+        <SectionResultViewer key={sectionResult.sectionId} sectionResult={sectionResult} />
+      ))}
     </div>
   );
 }

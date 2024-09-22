@@ -14,7 +14,7 @@
   box-sizing: border-box;
 }
 
-.error {
+.loading, .error {
   display: flex;
   justify-content: center;
 }
