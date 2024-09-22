@@ -6,7 +6,7 @@ export default function SectionResultViewer({ sectionResult }: { sectionResult: 
 
   return (
     <div>
-      <h3>{title}</h3>
+      <h2>{title}</h2>
       {questionResults.map((questionResult: QuestionResult) => {
         return <QuestionChart key={questionResult.questionId} questionResult={questionResult} />;
       })}
