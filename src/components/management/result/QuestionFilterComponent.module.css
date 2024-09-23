@@ -22,7 +22,7 @@
   margin-bottom: 0px;
 }
 
-.select {
+.select, .selectExtended {
   flex-grow: 1;
   max-width: calc(100% - 50px); /* 삭제 버튼과 "에"의 너비를 제외한 공간 */
   padding: 8px;
