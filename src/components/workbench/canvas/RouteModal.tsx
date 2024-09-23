@@ -17,6 +17,12 @@ export default function RouteModal({ section, sections, fields, oldStrategy, han
   const [strat, setStrat] = React.useState<RouteStrategy>(oldStrategy);
   const [error, setError] = React.useState<string>();
 
+  const options = React.useMemo(() => {
+    if (strat.type !== 'conditional') return [];
+    const kf = fields.find((i) => i.fieldId === strat.detail.key);
+    return kf?.options || [];
+  }, [fields, strat]);
+
   const handleSelectType = (newType: RouteStrategy['type']) => {
     if (strat.type === newType) return;
     setStrat(
@@ -53,9 +59,10 @@ export default function RouteModal({ section, sections, fields, oldStrategy, han
   };
 
   const handleConditionalDetail = (optionId: string) => (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newRouter = (strat as Conditional).detail.router.map(({ id, content, next }) => {
-      return { id, content, next: optionId === id ? e.target.value : next };
-    });
+    const newRouter = (strat as Conditional).detail.router.map(({ id, next }) => ({
+      id,
+      next: optionId === id ? e.target.value : next,
+    }));
 
     setStrat((p) => ({
       type: 'conditional',
@@ -165,10 +172,10 @@ export default function RouteModal({ section, sections, fields, oldStrategy, han
               </select>
               {strat.detail.router.length !== 0 && (
                 <div className={styles.optBranches}>
-                  {strat.detail.router.map(({ id, content, next }) => {
+                  {strat.detail.router.map(({ id, next }) => {
                     return (
                       <div key={id}>
-                        <div>응답 &ldquo;{content}&rdquo;</div>
+                        <div>응답 &ldquo;{options.find((i) => i.id === id)?.content || ''}&rdquo;</div>
                         <select value={next} onChange={handleConditionalDetail(id)}>
                           <option value="$placeholder" disabled>
                             선택하기...

@@ -1,9 +1,6 @@
 import { RewardConfig } from './shared';
 
 type Store = {
-  // for FE
-  activeField: string | null;
-
   // about survey
   title: string;
   description: string;
@@ -37,7 +34,7 @@ type Conditional = {
     key: string;
     router: {
       id: string;
-      content: string;
+      // content: string;
       next: string;
     }[];
   };

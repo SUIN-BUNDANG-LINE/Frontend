@@ -11,6 +11,7 @@ import Svg from '../misc/Svg';
 type Props = {
   index: number;
   field: Field;
+  activeState: [string | null, React.Dispatch<React.SetStateAction<string | null>>];
 };
 
 type TitleProps = {
@@ -154,9 +155,10 @@ function RenderTypeSelector({ handleEdit }: { handleEdit: (updates: Partial<Fiel
 
 // ===== ===== MAIN COMPONENT ===== =====
 
-function FieldComponent({ index, field }: Props) {
-  const active = useSurveyStore((state) => state.activeField) === field.fieldId;
-  const setActiveField = useSurveyStore((state) => state.setActiveField);
+function FieldComponent({ index, field, activeState }: Props) {
+  const active = activeState[0] === field.fieldId;
+  const setActiveField = activeState[1];
+
   const editField = useSurveyStore((state) => state.editField);
   const copyField = useSurveyStore((state) => state.copyField);
   const deleteField = useSurveyStore((state) => state.deleteField);

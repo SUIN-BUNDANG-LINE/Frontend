@@ -1,15 +1,27 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { fetchSurvey, fetchCreate } from './fetch';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { fetchSurveyGet, fetchSurveyPut, fetchCreate } from './fetch';
+import { OutgoingSurvey } from '../types';
 
 const queryKeys = {
   root: ['workbench'],
   survey: (surveyId: string) => [...queryKeys.root, surveyId],
 };
 
-const useWorkbenchSurvey = (surveyId: string) => {
+const useGetSurvey = (surveyId: string) => {
   return useQuery({
     queryKey: queryKeys.survey(surveyId),
-    queryFn: () => fetchSurvey(surveyId),
+    queryFn: () => fetchSurveyGet({ surveyId }),
+    // refetchOnWindowFocus: false,
+    // refetchOnReconnect: false,
+    // refetchOnMount: false,
+  });
+};
+
+const usePutSurvey = (surveyId: string, onSuccess: () => void, onError: () => void) => {
+  return useMutation({
+    mutationFn: (survey: OutgoingSurvey) => fetchSurveyPut({ surveyId, survey }),
+    onSuccess,
+    onError,
   });
 };
 
@@ -19,4 +31,4 @@ const useCreateSurvey = () => {
   });
 };
 
-export { useWorkbenchSurvey, useCreateSurvey };
+export { useGetSurvey, usePutSurvey, useCreateSurvey };

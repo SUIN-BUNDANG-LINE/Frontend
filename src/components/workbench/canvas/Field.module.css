@@ -70,6 +70,7 @@
   line-height: 24px;
   outline: none;
   padding-left: 0;
+  width: 100%;
 }
 
 .active .title input {
@@ -170,6 +171,10 @@
 
 .active .selectableResponseItem button:hover {
   background-color: #f3f3f3;
+}
+
+.active .selectableResponseItem input {
+  width: 100%;
 }
 
 .active .selectableResponseItem input:focus,

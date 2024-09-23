@@ -22,27 +22,28 @@ function RewardModal({
 }) {
   const [category, setCategory] = React.useState('');
   const [name, setName] = React.useState('');
-  const [count, setCount] = React.useState(1);
+  const [count, setCount] = React.useState('');
 
   const categoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategory(e.target.value.trim().slice(0, 20));
+    setCategory(e.target.value.trimStart().slice(0, 20));
   };
 
   const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value.trim().slice(0, 40));
+    setName(e.target.value.trimStart().slice(0, 40));
   };
 
   const countHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = Math.max(1, Math.min(maxTargetParticipant, +e.target.value.replace(/[^0-9]/g, '')));
+    const val = e.target.value.replace(/[^0-9]/g, '');
+    // const val = Math.max(1, Math.min(maxTargetParticipant, +e.target.value.replace(/[^0-9]/g, '')));
     setCount(val);
   };
 
   const onSubmit = () => {
-    if (category.trim() === '' || name.trim() === '') {
+    if (category.trim() === '' || name.trim() === '' || count === '') {
       return;
     }
 
-    handleRewardAdd({ category, name, count });
+    handleRewardAdd({ category, name, count: Math.min(maxTargetParticipant, Math.max(1, +count)) });
     closeModal();
   };
 
@@ -77,10 +78,20 @@ function RewardModal({
       <div className={styles.inputGroup}>
         <label htmlFor="new-reward-count" className={styles.label}>
           수량
-          <input id="new-reward-count" type="text" className={styles.input} value={count} onChange={countHandler} />
+          <input
+            id="new-reward-count"
+            type="text"
+            className={styles.input}
+            placeholder="1"
+            value={count}
+            onChange={countHandler}
+          />
         </label>
       </div>
-      <Button variant="primary" onClick={onSubmit} disabled={category.trim() === '' || name.trim() === ''}>
+      <Button
+        variant="primary"
+        onClick={onSubmit}
+        disabled={category.trim() === '' || name.trim() === '' || count === ''}>
         추가
       </Button>
     </div>

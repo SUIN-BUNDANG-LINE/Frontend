@@ -3,6 +3,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { v4 as uuid } from 'uuid';
+import { subscribeWithSelector } from 'zustand/middleware';
 import type { Field, Section, Store, TextField, CheckboxField, RadioField, RewardConfig } from '../types';
 
 function getDefaultSection(): Section {
@@ -34,8 +35,6 @@ function getDefaultField(sectionId: string, type: Field['type']) {
 }
 
 const DEFAULT_STORE: Store = {
-  activeField: null,
-
   title: '',
   description: '',
   thumbnail: null,
@@ -55,9 +54,7 @@ const DEFAULT_STORE: Store = {
   fields: [],
 };
 
-type Actions = {
-  setActiveField: (fieldId: string) => void;
-
+export type Actions = {
   initStore: ({ store }: { store: Store }) => void;
 
   setter: ({ key, value }: { key: string; value: unknown }) => void;
@@ -80,141 +77,141 @@ type Actions = {
   deleteField: ({ fieldId }: { fieldId: string }) => void;
 };
 
-const useSurveyStore = create(
-  immer<Store & Actions>((set) => ({
-    ...DEFAULT_STORE,
+const useSurveyStore = create<Store & Actions>()(
+  immer(
+    subscribeWithSelector((set) => ({
+      ...DEFAULT_STORE,
 
-    initStore: ({ store }) => {
-      set((state) => {
-        Object.assign(state, store);
-      });
-    },
+      initStore: ({ store }) => {
+        set((state) => {
+          Object.assign(state, store);
+        });
+      },
 
-    setter: ({ key, value }) => {
-      set((state) => {
-        Object.assign(state, { [key]: value });
-      });
-    },
+      setter: ({ key, value }) => {
+        set((state) => {
+          Object.assign(state, { [key]: value });
+        });
+      },
 
-    rewardSetter: ({ updates }) => {
-      set((state) => {
-        Object.assign(state.rewardConfig, updates);
-      });
-    },
+      rewardSetter: ({ updates }) => {
+        set((state) => {
+          Object.assign(state.rewardConfig, updates);
+        });
+      },
 
-    setActiveField: (fieldId: string) => {
-      set((state) => {
-        state.activeField = fieldId;
-      });
-    },
+      // Add, edit, delete a section
+      setSections: ({ sections }) => {
+        set((state) => {
+          state.sections = sections;
+        });
+      },
 
-    // Add, edit, delete a section
-    setSections: ({ sections }) => {
-      set((state) => {
-        state.sections = sections;
-      });
-    },
+      setSectionTitle: ({ sectionId, title }) => {
+        set((state) => {
+          const section = state.sections.find((s: Section) => s.sectionId === sectionId);
+          if (section) {
+            Object.assign(section, { title });
+          }
+        });
+      },
 
-    setSectionTitle: ({ sectionId, title }) => {
-      set((state) => {
-        const section = state.sections.find((s: Section) => s.sectionId === sectionId);
-        if (section) {
-          Object.assign(section, { title });
-        }
-      });
-    },
+      setSectionDescription: ({ sectionId, description }) => {
+        set((state) => {
+          const section = state.sections.find((s: Section) => s.sectionId === sectionId);
+          if (section) {
+            Object.assign(section, { description });
+          }
+        });
+      },
 
-    setSectionDescription: ({ sectionId, description }) => {
-      set((state) => {
-        const section = state.sections.find((s: Section) => s.sectionId === sectionId);
-        if (section) {
-          Object.assign(section, { description });
-        }
-      });
-    },
+      addSection: ({ index }) =>
+        set((state) => {
+          state.sections.splice(index, 0, getDefaultSection());
+        }),
 
-    addSection: ({ index }) =>
-      set((state) => {
-        state.sections.splice(index, 0, getDefaultSection());
-      }),
+      copySection: ({ section, index }) =>
+        set((state) => {
+          const newSectionId = uuid();
+          const newSection = structuredClone(section);
+          newSection.sectionId = newSectionId;
+          newSection.routeStrategy = { type: 'sequential', detail: null };
 
-    copySection: ({ section, index }) =>
-      set((state) => {
-        const newSectionId = uuid();
-        const newSection = structuredClone(section);
-        newSection.sectionId = newSectionId;
-        newSection.routeStrategy = { type: 'sequential', detail: null };
+          const newFields = state.fields
+            .filter((f) => f.sectionId === section.sectionId)
+            .map((f) => ({
+              ...f,
+              fieldId: uuid(),
+              sectionId: newSectionId,
+              options: f.options.map((o) => ({ id: uuid(), content: o.content })),
+            }));
 
-        const newFields = state.fields
-          .filter((f) => f.sectionId === section.sectionId)
-          .map((f) => ({
-            ...f,
-            fieldId: uuid(),
-            sectionId: newSectionId,
-            options: f.options.map((o) => ({ id: uuid(), content: o.content })),
-          }));
+          state.sections.splice(index + 1, 0, newSection);
+          state.fields.push(...newFields);
+        }),
 
-        state.sections.splice(index + 1, 0, newSection);
-        state.fields.push(...newFields);
-      }),
+      editSection: ({ sectionId, updates }) =>
+        set((state) => {
+          const section = state.sections.find((s: Section) => s.sectionId === sectionId);
+          if (section) {
+            Object.assign(section, updates);
+          }
+        }),
 
-    editSection: ({ sectionId, updates }) =>
-      set((state) => {
-        const section = state.sections.find((s: Section) => s.sectionId === sectionId);
-        if (section) {
-          Object.assign(section, updates);
-        }
-      }),
+      deleteSection: ({ sectionId }) =>
+        set((state) => {
+          state.sections = state.sections.filter((s: Section) => s.sectionId !== sectionId);
+          state.fields = state.fields.filter((f: Field) => f.sectionId !== sectionId);
+        }),
 
-    deleteSection: ({ sectionId }) =>
-      set((state) => {
-        state.sections = state.sections.filter((s: Section) => s.sectionId !== sectionId);
-        state.fields = state.fields.filter((f: Field) => f.sectionId !== sectionId);
-        if (state.sections.length === 0) state.sections.push(getDefaultSection());
-      }),
+      // Add, edit, delete a field
+      setFields: ({ fields }) =>
+        set((state) => {
+          state.fields = fields;
+        }),
 
-    // Add, edit, delete a field
-    setFields: ({ fields }) =>
-      set((state) => {
-        state.fields = fields;
-      }),
+      copyField: ({ field, sectionId, index }) =>
+        set((state) => {
+          const position = state.fields.findIndex((f: Field) => f.sectionId === sectionId) + index;
 
-    copyField: ({ field, sectionId, index }) =>
-      set((state) => {
-        const position = state.fields.findIndex((f: Field) => f.sectionId === sectionId) + index;
+          const newField = structuredClone(field);
+          newField.fieldId = uuid();
 
-        const newField = structuredClone(field);
-        newField.fieldId = uuid();
+          state.fields.splice(position, 0, newField);
+        }),
 
-        state.fields.splice(position, 0, newField);
-        state.activeField = newField.fieldId;
-      }),
+      addField: ({ sectionId, index, type }) =>
+        set((state) => {
+          const position = state.fields.findIndex((f: Field) => f.sectionId === sectionId) + index;
+          const newField = getDefaultField(sectionId, type);
 
-    addField: ({ sectionId, index, type }) =>
-      set((state) => {
-        const position = state.fields.findIndex((f: Field) => f.sectionId === sectionId) + index;
-        const newField = getDefaultField(sectionId, type);
+          state.fields.splice(position, 0, newField);
+        }),
 
-        state.fields.splice(position, 0, newField);
-        state.activeField = newField.fieldId;
-      }),
+      editField: ({ fieldId, updates }) =>
+        set((state) => {
+          const field = state.fields.find((f: Field) => f.fieldId === fieldId);
+          if (!field) throw new Error('function editField failed: unknown field id');
 
-    editField: ({ fieldId, updates }) =>
-      set((state) => {
-        const field = state.fields.find((f: Field) => f.fieldId === fieldId);
-        if (!field) throw new Error('function editField failed: unknown field id');
+          if (updates.type) {
+            if (updates.type === 'text') {
+              updates.other = false;
+            }
+            if ((updates.type === 'checkbox' || updates.type === 'radio') && field.options.length === 0) {
+              updates.options = [{ id: uuid(), content: '' }];
+            }
+          }
 
-        if (updates.type && updates.type === 'text') field.other = false;
+          Object.assign(field, updates);
+        }),
 
-        Object.assign(field, updates);
-      }),
-
-    deleteField: ({ fieldId }) =>
-      set((state) => {
-        const fieldIndex = state.fields.findIndex((f: Field) => f.fieldId === fieldId);
-        if (fieldIndex !== -1) state.fields.splice(fieldIndex, 1);
-      }),
-  }))
+      deleteField: ({ fieldId }) =>
+        set((state) => {
+          const fieldIndex = state.fields.findIndex((f: Field) => f.fieldId === fieldId);
+          if (fieldIndex !== -1) state.fields.splice(fieldIndex, 1);
+        }),
+    }))
+  )
 );
 
 export { useSurveyStore };
