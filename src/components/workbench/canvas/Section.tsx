@@ -82,15 +82,20 @@ function SectionComponent({ section, index, isDraggingOver, activeState }: Props
 
           const updateRequired =
             detail.router.some((i) => keyField.options.every((j) => j.id !== i.id)) ||
-            keyField.options.some((i) => detail.router.every((j) => j.id !== i.id));
+            keyField.options.some((i) => detail.router.every((j) => j.id !== i.id)) ||
+            detail.router.some((i) => sections.every((j) => j.sectionId !== i.next));
           if (!updateRequired) return currentStrat;
 
-          // 삭제한 옵션은 라우터에서도 제외
-          const newRouter = detail.router.filter((i) => keyField.options.some((j) => j.id === i.id));
-
-          // 생성된 옵션은 다음 섹션으로 설정
           const sectionIndex = sections.findIndex((i) => i.sectionId === sectionId);
           const nextSectionId = 1 + sectionIndex < sections.length ? sections.at(1 + sectionIndex)!.sectionId : Submit;
+
+          // 삭제한 옵션은 라우터에서도 제외
+          // 이동할 섹션이 삭제되었으면 다음 섹션으로 설정
+          const newRouter = detail.router
+            .filter((i) => keyField.options.some((j) => j.id === i.id))
+            .map((i) => (sections.every((j) => j.sectionId !== i.next) ? { id: i.id, next: nextSectionId } : i));
+
+          // 생성된 옵션은 다음 섹션으로 설정
           newRouter.push(
             ...keyField.options
               .filter((i) => newRouter.every((j) => j.id !== i.id))
