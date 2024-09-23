@@ -1,21 +1,29 @@
-import React, { useState } from 'react';
-import 'moment/locale/ko';
+import { useState, useEffect } from 'react';
 import type { ResultFilter, SectionResult, QuestionFilter, QuestionResultInfo } from '@/services/result/types';
 import SectionResultViewer from '@/components/management/result/SectionResultViewer';
 import { useSurveyResult } from '@/services/result';
 import { FaUsers } from 'react-icons/fa';
 import Loading from '@/components/ui/loading/Loading';
 import Error from '@/components/ui/error/Error';
-import FilterManager from '@/components/management/result/FilterManager'; // 새로 만든 컴포넌트 임포트
+import FilterManager from '@/components/management/result/FilterManager';
 import styles from './tab0.module.css';
 
 export default function Tab0({ surveyId }: { surveyId: string }) {
   const [resultFilter, setResultFilter] = useState<ResultFilter>({ questionFilters: [] });
+  const [isManualSearch, setIsManualSearch] = useState(false);
   const { data, isLoading, isError, refetch } = useSurveyResult(surveyId, resultFilter);
 
   const handleSearch = (filters: QuestionFilter[]) => {
     setResultFilter({ questionFilters: filters });
+    setIsManualSearch(true);
   };
+
+  useEffect(() => {
+    if (isManualSearch) {
+      refetch();
+      setIsManualSearch(false);
+    }
+  }, [isManualSearch, refetch]);
 
   function makeResultInfo(): QuestionResultInfo[] {
     const questionResults = data?.sectionResults?.flatMap((sectionResult) => sectionResult.questionResults);
