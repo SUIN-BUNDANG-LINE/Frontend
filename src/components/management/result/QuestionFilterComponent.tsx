@@ -54,9 +54,10 @@ export default function QuestionFilterComponent({
       <div className={styles.field}>
         <div className={styles.contentButtonContainer}>
           {selectedQuestion ? (
-            selectedQuestion.contents.map((content) => (
+            selectedQuestion.contents.map((content, idx) => (
               <button
-                key={`content-${content}`}
+                // eslint-disable-next-line react/no-array-index-key
+                key={idx}
                 className={`${styles.contentButton} ${
                   filter.contents.includes(content) ? styles.selectedContentButton : ''
                 }`}

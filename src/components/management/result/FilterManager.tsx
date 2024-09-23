@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import type { QuestionFilter, QuestionResultInfo } from '@/services/result/types';
 import QuestionFilterComponent from '@/components/management/result/QuestionFilterComponent';
 import { FaPlus, FaSearch } from 'react-icons/fa';
-import { showToast } from '@/utils/toast'; // Import the showToast function
+import { showToast } from '@/utils/toast';
 import styles from './FilterManager.module.css';
 
 interface FilterManagerProps {
@@ -79,7 +79,8 @@ export default function FilterManager({ onSearch, resultInfo }: FilterManagerPro
       </div>
       {tempFilters.map((filter, index) => (
         <QuestionFilterComponent
-          key={filter.questionId}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
           filter={filter}
           index={index}
           onFilterChange={handleFilterChange}
