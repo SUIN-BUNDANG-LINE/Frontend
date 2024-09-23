@@ -39,7 +39,7 @@ export default function Header({ tab, tabHandler, title }: Props) {
           </Link>
         </div>
         <div className={styles.second}>
-          <div className={styles.title}>{title !== undefined ? title : ''}</div>
+          <div className={styles.title}>{title || '불러오는 중...'}</div>
           <div className={styles.menu}>
             {tabData.map(({ label, path }, index) => (
               <button
