@@ -3,9 +3,9 @@
 import React from 'react';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { replaceURLSearchParams } from '@/utils/url-search-params';
-import { useWorkbenchSurvey } from '@/components/workbench/service';
+import { useGetSurvey } from '@/components/workbench/service';
 import Header from '@/components/management/ui/Header';
-import styles from './layout.module.css';
+import styles from './page.module.css';
 import Tab0 from './tab0';
 import Tab1 from './tab1';
 import Tab2 from './tab2';
@@ -22,7 +22,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const searchParams = useSearchParams();
   const [tab, setTab] = React.useState(getTabFromSearchParams(searchParams));
-  const { data } = useWorkbenchSurvey(id);
+  const { data } = useGetSurvey(id);
 
   const tabHandler = (newTab: number) => {
     setTab(newTab);
