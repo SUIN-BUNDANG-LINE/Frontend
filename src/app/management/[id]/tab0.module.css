@@ -18,3 +18,25 @@
   display: flex;
   justify-content: center;
 }
+
+.participantInfo{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.participantIcon {
+  height: 25px;
+}
+
+.participantInfoContent {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.participantInfoContent:last-child {
+  margin-right: 0px;
+}

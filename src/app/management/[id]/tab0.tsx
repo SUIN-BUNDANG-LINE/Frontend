@@ -3,6 +3,7 @@ import 'moment/locale/ko';
 import type { ResultFilter, SectionResult, QuestionFilter, QuestionResultInfo } from '@/services/result/types';
 import SectionResultViewer from '@/components/management/result/SectionResultViewer';
 import { useSurveyResult } from '@/services/result';
+import { FaUsers } from 'react-icons/fa';
 import Loading from '@/components/ui/loading/Loading';
 import Error from '@/components/ui/error/Error';
 import FilterManager from '@/components/management/result/FilterManager'; // 새로 만든 컴포넌트 임포트
@@ -23,7 +24,7 @@ export default function Tab0({ surveyId }: { surveyId: string }) {
       type: questionResult.type,
       title: questionResult.title,
       id: questionResult.questionId,
-      contents: questionResult.responses.map((response) => response.content),
+      contents: questionResult.responseContents,
     }));
   }
 
@@ -42,6 +43,12 @@ export default function Tab0({ surveyId }: { surveyId: string }) {
 
   return (
     <div className={styles.container}>
+      <div className={styles.participantInfo}>
+        <div className={styles.participantInfoContent}>
+          <FaUsers className={styles.participantIcon} />
+        </div>
+        <div className={styles.participantInfoContent}>응답자 수: {data?.participantCount}명</div>
+      </div>
       <FilterManager onSearch={handleSearch} resultInfo={makeResultInfo()} />
       {data?.sectionResults.map((sectionResult: SectionResult) => (
         <SectionResultViewer key={sectionResult.sectionId} sectionResult={sectionResult} />
