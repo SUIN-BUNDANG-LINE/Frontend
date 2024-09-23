@@ -33,6 +33,11 @@
   font-size: 14px;
 }
 
+.selectExtended {
+  max-width: calc(100% - 92.31px);
+  margin-left: 6px;
+}
+
 .inlineLabel {
   font-size: 14px;
   font-weight: 500;

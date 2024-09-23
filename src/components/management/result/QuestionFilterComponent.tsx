@@ -33,9 +33,10 @@ export default function QuestionFilterComponent({
       </button>
 
       <div className={styles.field}>
+        {index > 0 && <span className={styles.inlineLabel}>그리고</span>}
         <select
           id={`question-select-${index}`}
-          className={styles.select}
+          className={`${styles.select} ${index > 0 ? styles.selectExtended : ''}`}
           value={filter.questionId}
           onChange={(e) => onFilterChange(index, 'questionId', e.target.value)}>
           <option value="" disabled>
