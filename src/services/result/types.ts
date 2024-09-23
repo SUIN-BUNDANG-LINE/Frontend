@@ -1,5 +1,6 @@
 interface SurveyResult {
   sectionResults: SectionResult[];
+  participantCount: number;
 }
 
 interface SectionResult {
@@ -14,6 +15,7 @@ interface QuestionResult {
   type: QuestionType;
   participantCount: number;
   responses: Response[];
+  responseContents: string[];
 }
 
 interface Response {
