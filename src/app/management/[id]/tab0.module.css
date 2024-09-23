@@ -1,0 +1,15 @@
+.container {
+  box-sizing: border-box;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.container div,
+.container label,
+.container input,
+.container textarea {
+  box-sizing: border-box;
+}
