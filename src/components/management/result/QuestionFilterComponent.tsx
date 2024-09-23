@@ -81,7 +81,7 @@ export default function QuestionFilterComponent({
 
       {selectedQuestion && (
         <div className={styles.field}>
-          <span className={styles.inlineLabel}>라고</span>
+          <span className={styles.inlineLabel}>중 하나 이상</span>
           <label htmlFor={`toggle-${index}`} className={styles.toggleSwitch}>
             <input
               id={`toggle-${index}`}
@@ -91,8 +91,8 @@ export default function QuestionFilterComponent({
               aria-label="긍정 필터 여부 토글"
             />
             <div className={styles.switchSlider}>
-              <span className={styles.switchLabelLeft}>답변하지 않은</span>
-              <span className={styles.switchLabelRight}>답변한</span>
+              <span className={styles.switchLabelLeft}>선택하지 않은</span>
+              <span className={styles.switchLabelRight}>선택한</span>
             </div>
           </label>
           <span className={styles.inlineLabel}>참가자의 응답 보기</span>
