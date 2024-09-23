@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import type { QuestionFilter, QuestionResultInfo } from '@/services/result/types';
 import QuestionFilterComponent from '@/components/management/result/QuestionFilterComponent';
 import { FaPlus, FaSearch } from 'react-icons/fa';
+import { showToast } from '@/utils/toast'; // Import the showToast function
 import styles from './FilterManager.module.css';
 
 interface FilterManagerProps {
@@ -20,6 +21,11 @@ export default function FilterManager({ onSearch, resultInfo }: FilterManagerPro
   };
 
   const handleAddFilter = () => {
+    if (tempFilters.length >= 20) {
+      showToast('error', '필터는 20개까지 추가할 수 있습니다.');
+      return;
+    }
+
     setTempFilters((prev) => [...prev, { ...defaultQuestionFilter }]);
   };
 
@@ -52,6 +58,7 @@ export default function FilterManager({ onSearch, resultInfo }: FilterManagerPro
     const invalidIndexes = validateFilters();
     if (invalidIndexes.length > 0) {
       setInvalidFilterIndexes(invalidIndexes);
+      showToast('error', '필터의 내용을 채워주세요.');
       setTimeout(() => {
         setInvalidFilterIndexes([]);
       }, 500);
