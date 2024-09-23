@@ -1,5 +1,15 @@
 import { v4 as uuid } from 'uuid';
-import type { ImportedSurvey, OutgoingSurvey, Store, Section, Field, RouteDetails, Question } from '../types';
+import moment from 'moment';
+import type {
+  ImportedSurvey,
+  OutgoingSurvey,
+  Store,
+  Section,
+  Field,
+  RouteDetails,
+  Question,
+  RewardConfig,
+} from '../types';
 import { Other, Submit } from '../misc/Route';
 
 const cin = (survey: ImportedSurvey): Store => {
@@ -95,16 +105,23 @@ const cout = (store: Store): OutgoingSurvey => {
               keyQuestionId: null,
               sectionRouteConfigs: null,
             };
-          case 'conditional':
+          case 'conditional': {
+            const { detail } = i.routeStrategy;
+            const { key, router } = detail;
+            const kf = fields.find((k) => k.fieldId === key);
+
             return {
               type: 'SET_BY_CHOICE',
               nextSectionId: null,
-              keyQuestionId: i.routeStrategy.detail.key,
-              sectionRouteConfigs: i.routeStrategy.detail.router.map((j) => ({
-                content: j.content === Other ? null : j.content,
-                nextSectionId: j.next === Submit ? null : j.next,
-              })),
+              keyQuestionId: key,
+              sectionRouteConfigs: router.map((j) => {
+                return {
+                  content: j.id === Other ? null : kf!.options.find((k) => k.id === j.id)!.content,
+                  nextSectionId: j.next === Submit ? null : j.next,
+                };
+              }),
             };
+          }
           default:
             throw new Error('알 수 없는 라우팅 방법입니다.');
         }
@@ -133,16 +150,21 @@ const cout = (store: Store): OutgoingSurvey => {
     });
   };
 
-  const {
-    title,
-    description,
-    thumbnail,
-    finishMessage,
-    isVisible,
-    rewardConfig: rewardSetting,
-    sections,
-    fields,
-  } = store;
+  const normalizeReward = (rewardConfig: RewardConfig): RewardConfig => {
+    const { type, rewards, targetParticipantCount, finishedAt } = rewardConfig;
+
+    switch (type) {
+      case 'IMMEDIATE_DRAW':
+        return { type, rewards, finishedAt: moment(finishedAt).toISOString(), targetParticipantCount };
+      case 'SELF_MANAGEMENT':
+        return { type, rewards, finishedAt: moment(finishedAt).toISOString(), targetParticipantCount: null };
+      case 'NO_REWARD':
+      default:
+        return { type: 'NO_REWARD', rewards: [], targetParticipantCount: null, finishedAt: null };
+    }
+  };
+
+  const { title, description, thumbnail, finishMessage, isVisible, rewardConfig, sections, fields } = store;
 
   return {
     title,
@@ -150,7 +172,7 @@ const cout = (store: Store): OutgoingSurvey => {
     thumbnail,
     finishMessage,
     isVisible,
-    rewardSetting,
+    rewardSetting: normalizeReward(rewardConfig),
     sections: getSections(sections, fields),
   };
 };

@@ -37,6 +37,10 @@
   transition: background-color 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
+.button:disabled {
+  cursor: wait;
+}
+
 .content {
   display: flex;
   justify-content: center;

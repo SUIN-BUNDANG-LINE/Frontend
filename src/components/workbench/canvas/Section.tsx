@@ -8,10 +8,10 @@ import Button from '@/components/ui/button/Button';
 import type { RouteStrategy, Section } from '../types';
 import { useSurveyStore } from '../store';
 import Field from './Field';
-import styles from './Section.module.css'; // Import styles
 import Svg from '../misc/Svg';
 import RouteModal from './RouteModal';
 import { Submit } from '../misc/Route';
+import styles from './Section.module.css'; // Import styles
 
 type Props = {
   section: Section;
@@ -94,7 +94,7 @@ function SectionComponent({ section, index, isDraggingOver, activeState }: Props
           newRouter.push(
             ...keyField.options
               .filter((i) => newRouter.every((j) => j.id !== i.id))
-              .map(({ id, content }) => ({ id, content, next: nextSectionId }))
+              .map(({ id }) => ({ id, next: nextSectionId }))
           );
 
           const newRouteStrategy = { type: 'conditional' as const, detail: { key: detail.key, router: newRouter } };

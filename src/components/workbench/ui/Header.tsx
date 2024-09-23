@@ -44,9 +44,10 @@ type Props = {
   tabHandler: (newTab: number) => void;
   errors: ErrorDescriptor[];
   handleSubmit: () => void;
+  isPending: boolean;
 };
 
-function Header({ tab, tabHandler, errors, handleSubmit }: Props) {
+function Header({ tab, tabHandler, errors, handleSubmit, isPending }: Props) {
   const title = useSurveyStore((state) => state.title);
 
   return (
@@ -60,7 +61,7 @@ function Header({ tab, tabHandler, errors, handleSubmit }: Props) {
             <div className={styles.title}>{title || '제목 없는 설문'}</div>
             <Menu tab={tab} tabHandler={tabHandler} />
           </div>
-          <Submit errors={errors} handleSubmit={handleSubmit} />
+          <Submit errors={errors} handleSubmit={handleSubmit} isPending={isPending} />
         </div>
       </div>
 
@@ -73,7 +74,7 @@ function Header({ tab, tabHandler, errors, handleSubmit }: Props) {
               </div>
               <div className={styles.title}>{title || '제목 없는 설문'}</div>
             </div>
-            <Submit errors={errors} handleSubmit={handleSubmit} />
+            <Submit errors={errors} handleSubmit={handleSubmit} isPending={isPending} />
           </div>
           <Menu tab={tab} tabHandler={tabHandler} />
         </div>

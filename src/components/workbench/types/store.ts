@@ -34,7 +34,7 @@ type Conditional = {
     key: string;
     router: {
       id: string;
-      content: string;
+      // content: string;
       next: string;
     }[];
   };

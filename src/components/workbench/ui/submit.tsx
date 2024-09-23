@@ -2,12 +2,18 @@ import { FaSave, FaExternalLinkAlt } from 'react-icons/fa';
 import { ErrorDescriptor } from '../types';
 import styles from './submit.module.css';
 
-export default function Submit({ errors, handleSubmit }: { errors: ErrorDescriptor[]; handleSubmit: () => void }) {
+type Props = { errors: ErrorDescriptor[]; handleSubmit: () => void; isPending: boolean };
+
+export default function Submit({ errors, handleSubmit, isPending }: Props) {
   const error = errors.length !== 0;
 
   return (
     <div className={styles.right}>
-      <button type="button" className={`${styles.button} ${error ? styles.error : ''}`} onClick={handleSubmit}>
+      <button
+        type="button"
+        className={`${styles.button} ${error ? styles.error : ''}`}
+        onClick={handleSubmit}
+        disabled={isPending}>
         {error && (
           <>
             <div>저장 불가</div>
@@ -17,7 +23,7 @@ export default function Submit({ errors, handleSubmit }: { errors: ErrorDescript
         {!error && (
           <div className={styles.content}>
             <FaSave />
-            수동 저장
+            {isPending ? '저장 중...' : '저장'}
           </div>
         )}
       </button>
