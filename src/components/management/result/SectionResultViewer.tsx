@@ -16,7 +16,7 @@ export default function SectionResultViewer({ sectionResult }: { sectionResult: 
       <div className={styles.sectionHeader}>
         <div className={styles.sectionTitle}>{title}</div>
         <button type="button" className={styles.collapseButton} onClick={toggleCollapse}>
-          {isCollapsed ? '▼' : '▲'}
+          {isCollapsed ? '열기' : '닫기'}
         </button>
       </div>
       {!isCollapsed && (
