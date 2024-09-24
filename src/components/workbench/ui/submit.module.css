@@ -2,9 +2,21 @@
 .preview {
   display: flex;
   column-gap: 2px;
+  padding: 6px 8px;
+  margin: 3px 0;
+  cursor: pointer;
+  text-decoration: none;
   color: var(--gray-d);
   font-size: 12px;
-  padding: 8px 0;
+  border-radius: 4px;
+  transition:
+    color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+    background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.preview:hover {
+  background-color: var(--gray-ml);
+  color: #000;
 }
 
 .right {

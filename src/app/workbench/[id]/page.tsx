@@ -5,7 +5,7 @@ import { usePutSurvey, useGetSurvey } from '@/components/workbench/service';
 import Loading from '@/components/ui/loading/Loading';
 import { Actions, useSurveyStore } from '@/components/workbench/store';
 import { cin, cout } from '@/components/workbench/func';
-import Header from '@/components/workbench/ui/header';
+import Header from '@/components/workbench/ui/Header';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
 import { replaceURLSearchParams } from '@/utils/url-search-params';
 import { Store } from '@/components/workbench/types';
@@ -98,7 +98,14 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className={styles.app}>
-      <Header tab={tab} tabHandler={tabHandler} isPending={isPending} errors={[]} handleSubmit={handleSubmit} />
+      <Header
+        tab={tab}
+        tabHandler={tabHandler}
+        isPending={isPending}
+        errors={[]}
+        handleSubmit={handleSubmit}
+        surveyId={id}
+      />
       {content}
     </div>
   );

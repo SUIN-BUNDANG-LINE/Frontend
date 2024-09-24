@@ -1,10 +1,11 @@
 import { FaSave, FaExternalLinkAlt } from 'react-icons/fa';
+import Link from 'next/link';
 import { ErrorDescriptor } from '../types';
 import styles from './submit.module.css';
 
-type Props = { errors: ErrorDescriptor[]; handleSubmit: () => void; isPending: boolean };
+type Props = { errors: ErrorDescriptor[]; handleSubmit: () => void; isPending: boolean; surveyId: string };
 
-export default function Submit({ errors, handleSubmit, isPending }: Props) {
+export default function Submit({ errors, handleSubmit, isPending, surveyId }: Props) {
   const error = errors.length !== 0;
 
   return (
@@ -27,10 +28,10 @@ export default function Submit({ errors, handleSubmit, isPending }: Props) {
           </div>
         )}
       </button>
-      <div className={styles.preview}>
+      <Link href={`/workbench/${surveyId}/preview`} className={styles.preview}>
         <FaExternalLinkAlt />
         <div>미리보기</div>
-      </div>
+      </Link>
     </div>
   );
 }
