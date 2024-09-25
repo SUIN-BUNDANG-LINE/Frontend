@@ -31,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   let content;
   if (tab === 0) content = <Tab0 surveyId={id} />;
-  else if (tab === 1) content = <Tab1 />;
+  else if (tab === 1) content = <Tab1 surveyId={id} />;
   else if (tab === 2) content = <Tab2 />;
   else if (tab === 3) content = <Tab3 />;
 
