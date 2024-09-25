@@ -1,0 +1,25 @@
+.summaryContainer {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  margin-top: 0px;
+  color: #000;
+}
+
+.infoWithIcons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.infoWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
