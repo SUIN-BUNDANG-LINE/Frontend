@@ -1,4 +1,4 @@
-import { FaClipboardCheck, FaTrophy } from 'react-icons/fa';
+import { FaClipboardCheck, FaTrophy, FaSync } from 'react-icons/fa';
 import { FaUserGroup } from 'react-icons/fa6';
 import styles from './ParticipantSummary.module.css';
 
@@ -7,6 +7,7 @@ interface ParticipantSummaryProps {
   drawCount: number | null;
   targetParticipant: number | null;
   winningCount: number | null;
+  handleRefetch: () => void;
 }
 
 export default function ParticipantSummary({
@@ -14,10 +15,16 @@ export default function ParticipantSummary({
   drawCount,
   targetParticipant,
   winningCount,
+  handleRefetch,
 }: ParticipantSummaryProps) {
   return (
     <div className={styles.summaryContainer}>
-      <h2 className={styles.title}>참가 현황</h2>
+      <div className={styles.titleContainer}>
+        <h2 className={styles.title}>참가 현황</h2>
+        <button type="button" onClick={() => handleRefetch()} className={styles.refreshButton}>
+          <FaSync /> 갱신
+        </button>
+      </div>
       <div className={styles.infoWithIcons}>
         <div className={styles.infoWithIcon}>
           <FaClipboardCheck />

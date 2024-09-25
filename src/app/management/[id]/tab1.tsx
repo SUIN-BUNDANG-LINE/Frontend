@@ -39,6 +39,7 @@ export default function Tab1({ surveyId }: { surveyId: string }) {
         drawCount={participantsWithDraw.length}
         targetParticipant={targetParticipant}
         winningCount={winners.length}
+        handleRefetch={() => refetch()}
       />
       {isImmediateDraw && <WinnerList winners={winners} />}
       <ParticipantList participants={participants} />
