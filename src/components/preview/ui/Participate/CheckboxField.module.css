@@ -1,0 +1,65 @@
+.line {
+  min-height: 42px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px 4px 4px 0;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  outline: none;
+  cursor: pointer;
+}
+
+.line:hover {
+  background-color: var(--gray-l);
+}
+
+.option {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+}
+
+.option > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marker {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px gray inset;
+  background-color: transparent;
+
+  transition:
+    box-shadow 0.2s,
+    width 0.2s,
+    height 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.marker.active {
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 0 0 6px var(--primary) inset;
+}
+
+.input {
+  height: 32px;
+  padding-left: 4px;
+  width: 50%;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid var(--gray);
+}
+
+.input:focus {
+  width: 80%;
+  border-color: var(--primary-alt);
+}

@@ -1,0 +1,46 @@
+.heads {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  padding: 18px;
+  background-color: #fff;
+}
+
+.thumbnail {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.title,
+.description {
+  max-width: 720px;
+  text-align: center;
+}
+
+.description {
+  text-align: justify;
+  line-height: 22px;
+  padding-bottom: 12px;
+  color: var(--gray-d);
+}
+
+.share {
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: var(--gray-l);
+  cursor: text;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.share:hover {
+  background-color: var(--gray-ml);
+}
+
+.shareContent {
+  display: flex;
+  gap: 4px;
+  color: var(--gray-d);
+}

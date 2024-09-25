@@ -11,9 +11,8 @@ const useGetSurvey = (surveyId: string) => {
   return useQuery({
     queryKey: queryKeys.survey(surveyId),
     queryFn: () => fetchSurveyGet({ surveyId }),
-    // refetchOnWindowFocus: false,
-    // refetchOnReconnect: false,
-    // refetchOnMount: false,
+    staleTime: 0,
+    gcTime: 0,
   });
 };
 

@@ -10,7 +10,7 @@ import { useSurveyStore } from '../store';
 import Field from './Field';
 import Svg from '../misc/Svg';
 import RouteModal from './RouteModal';
-import { Submit } from '../misc/Route';
+import { Other, Submit } from '../misc/Route';
 import styles from './Section.module.css'; // Import styles
 
 type Props = {
@@ -80,27 +80,43 @@ function SectionComponent({ section, index, isDraggingOver, activeState }: Props
           if (!keyField || keyField.sectionId !== section.sectionId || keyField.type !== 'radio' || !keyField.required)
             return normalize();
 
-          const updateRequired =
-            detail.router.some((i) => keyField.options.every((j) => j.id !== i.id)) ||
-            keyField.options.some((i) => detail.router.every((j) => j.id !== i.id)) ||
-            detail.router.some((i) => sections.every((j) => j.sectionId !== i.next));
+          const optRemoved = detail.router.some((i) => i.id !== Other && keyField.options.every((j) => j.id !== i.id));
+          const optAdded = keyField.options.some((i) => detail.router.every((j) => j.id !== i.id));
+          const othRemoved = !keyField.other && detail.router.some((i) => i.id === Other);
+          const othAdded = keyField.other && detail.router.every((i) => i.id !== Other);
+          const nxtRemoved = detail.router.some(
+            (i) => i.next !== Submit && sections.every((j) => j.sectionId !== i.next)
+          );
+
+          const updateRequired = optRemoved || optAdded || othRemoved || othAdded || nxtRemoved;
           if (!updateRequired) return currentStrat;
 
           const sectionIndex = sections.findIndex((i) => i.sectionId === sectionId);
           const nextSectionId = 1 + sectionIndex < sections.length ? sections.at(1 + sectionIndex)!.sectionId : Submit;
 
-          // 삭제한 옵션은 라우터에서도 제외
-          // 이동할 섹션이 삭제되었으면 다음 섹션으로 설정
-          const newRouter = detail.router
-            .filter((i) => keyField.options.some((j) => j.id === i.id))
-            .map((i) => (sections.every((j) => j.sectionId !== i.next) ? { id: i.id, next: nextSectionId } : i));
+          let newRouter = detail.router.map((i) => i);
 
-          // 생성된 옵션은 다음 섹션으로 설정
-          newRouter.push(
-            ...keyField.options
-              .filter((i) => newRouter.every((j) => j.id !== i.id))
-              .map(({ id }) => ({ id, next: nextSectionId }))
-          );
+          if (optRemoved) {
+            newRouter = newRouter.filter((i) => i.id === Other || keyField.options.some((j) => j.id === i.id));
+          }
+          if (othRemoved) {
+            newRouter = newRouter.filter((i) => i.id !== Other);
+          }
+          if (optAdded) {
+            newRouter.push(
+              ...keyField.options
+                .filter((i) => newRouter.every((j) => j.id !== i.id))
+                .map(({ id }) => ({ id, next: nextSectionId }))
+            );
+          }
+          if (othAdded) {
+            newRouter.push({ id: Other, next: nextSectionId });
+          }
+          if (nxtRemoved) {
+            newRouter = newRouter.map((i) =>
+              i.next !== Submit && sections.every((j) => j.sectionId !== i.next) ? { id: i.id, next: nextSectionId } : i
+            );
+          }
 
           const newRouteStrategy = { type: 'conditional' as const, detail: { key: detail.key, router: newRouter } };
 
@@ -123,13 +139,15 @@ function SectionComponent({ section, index, isDraggingOver, activeState }: Props
 
       switch (type) {
         case 'manual': {
-          return detail === Submit ? '제출' : sections.find((i) => i.sectionId === detail)?.title || '제목 없는 섹션';
+          const t = sections.find((i) => i.sectionId === detail)?.title || '제목 없는 섹션';
+          return detail === Submit ? '제출' : t;
         }
         case 'sequential': {
           return '순서대로';
         }
         case 'conditional': {
-          return `질문 "${fields.find((i) => i.fieldId === detail.key)?.title || '제목 없는 질문'}"에 따라 분기`;
+          const t = fields.find((i) => i.fieldId === detail.key)?.title || '제목 없는 질문';
+          return `"${t.length > 16 ? `${t.slice(0, 16)}...` : t}"을 기준으로 분기`;
         }
         default: {
           return '알 수 없음';
