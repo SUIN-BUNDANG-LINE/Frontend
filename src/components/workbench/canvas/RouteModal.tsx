@@ -175,7 +175,7 @@ export default function RouteModal({ section, sections, fields, oldStrategy, han
                   {strat.detail.router.map(({ id, next }) => {
                     return (
                       <div key={id}>
-                        <div>응답 &ldquo;{options.find((i) => i.id === id)?.content || ''}&rdquo;</div>
+                        <div>응답 &ldquo;{options.find((i) => i.id === id)?.content || '기타'}&rdquo;</div>
                         <select value={next} onChange={handleConditionalDetail(id)}>
                           <option value="$placeholder" disabled>
                             선택하기...

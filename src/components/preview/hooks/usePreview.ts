@@ -83,6 +83,10 @@ const usePreview = (surveyId: string) => {
       }
     },
     pop: () => {
+      if (state === 'readyToSubmit') {
+        setState('participate');
+        return;
+      }
       if (progress.stack.length === 1) {
         setProgress({ stack: [], page: [] });
         setState('surveyDetails');
@@ -97,6 +101,11 @@ const usePreview = (surveyId: string) => {
     },
     top: () => {
       return progress.stack.at(-1);
+    },
+    clear: () => {
+      setProgress({ stack: [], page: [] });
+      setResponses([]);
+      setState('surveyDetails');
     },
   };
 

@@ -1,0 +1,37 @@
+.header {
+  height: 6rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+
+  max-width: var(--container-width);
+
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  white-space: nowrap;
+  height: 100%;
+  padding-right: 1rem;
+}

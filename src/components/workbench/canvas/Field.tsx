@@ -103,15 +103,22 @@ function RenderSelectableResponse({ type, options, handleEdit, active, other }: 
           </button>
         </div>
       ))}
-      <button
-        type="button"
-        onClick={() => {
-          const newOptions = [...options, { id: uuidv4(), content: '' }];
-          handleEdit({ options: newOptions });
-        }}
-        className={styles.addOption}>
-        + 선택지 추가
-      </button>
+      {options.length < 20 && (
+        <button
+          type="button"
+          onClick={() => {
+            const newOptions = [...options, { id: uuidv4(), content: '' }];
+            handleEdit({ options: newOptions });
+          }}
+          className={styles.addOption}>
+          + 선택지 추가
+        </button>
+      )}
+      {options.length >= 20 && (
+        <div style={{ fontSize: '14px', color: 'var(--gray)', padding: '8px 0' }}>
+          선택지는 20개까지 만들 수 있습니다.
+        </div>
+      )}
       {other && (
         <div className={styles.selectableResponseItem}>
           <div className={indicatorClass} />
