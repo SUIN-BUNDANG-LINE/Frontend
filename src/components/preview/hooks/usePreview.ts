@@ -94,7 +94,6 @@ const usePreview = (surveyId: string) => {
           page: fields.filter((i) => i.sectionId === pre.stack.at(-2)!.sectionId),
         };
       });
-      setState('surveyDetails');
     },
     top: () => {
       return progress.stack.at(-1);
