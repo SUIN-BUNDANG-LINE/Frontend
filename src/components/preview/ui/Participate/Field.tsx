@@ -10,18 +10,22 @@ type Props = {
   field: FieldType;
   responses: Response[];
   dispatch: Dispatch;
+  valid: boolean;
 };
 
-export default function Field({ field, responses, dispatch }: Props) {
+export default function Field({ field, responses, dispatch, valid }: Props) {
   const { title, description, required } = field;
 
   const response = responses.find((i) => i.fieldId === field.fieldId);
 
+  const requiredTagClasses = [styles.requiredTag];
+  if (valid) requiredTagClasses.push(styles.valid);
+
   return (
-    <div className={styles.field}>
+    <div className={styles.field} id={field.fieldId}>
       <div className={styles.heads}>
         <div className={styles.title}>
-          {required && <span className={styles.requiredTag}>필수</span>}
+          {required && <span className={requiredTagClasses.join(' ')}>필수</span>}
           {title || '제목 없는 질문'}
         </div>
         <div className={styles.description}>{description}</div>

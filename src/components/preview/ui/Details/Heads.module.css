@@ -21,9 +21,12 @@
 }
 
 .description {
+  width: 100%;
   text-align: justify;
   line-height: 22px;
-  padding-bottom: 12px;
+  border: none;
+  outline: none;
+  resize: none;
   color: var(--gray-d);
 }
 
