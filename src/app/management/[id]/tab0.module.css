@@ -2,7 +2,7 @@
   box-sizing: border-box;
   border-radius: 8px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 12px;
 }
@@ -12,4 +12,31 @@
 .container input,
 .container textarea {
   box-sizing: border-box;
+}
+
+.loading, .error {
+  display: flex;
+  justify-content: center;
+}
+
+.participantInfo{
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.participantIcon {
+  height: 25px;
+}
+
+.participantInfoContent {
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.participantInfoContent:last-child {
+  margin-right: 0px;
 }

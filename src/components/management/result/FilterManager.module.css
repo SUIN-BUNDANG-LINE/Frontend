@@ -1,0 +1,30 @@
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.addButton,
+.searchButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background-color: rgb(255, 213, 33);
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.addButton:hover,
+.searchButton:hover {
+  background-color: rgb(220, 183, 28); /* 진한 색상 */
+}
+
+.buttonIcon {
+  font-size: 14px;
+}
