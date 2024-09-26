@@ -10,6 +10,8 @@ const useParticipants = (surveyId: string) => {
     queryKey: queryKeys.participants(surveyId),
     queryFn: () => getParticipants(surveyId),
     placeholderData: keepPreviousData,
+    staleTime: 0,
+    gcTime: Infinity,
   });
 };
 
