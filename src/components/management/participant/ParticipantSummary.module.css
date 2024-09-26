@@ -1,0 +1,57 @@
+.summaryContainer {
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.titleContainer {
+  margin-top: 0px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  color: #000;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.refreshButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  background-color: rgb(255, 213, 33);
+}
+
+.refreshButton:hover {
+  background-color: rgb(220, 183, 28);
+}
+
+.refreshButton svg {
+  font-size: 12px;
+  color: #333;
+}
+
+.infoWithIcons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-size: 16px;
+}
+
+.infoWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
