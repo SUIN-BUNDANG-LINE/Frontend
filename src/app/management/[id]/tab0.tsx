@@ -55,7 +55,7 @@ export default function Tab0({ surveyId }: { surveyId: string }) {
         <div className={styles.participantInfoContent}>
           <FaUsers className={styles.participantIcon} />
         </div>
-        <div className={styles.participantInfoContent}>응답자 수: {data?.participantCount}명</div>
+        <div className={styles.participantInfoContent}>응답자 수 : {data?.participantCount}명</div>
       </div>
       <FilterManager onSearch={handleSearch} resultInfo={makeResultInfo()} />
       {data?.sectionResults.map((sectionResult: SectionResult) => (
