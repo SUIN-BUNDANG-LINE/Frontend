@@ -95,6 +95,7 @@
 }
 
 .rewardItemContent {
+  text-align: left;
   width: 100%;
   position: relative;
   display: flex;
@@ -186,4 +187,9 @@
 
 .addButton:hover {
   background-color: var(--primary-dark);
+}
+
+.rewardFrozen {
+  padding-bottom: 18px;
+  font-size: 14px;
 }

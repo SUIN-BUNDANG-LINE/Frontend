@@ -15,14 +15,16 @@ function RewardModal({
   maxTargetParticipant,
   handleRewardAdd,
   closeModal,
+  init,
 }: {
   maxTargetParticipant: number;
   handleRewardAdd: (reward: Reward) => void;
   closeModal: () => void;
+  init: RewardWithKey | null;
 }) {
-  const [category, setCategory] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [count, setCount] = React.useState('');
+  const [category, setCategory] = React.useState(init?.category || '');
+  const [name, setName] = React.useState(init?.name || '');
+  const [count, setCount] = React.useState(init?.count || '');
 
   const categoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCategory(e.target.value.trimStart().slice(0, 20));
@@ -34,7 +36,6 @@ function RewardModal({
 
   const countHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/[^0-9]/g, '');
-    // const val = Math.max(1, Math.min(maxTargetParticipant, +e.target.value.replace(/[^0-9]/g, '')));
     setCount(val);
   };
 
@@ -103,21 +104,23 @@ function RewardItem({
   category,
   count,
   deleteHandler,
+  editHandler,
 }: {
   name: string;
   category: string;
   count: number;
   deleteHandler: () => void;
+  editHandler: () => void;
 }) {
   return (
     <div className={styles.rewardItem}>
-      <div className={styles.rewardItemContent}>
+      <button type="button" className={styles.rewardItemContent} onClick={editHandler}>
         <div className={styles.rewardItemLeft}>
           <div className={styles.rewardCategory}>{category}</div>
           <div className={styles.rewardName}>{name}</div>
         </div>
         <div className={styles.rewardCount}>x{count}</div>
-      </div>
+      </button>
       <button type="button" aria-label="삭제" className={styles.rewardDelete} onClick={deleteHandler}>
         <FaX />
       </button>
@@ -125,16 +128,31 @@ function RewardItem({
   );
 }
 
-function Tab0() {
-  const { isOpen, openModal, closeModal } = useModal();
+type RewardWithKey = Reward & {
+  key: string;
+};
 
-  const title = useSurveyStore((state) => state.title);
-  const description = useSurveyStore((state) => state.description);
-  const finishMessage = useSurveyStore((state) => state.finishMessage);
-  const isVisible = useSurveyStore((state) => state.isVisible);
-  const rewardConfig = useSurveyStore((state) => state.rewardConfig);
-  const setter = useSurveyStore((state) => state.setter);
-  const rewardSetter = useSurveyStore((state) => state.rewardSetter);
+function Tab0() {
+  const { isOpen, openModal, closeModal: closeModalInner } = useModal();
+  const [rewardAddTarget, setRewardAddTarget] = React.useState<RewardWithKey | null>(null);
+
+  const closeModal = () => {
+    setRewardAddTarget(null);
+    closeModalInner();
+  };
+
+  const { title, description, finishMessage, isVisible, rewardConfig, setter, rewardSetter, status } = useSurveyStore(
+    (state) => ({
+      title: state.title,
+      description: state.description,
+      finishMessage: state.finishMessage,
+      isVisible: state.isVisible,
+      rewardConfig: state.rewardConfig,
+      setter: state.setter,
+      rewardSetter: state.rewardSetter,
+      status: state.status,
+    })
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -171,19 +189,33 @@ function Tab0() {
     }
   };
 
-  const rewardArray = React.useMemo(
+  const rewardArray = React.useMemo<RewardWithKey[]>(
     () => rewardConfig.rewards.map((i) => ({ ...i, key: uuid() })),
     [rewardConfig.rewards]
   );
 
   const handleRewardAdd = (reward: Reward) => {
-    const newRewards = rewardArray.concat([{ ...reward, key: uuid() }]);
-    rewardSetter({ updates: { rewards: newRewards } });
+    if (rewardAddTarget) {
+      // edit
+      const newRewards = rewardArray.map((i) => (i.key === rewardAddTarget.key ? reward : i));
+      rewardSetter({ updates: { rewards: newRewards } });
+    } else {
+      // add
+      const newRewards = rewardArray.concat([{ ...reward, key: uuid() }]);
+      rewardSetter({ updates: { rewards: newRewards } });
+    }
   };
 
   const handleRewardDelete = (key: string) => () => {
+    if (status !== 'NOT_STARTED') return;
     const newRewards = rewardArray.filter((i) => i.key !== key).map(({ key: _, ...rest }) => rest);
     rewardSetter({ updates: { rewards: newRewards } });
+  };
+
+  const handleRewardEdit = (reward: RewardWithKey) => () => {
+    if (status !== 'NOT_STARTED') return;
+    setRewardAddTarget(reward);
+    openModal();
   };
 
   return (
@@ -193,6 +225,7 @@ function Tab0() {
           maxTargetParticipant={Math.min(500, rewardConfig.targetParticipantCount || 500)}
           handleRewardAdd={handleRewardAdd}
           closeModal={closeModal}
+          init={rewardAddTarget}
         />
       </Modal>
       <div className={styles.container}>
@@ -254,6 +287,10 @@ function Tab0() {
           <h3>리워드</h3>
         </div>
 
+        {status !== 'NOT_STARTED' && (
+          <div className={styles.rewardFrozen}>공개했던 설문의 리워드는 수정할 수 없습니다.</div>
+        )}
+
         <div className={styles.group}>
           <label className={styles.label} htmlFor="reward-type">
             <span>지급 방식</span>
@@ -262,7 +299,8 @@ function Tab0() {
               id="reward-type"
               className={styles.select}
               value={rewardConfig.type}
-              onChange={handleRewardChange}>
+              onChange={handleRewardChange}
+              disabled={status !== 'NOT_STARTED'}>
               <option value="NO_REWARD">리워드 없음</option>
               <option value="SELF_MANAGEMENT">리워드 직접 지급</option>
               <option value="IMMEDIATE_DRAW">즉시 추첨 뽑기</option>
@@ -282,12 +320,15 @@ function Tab0() {
                     count={count}
                     key={key}
                     deleteHandler={handleRewardDelete(key)}
+                    editHandler={handleRewardEdit({ name, category, count, key })}
                   />
                 ))}
               </div>
-              <Button variant="primary" style={{ marginTop: '12px' }} onClick={openModal}>
-                + 리워드 추가
-              </Button>
+              {status === 'NOT_STARTED' && (
+                <Button variant="primary" style={{ marginTop: '12px' }} onClick={openModal}>
+                  + 리워드 추가
+                </Button>
+              )}
             </label>
           </div>
         )}
@@ -296,16 +337,25 @@ function Tab0() {
           <div className={styles.group}>
             <div className={styles.label}>
               <span>마감 일정</span>
-              <Datetime
-                input={false}
-                isValidDate={(current) => current.isAfter(moment().subtract(1, 'day'))}
-                inputProps={{ className: styles.input }}
-                locale="ko-KR"
-                timeFormat="MMMM Do YYYY, h"
-                timeConstraints={{ minutes: { min: 0, max: 0, step: 1 } }}
-                value={new Date(rewardConfig.finishedAt)}
-                onChange={(v) => rewardSetter({ updates: { finishedAt: v.toString() } })}
+              <input
+                type="text"
+                disabled
+                className={styles.input}
+                value={`${moment(rewardConfig.finishedAt).format('YYYY년 MM월 DD일 HH시')} 종료`}
+                style={{ marginBottom: '8px' }}
               />
+              {status === 'NOT_STARTED' && (
+                <Datetime
+                  input={false}
+                  isValidDate={(current) => current.isAfter(moment().subtract(1, 'day'))}
+                  inputProps={{ className: styles.input }}
+                  locale="ko-KR"
+                  timeFormat="YYYY년 MM월 DD일, HH시"
+                  timeConstraints={{ minutes: { min: 0, max: 0, step: 1 } }}
+                  value={new Date(rewardConfig.finishedAt)}
+                  onChange={(v) => rewardSetter({ updates: { finishedAt: v.toString() } })}
+                />
+              )}
             </div>
           </div>
         )}
@@ -325,6 +375,7 @@ function Tab0() {
                 className={styles.input}
                 value={rewardConfig.targetParticipantCount || 0}
                 onChange={handleRewardChange}
+                disabled={status !== 'NOT_STARTED'}
                 placeholder="최대 참여 인원을 입력하세요"
               />
             </label>
