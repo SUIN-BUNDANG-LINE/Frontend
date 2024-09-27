@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import Svg from '../misc/Svg';
 import { useSurveyStore } from '../store';
 import styles from './header.module.css';
@@ -45,23 +46,25 @@ type Props = {
   errors: ErrorDescriptor[];
   handleSubmit: () => void;
   isPending: boolean;
+  surveyId: string;
 };
 
-function Header({ tab, tabHandler, errors, handleSubmit, isPending }: Props) {
+function Header({ tab, tabHandler, errors, handleSubmit, isPending, surveyId }: Props) {
   const title = useSurveyStore((state) => state.title);
+  const router = useRouter();
 
   return (
     <>
       <div className={styles.maxUI}>
         <div className={styles.header}>
-          <div className={styles.leave}>
+          <button type="button" onClick={() => router.back()} className={styles.leave} aria-label="back">
             <Svg size="42px" path="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
-          </div>
+          </button>
           <div className={styles.main}>
             <div className={styles.title}>{title || '제목 없는 설문'}</div>
             <Menu tab={tab} tabHandler={tabHandler} />
           </div>
-          <Submit errors={errors} handleSubmit={handleSubmit} isPending={isPending} />
+          <Submit errors={errors} handleSubmit={handleSubmit} isPending={isPending} surveyId={surveyId} />
         </div>
       </div>
 
@@ -74,7 +77,7 @@ function Header({ tab, tabHandler, errors, handleSubmit, isPending }: Props) {
               </div>
               <div className={styles.title}>{title || '제목 없는 설문'}</div>
             </div>
-            <Submit errors={errors} handleSubmit={handleSubmit} isPending={isPending} />
+            <Submit errors={errors} handleSubmit={handleSubmit} isPending={isPending} surveyId={surveyId} />
           </div>
           <Menu tab={tab} tabHandler={tabHandler} />
         </div>

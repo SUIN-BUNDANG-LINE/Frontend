@@ -1,0 +1,26 @@
+.container {
+  width: 100%;
+  max-width: 720px;
+}
+
+.from {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px;
+  font-size: 18px;
+}
+
+.message {
+  width: 100%;
+  display: flex;
+  text-align: justify;
+  line-height: 22px;
+  outline: none;
+  resize: none;
+  color: var(--gray-d);
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #fff;
+  border: 1px solid var(--primary);
+}

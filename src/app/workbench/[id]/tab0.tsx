@@ -158,8 +158,16 @@ function Tab0() {
           },
         });
         break;
-      default:
+      default: {
         rewardSetter({ updates: { [name]: value } });
+        if (name === 'type') {
+          if (value === 'NO_REWARD') {
+            rewardSetter({ updates: { finishedAt: null } });
+          } else if (!rewardConfig.finishedAt) {
+            rewardSetter({ updates: { finishedAt: moment().startOf('day').add(7, 'days').toISOString() } });
+          }
+        }
+      }
     }
   };
 

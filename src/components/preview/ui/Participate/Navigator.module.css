@@ -1,0 +1,17 @@
+.navigator {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-width);
+  padding-left: 12px;
+  padding-bottom: 24px;
+  margin: 0 auto;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
