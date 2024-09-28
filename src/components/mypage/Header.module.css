@@ -17,6 +17,7 @@
   align-items: flex-start;
   justify-content: center;
   padding-left: 12px;
+  white-space: nowrap;
 }
 
 .userdata > div {
