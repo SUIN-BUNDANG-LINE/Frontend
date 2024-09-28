@@ -74,7 +74,7 @@ export default function FilterManager({ onSearch, resultInfo }: FilterManagerPro
           <FaPlus className={styles.buttonIcon} /> 필터 추가
         </button>
         <button type="button" onClick={handleSearch} className={styles.searchButton}>
-          <FaSearch className={styles.buttonIcon} /> 검색
+          <FaSearch className={styles.buttonIcon} /> 필터 적용
         </button>
       </div>
       {tempFilters.map((filter, index) => (
