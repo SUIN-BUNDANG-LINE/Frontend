@@ -8,7 +8,13 @@ import Loading from '@/components/ui/loading/Loading';
 import { ParticipantInfo } from '@/services/participant/types';
 import styles from './tab1.module.css';
 
-export default function Tab1({ surveyId }: { surveyId: string }) {
+export default function Tab1({
+  surveyId,
+  setTab,
+}: {
+  surveyId: string;
+  setTab: React.Dispatch<React.SetStateAction<number>>;
+}) {
   const { data, isLoading, isError, refetch } = useParticipants(surveyId);
 
   if (isLoading)
@@ -41,7 +47,7 @@ export default function Tab1({ surveyId }: { surveyId: string }) {
         winningCount={winners.length}
       />
       {isImmediateDraw && <WinnerList winners={winners} />}
-      <ParticipantList participants={participants} />
+      <ParticipantList participants={participants} setTab={setTab} />
     </div>
   );
 }
