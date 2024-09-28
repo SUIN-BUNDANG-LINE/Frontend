@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
-import { replaceURLSearchParams } from '@/utils/url-search-params';
+import { replaceURLSearchParams, deleteURLSearchParam } from '@/utils/url-search-params';
 import { useGetSurvey } from '@/components/workbench/service';
 import Header from '@/components/management/ui/Header';
 import styles from './page.module.css';
@@ -27,6 +27,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const tabHandler = (newTab: number) => {
     setTab(newTab);
     replaceURLSearchParams('tab', newTab);
+    deleteURLSearchParam('participantId');
   };
 
   let content;
