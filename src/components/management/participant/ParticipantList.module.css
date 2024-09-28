@@ -56,10 +56,18 @@
   color: #0070f3;
   text-decoration: none;
   font-weight: 600;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 .viewButton:hover {
   color: #0056b3;
+}
+
+.viewButton:focus {
+  outline: none;
 }
 
 .viewButton svg {
