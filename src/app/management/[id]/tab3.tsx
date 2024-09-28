@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaEdit, FaRegCopy, FaRegStopCircle } from 'react-icons/fa'; // 아이콘 추가
+import React, { useState } from 'react';
+import { FaEdit, FaRegCopy, FaRegStopCircle } from 'react-icons/fa';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/ui/modal/Modal';
 import { fetchSurveyEdit, fetchSurveyFinish } from '@/services/management/fetch';
@@ -8,12 +8,14 @@ import styles from './tab3.module.css';
 
 interface Tab3Props {
   surveyId: string;
-  isFinished: boolean;
+  initialIsFinished: boolean;
 }
 
-function Tab3({ surveyId, isFinished }: Tab3Props) {
+function Tab3({ surveyId, initialIsFinished }: Tab3Props) {
   const { isOpen: isEditModalOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
   const { isOpen: isFinishModalOpen, openModal: openFinishModal, closeModal: closeFinishModal } = useModal();
+
+  const [isFinished, setIsFinished] = useState(initialIsFinished);
 
   const handleEditSurvey = async () => {
     closeEditModal();
@@ -21,7 +23,7 @@ function Tab3({ surveyId, isFinished }: Tab3Props) {
       await fetchSurveyEdit({ surveyId });
       window.location.href = `/workbench/${surveyId}`;
     } catch (error) {
-      showToast('error', '설문을 종료하지 못했습니다.');
+      showToast('error', '설문을 수정 상태로 변경하지 못했습니다.');
     }
   };
 
@@ -30,8 +32,9 @@ function Tab3({ surveyId, isFinished }: Tab3Props) {
     try {
       await fetchSurveyFinish({ surveyId });
       showToast('success', '설문을 성공적으로 종료했습니다.');
+      setIsFinished(true);
     } catch (error) {
-      showToast('error', '설문을 수정 상태로 변경하지 못했습니다.');
+      showToast('error', '설문을 종료하지 못했습니다.');
     }
   };
 

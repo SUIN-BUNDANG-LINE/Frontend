@@ -40,7 +40,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (tab === 0) content = <Tab0 surveyId={id} />;
   else if (tab === 1) content = <Tab1 surveyId={id} setTab={setTab} />;
   else if (tab === 2) content = <Tab2 surveyId={id} participantId={searchParams.get('participantId')} />;
-  else if (tab === 3) content = <Tab3 surveyId={id} isFinished={data?.status === 'CLOSED'} />;
+  else if (tab === 3) content = <Tab3 surveyId={id} initialIsFinished={data?.status === 'CLOSED'} />;
 
   return (
     <div className={styles.app}>
