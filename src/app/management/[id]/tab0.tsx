@@ -11,7 +11,7 @@ import styles from './tab0.module.css';
 export default function Tab0({ surveyId }: { surveyId: string }) {
   const [resultFilter, setResultFilter] = useState<ResultFilter>({ questionFilters: [] });
   const [isManualSearch, setIsManualSearch] = useState(false);
-  const { data, isLoading, isError, refetch } = useSurveyResult(surveyId, resultFilter);
+  const { data, isLoading, isError, refetch } = useSurveyResult(surveyId, resultFilter, undefined);
 
   const handleSearch = (filters: QuestionFilter[]) => {
     setResultFilter({ questionFilters: filters });
