@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
+import { ReadonlyURLSearchParams, useSearchParams, useRouter } from 'next/navigation';
 import { replaceURLSearchParams, deleteURLSearchParam } from '@/utils/url-search-params';
 import { useGetSurvey } from '@/components/workbench/service';
 import Header from '@/components/management/ui/Header';
@@ -18,6 +18,7 @@ const getTabFromSearchParams = (searchParams: ReadonlyURLSearchParams) => {
 };
 
 export default function Page({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const { id } = params;
 
   const searchParams = useSearchParams();
@@ -29,6 +30,11 @@ export default function Page({ params }: { params: { id: string } }) {
     replaceURLSearchParams('tab', newTab);
     deleteURLSearchParam('participantId');
   };
+
+  if (data && ['NOT_STARTED', 'IN_MODIFICATION'].includes(data.status)) {
+    alert('접근할 수 없습니다.');
+    router.push('/mypage');
+  }
 
   let content;
   if (tab === 0) content = <Tab0 surveyId={id} />;
