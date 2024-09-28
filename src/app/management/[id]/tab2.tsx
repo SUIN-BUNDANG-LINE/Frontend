@@ -74,7 +74,11 @@ export default function Tab2({ surveyId, participantId }: { surveyId: string; pa
     );
 
   if (participants.length === 0) {
-    return <div>참가자가 없습니다.</div>;
+    return (
+      <div className={styles.container}>
+        <h4>참가자가 없습니다.</h4>
+      </div>
+    );
   }
 
   const handlePrevParticipant = () => {
