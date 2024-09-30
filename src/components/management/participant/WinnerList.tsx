@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import moment from 'moment';
 import { ParticipantInfo } from '@/services/participant/types';
 import styles from './WinnerList.module.css';
@@ -7,6 +9,20 @@ interface WinnerListProps {
 }
 
 export default function WinnerList({ winners }: WinnerListProps) {
+  const [visiblePhoneNumbers, setVisiblePhoneNumbers] = useState<{ [key: string]: boolean }>({});
+
+  const maskPhoneNumber = (phoneNumber: string | undefined) => {
+    if (!phoneNumber) return '***-****-****';
+    return phoneNumber.replace(/(\d{3})[-]?(\d{4})[-]?(\d{4})/, '$1-****-$3');
+  };
+
+  const togglePhoneNumberVisibility = (participantId: string) => {
+    setVisiblePhoneNumbers((prevState) => ({
+      ...prevState,
+      [participantId]: !prevState[participantId],
+    }));
+  };
+
   return (
     <div className={styles.winnerList}>
       <h2 className={styles.title}>당첨자 목록</h2>
@@ -19,13 +35,32 @@ export default function WinnerList({ winners }: WinnerListProps) {
           </tr>
         </thead>
         <tbody>
-          {winners.map((winner) => (
-            <tr key={winner.participantId}>
-              <td>{moment(winner.participatedAt).format('YYYY-MM-DD HH:mm:ss')}</td>
-              <td>{winner.drawInfo?.reward}</td>
-              <td>{winner.drawInfo?.phoneNumber}</td>
-            </tr>
-          ))}
+          {winners.map((winner) => {
+            const isPhoneNumberVisible = visiblePhoneNumbers[winner.participantId] || false;
+
+            const phoneNumber = winner.drawInfo?.phoneNumber || '';
+
+            return (
+              <tr key={winner.participantId}>
+                <td>{moment(winner.participatedAt).format('YYYY-MM-DD HH:mm:ss')}</td>
+                <td>{winner.drawInfo?.reward || 'N/A'}</td>
+                <td className={styles.phoneNumberCell}>
+                  <div className={styles.phoneNumberInfo}>
+                    <span className={styles.phoneNumber}>
+                      {isPhoneNumberVisible ? phoneNumber : maskPhoneNumber(phoneNumber)}
+                    </span>
+                    <button
+                      type="button"
+                      className={styles.eyeButton}
+                      onClick={() => togglePhoneNumberVisibility(winner.participantId)}
+                      aria-label="전화번호 보기">
+                      {isPhoneNumberVisible ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

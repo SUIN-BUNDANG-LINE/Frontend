@@ -22,4 +22,11 @@ function replaceURLSearchParams(key: string, val: string | number) {
   window.history.replaceState({ path: newurl }, '', newurl);
 }
 
-export { pushURLSearchParams, replaceURLSearchParams };
+function deleteURLSearchParam(key: string) {
+  const params = new URLSearchParams(window.location.search);
+  params.delete(key);
+  const newUrl = `${window.location.pathname}?${params.toString()}`;
+  window.history.replaceState({}, '', newUrl);
+}
+
+export { pushURLSearchParams, replaceURLSearchParams, deleteURLSearchParam };

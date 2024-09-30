@@ -44,3 +44,35 @@
 .winnerTable tr:hover {
   background-color: #f1f7ff;
 }
+
+.phoneNumberCell {
+  text-align: center;
+  padding: 0;
+}
+
+.phoneNumberInfo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.phoneNumber {
+  width: 120px;
+}
+
+.eyeButton {
+  display: flex;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0070f3;
+  padding: 0;
+}
+
+.eyeButton:hover {
+  color: #005bb5;
+}

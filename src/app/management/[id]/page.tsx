@@ -1,10 +1,11 @@
 'use client';
 
 import React from 'react';
-import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation';
-import { replaceURLSearchParams } from '@/utils/url-search-params';
+import { ReadonlyURLSearchParams, useSearchParams, useRouter } from 'next/navigation';
+import { replaceURLSearchParams, deleteURLSearchParam } from '@/utils/url-search-params';
 import { useGetSurvey } from '@/components/workbench/service';
 import Header from '@/components/management/ui/Header';
+import { showToast } from '@/utils/toast';
 import styles from './page.module.css';
 import Tab0 from './tab0';
 import Tab1 from './tab1';
@@ -18,6 +19,7 @@ const getTabFromSearchParams = (searchParams: ReadonlyURLSearchParams) => {
 };
 
 export default function Page({ params }: { params: { id: string } }) {
+  const router = useRouter();
   const { id } = params;
 
   const searchParams = useSearchParams();
@@ -27,13 +29,19 @@ export default function Page({ params }: { params: { id: string } }) {
   const tabHandler = (newTab: number) => {
     setTab(newTab);
     replaceURLSearchParams('tab', newTab);
+    deleteURLSearchParam('participantId');
   };
+
+  if (data && ['NOT_STARTED', 'IN_MODIFICATION'].includes(data.status)) {
+    showToast('error', '접근할 수 없습니다.');
+    router.push('/mypage');
+  }
 
   let content;
   if (tab === 0) content = <Tab0 surveyId={id} />;
-  else if (tab === 1) content = <Tab1 surveyId={id} />;
-  else if (tab === 2) content = <Tab2 />;
-  else if (tab === 3) content = <Tab3 />;
+  else if (tab === 1) content = <Tab1 surveyId={id} setTab={setTab} />;
+  else if (tab === 2) content = <Tab2 surveyId={id} participantId={searchParams.get('participantId')} />;
+  else if (tab === 3) content = <Tab3 surveyId={id} initialIsFinished={data ? data.status === 'CLOSED' : undefined} />;
 
   return (
     <div className={styles.app}>

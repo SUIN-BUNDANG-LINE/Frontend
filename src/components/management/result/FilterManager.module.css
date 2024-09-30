@@ -20,9 +20,17 @@
   font-weight: 500;
 }
 
-.addButton:hover,
-.searchButton:hover {
+.addButton:hover {
   background-color: rgb(220, 183, 28); /* 진한 색상 */
+}
+
+.searchButton {
+  background-color: #0070f3;
+  color: white;
+}
+
+.searchButton:hover {
+  background-color: #0056b3;
 }
 
 .buttonIcon {

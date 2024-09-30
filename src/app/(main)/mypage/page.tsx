@@ -28,7 +28,7 @@ const createdMapper = (arg: MyPageSurveyInfo) => {
   return (
     <>
       <Link
-        href={['제작 중', '수정 중', '마감'].includes(arg.status) ? `/workbench/${arg.id}` : `/management/${arg.id}`}
+        href={['제작 중', '수정 중'].includes(arg.status) ? `/workbench/${arg.id}` : `/management/${arg.id}`}
         style={{ textDecoration: 'none', color: 'inherit' }}>
         <span style={{ display: 'flex', alignItems: 'center' }}>
           <Image
