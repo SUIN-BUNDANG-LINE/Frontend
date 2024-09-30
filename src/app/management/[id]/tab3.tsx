@@ -4,6 +4,8 @@ import useModal from '@/hooks/useModal';
 import Modal from '@/components/ui/modal/Modal';
 import { fetchSurveyEdit, fetchSurveyFinish } from '@/services/management/fetch';
 import { showToast } from '@/utils/toast';
+import Button from '@/components/ui/button/Button';
+import { writeClipboard } from '@/utils/misc';
 import styles from './tab3.module.css';
 
 interface Tab3Props {
@@ -40,7 +42,7 @@ function Tab3({ surveyId, initialIsFinished }: Tab3Props) {
 
   const handleCopyLink = () => {
     const surveyLink = `${window.location.origin}/s/${surveyId}`;
-    navigator.clipboard.writeText(surveyLink);
+    writeClipboard(surveyLink);
     showToast('success', '설문 참여 링크가 클립보드에 복사되었습니다.');
   };
 
@@ -74,24 +76,24 @@ function Tab3({ surveyId, initialIsFinished }: Tab3Props) {
       <Modal isOpen={isEditModalOpen} onClose={closeEditModal} title="설문 수정 확인">
         <p>설문을 수정하는 동안에는 응답을 받을 수 없습니다. 설문을 수정하시겠습니까?</p>
         <div className={styles.modalActions}>
-          <button type="button" onClick={handleEditSurvey} className={styles.confirmButton}>
-            확인
-          </button>
-          <button type="button" onClick={closeEditModal} className={styles.cancelButton}>
+          <Button variant="primary" onClick={handleEditSurvey}>
+            수정하기
+          </Button>
+          <Button variant="secondary" onClick={closeEditModal}>
             취소
-          </button>
+          </Button>
         </div>
       </Modal>
 
       <Modal isOpen={isFinishModalOpen} onClose={closeFinishModal} title="설문 종료 확인">
         <p>설문을 종료하면 더 이상 응답을 받을 수 없습니다. 설문을 종료하시겠습니까?</p>
         <div className={styles.modalActions}>
-          <button type="button" onClick={handleFinishSurvey} className={styles.confirmButton}>
-            확인
-          </button>
-          <button type="button" onClick={closeFinishModal} className={styles.cancelButton}>
+          <Button variant="primary" onClick={handleFinishSurvey}>
+            종료하기
+          </Button>
+          <Button variant="secondary" onClick={closeEditModal}>
             취소
-          </button>
+          </Button>
         </div>
       </Modal>
     </div>

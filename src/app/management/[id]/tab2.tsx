@@ -41,7 +41,7 @@ export default function Tab2({ surveyId, participantId }: { surveyId: string; pa
         setInputIndex('1');
       }
     }
-  }, [participants]);
+  }, [participantId, participants]);
 
   const currentParticipantId =
     participants.length > 0 ? participants[currentParticipantIndex].participantId : undefined;
