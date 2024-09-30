@@ -90,7 +90,7 @@ export default function Page({ params }: { params: { id: string } }) {
       case 1:
         return <Tab1 />;
       case 2:
-        return <Tab2 />;
+        return <Tab2 surveyId={id} />;
       default:
         return null;
     }

@@ -220,7 +220,7 @@ function Tab0() {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={closeModal} title="리워드 추가">
+      <Modal isOpen={isOpen} onClose={closeModal} title={`리워드 ${rewardAddTarget ? '수정' : '추가'}`}>
         <RewardModal
           maxTargetParticipant={Math.min(500, rewardConfig.targetParticipantCount || 500)}
           handleRewardAdd={handleRewardAdd}

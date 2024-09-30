@@ -20,14 +20,14 @@ export default function Pagination({ page, setPageHandler, maxPage }: Props) {
     <Wrapper>
       <div className={styles.pagination}>
         <div>
-          <button type="button" className={styles.button} onClick={decrement} disabled={page === 1}>
+          <button type="button" className={styles.button} onClick={decrement} disabled={page <= 1}>
             &lt;
           </button>
           <div className={styles.indicator}>
             <span>{page}</span>
             <span>/ {maxPage}</span>
           </div>
-          <button type="button" className={styles.button} onClick={increment} disabled={page === maxPage}>
+          <button type="button" className={styles.button} onClick={increment} disabled={page >= maxPage}>
             &gt;
           </button>
         </div>

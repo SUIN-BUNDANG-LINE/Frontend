@@ -107,6 +107,12 @@
   border-radius: 4px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.rewardItemContent:hover {
+  background-color: var(--gray-l);
 }
 
 .rewardName {
