@@ -7,6 +7,7 @@ import { Reward, RewardType } from '@/services/surveys/types';
 import Link from 'next/link';
 import { statusReader } from '@/utils/enumReader';
 import styles from './Body.module.css';
+import { getSurveyState } from '../survey-p/funcs/storage';
 
 interface Props {
   status: string;
@@ -16,6 +17,7 @@ interface Props {
   finishedAt: string | null;
   rewards: Reward[];
   onStart: () => void;
+  surveyId: string;
 }
 
 export default function Body({
@@ -26,7 +28,11 @@ export default function Body({
   finishedAt,
   rewards,
   onStart,
+  surveyId,
 }: Props) {
+  const isParticipated = getSurveyState(surveyId) === '$';
+  const isInProgress = status === 'IN_PROGRESS';
+
   const [statusText, statusDetail] = statusReader(status);
   const StatusComponent =
     status === 'IN_PROGRESS' ? undefined : (
@@ -83,11 +89,22 @@ export default function Body({
     );
   })();
 
+  const getParticipateButtonText = () => {
+    if (isParticipated) return '참여완료';
+    if (isInProgress) return '참여하기';
+    return '참여불가';
+  };
+
   return (
     <div className={styles.body}>
       <div className={styles.content}>
-        <Button variant="primary" width="100%" height="48px" onClick={onStart} disabled={status !== 'IN_PROGRESS'}>
-          참여하기
+        <Button
+          variant="primary"
+          width="100%"
+          height="48px"
+          onClick={onStart}
+          disabled={isParticipated || !isInProgress}>
+          {getParticipateButtonText()}
         </Button>
         <Link href="/" className={styles.link}>
           <span>설문이용 메인으로</span>

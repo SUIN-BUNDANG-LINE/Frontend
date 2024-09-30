@@ -25,6 +25,7 @@ export default function DetailsViewer({ data, surveyId }: Props) {
         finishedAt={finishedAt}
         rewards={rewards}
         onStart={() => router.push(`/s/${surveyId}/p`)}
+        surveyId={surveyId}
       />
     </>
   );
