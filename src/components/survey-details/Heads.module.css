@@ -28,6 +28,7 @@
   outline: none;
   resize: none;
   color: var(--gray-d);
+  margin-bottom: 10px;
 }
 
 .shareButton {
