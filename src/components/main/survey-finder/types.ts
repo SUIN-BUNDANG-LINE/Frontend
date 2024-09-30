@@ -5,12 +5,12 @@ interface Reward {
 
 interface Survey {
   surveyId: string;
-  thumbnail: string;
+  thumbnail: string | null;
   title: string;
   description: string;
-  targetParticipants: number;
+  targetParticipants: number | null;
   rewardCount: number;
-  finishedAt: string;
+  finishedAt: string | null;
   rewards: Reward[];
 }
 

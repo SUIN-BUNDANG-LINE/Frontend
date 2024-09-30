@@ -9,12 +9,12 @@ interface SurveysListResponse {
   pageCount: number;
   surveys: {
     surveyId: string;
-    thumbnail: string;
+    thumbnail: string | null;
     title: string;
     description: string;
-    targetParticipants: number;
+    targetParticipants: number | null;
     rewardCount: number;
-    finishedAt: string;
+    finishedAt: string | null;
     rewards: {
       category: string;
       items: string[];

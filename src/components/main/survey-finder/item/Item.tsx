@@ -15,12 +15,16 @@ export default function ListItem({ survey }: { survey: Survey }) {
     <Link className={styles.item} href={`/s/${surveyId}`}>
       <div
         className={styles.thumbnail}
-        style={{ backgroundColor: 'var(--gray-ml)', backgroundSize: 'cover', backgroundImage: `url("${thumbnail}")` }}
+        style={{
+          backgroundColor: 'var(--gray-ml)',
+          backgroundSize: 'cover',
+          backgroundImage: `url("${thumbnail || '/assets/default-thumbnail.webp'}")`,
+        }}
       />
       <div className={styles.info}>
         <div>
           <div className={styles.title}>{title.length < 28 ? title : `${title.substring(0, 25).trim()}...`}</div>
-          <div className={styles.time}>{dateReader(finishedAt)}</div>
+          <div className={styles.time}>{finishedAt ? dateReader(finishedAt) : '응답 받는 중'}</div>
           <div className={styles.description}>{description}</div>
           <div className={styles.rewards}>
             {rewards.map((i) => (
