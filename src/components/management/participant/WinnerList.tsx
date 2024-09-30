@@ -45,14 +45,18 @@ export default function WinnerList({ winners }: WinnerListProps) {
                 <td>{moment(winner.participatedAt).format('YYYY-MM-DD HH:mm:ss')}</td>
                 <td>{winner.drawInfo?.reward || 'N/A'}</td>
                 <td className={styles.phoneNumberCell}>
-                  {isPhoneNumberVisible ? phoneNumber : maskPhoneNumber(phoneNumber)}
-                  <button
-                    type="button"
-                    className={styles.eyeButton}
-                    onClick={() => togglePhoneNumberVisibility(winner.participantId)}
-                    aria-label="전화번호 보기">
-                    {isPhoneNumberVisible ? <FaEyeSlash /> : <FaEye />}
-                  </button>
+                  <div className={styles.phoneNumberInfo}>
+                    <span className={styles.phoneNumber}>
+                      {isPhoneNumberVisible ? phoneNumber : maskPhoneNumber(phoneNumber)}
+                    </span>
+                    <button
+                      type="button"
+                      className={styles.eyeButton}
+                      onClick={() => togglePhoneNumberVisibility(winner.participantId)}
+                      aria-label="전화번호 보기">
+                      {isPhoneNumberVisible ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
                 </td>
               </tr>
             );
