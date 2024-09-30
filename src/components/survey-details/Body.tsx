@@ -5,10 +5,11 @@ import moment from 'moment';
 import { FaPeopleGroup } from 'react-icons/fa6';
 import { Reward, RewardType } from '@/services/surveys/types';
 import Link from 'next/link';
+import { statusReader } from '@/utils/enumReader';
 import styles from './Body.module.css';
 
 interface Props {
-  status: [string, string];
+  status: string;
   type: RewardType;
   targetParticipantCount: number | null;
   currentParticipantCount: number | null;
@@ -26,14 +27,15 @@ export default function Body({
   rewards,
   onStart,
 }: Props) {
+  const [statusText, statusDetail] = statusReader(status);
   const StatusComponent =
-    status[0] === '응답 받는 중' ? undefined : (
+    status === 'IN_PROGRESS' ? undefined : (
       <div className={styles.descriptor}>
         <GiSpeakerOff size="24px" />
         <div className={styles.status}>
           <div>응답을 받지 않습니다.</div>
           <div>
-            {status[0]}: {status[1]}
+            {statusText}: {statusDetail}
           </div>
         </div>
       </div>
@@ -84,7 +86,7 @@ export default function Body({
   return (
     <div className={styles.body}>
       <div className={styles.content}>
-        <Button variant="primary" width="100%" height="48px" onClick={onStart}>
+        <Button variant="primary" width="100%" height="48px" onClick={onStart} disabled={status !== 'IN_PROGRESS'}>
           참여하기
         </Button>
         <Link href="/" className={styles.link}>

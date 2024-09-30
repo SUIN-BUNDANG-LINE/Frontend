@@ -1,6 +1,5 @@
 import { useRouter } from 'next/navigation';
 import type { SurveysDetailsResponse } from '@/services/surveys/types';
-import { statusReader } from '@/utils/enumReader';
 import Heads from './Heads';
 import Body from './Body';
 
@@ -19,7 +18,7 @@ export default function DetailsViewer({ data, surveyId }: Props) {
     <>
       <Heads title={title} description={description} thumbnail={thumbnail} />
       <Body
-        status={statusReader(status)}
+        status={status}
         type={type}
         targetParticipantCount={targetParticipants}
         currentParticipantCount={currentParticipants}
