@@ -97,14 +97,16 @@ export default function Body({
         {StatusComponent}
         {RewardComponent}
       </div>
-      <div className={styles.clause}>
-        <h4>리워드 관련 안내</h4>
-        <ul>
-          <li>낙첨된 경우 리워드는 지급되지 않습니다.</li>
-          <li>표시된 리워드와 수량은 설문 조사자가 지급하기로 약속한 내용입니다.</li>
-          <li>리워드 관련 분쟁에 대해 설문이용은 일체의 책임을 지지 않습니다.</li>
-        </ul>
-      </div>
+      {['IMMEDIATE_DRAW', 'SELF_MANAGEMENT'].includes(type) && (
+        <div className={styles.clause}>
+          <h4>리워드 관련 안내</h4>
+          <ul>
+            {type === 'IMMEDIATE_DRAW' && <li>낙첨된 경우 리워드는 지급되지 않습니다.</li>}
+            <li>표시된 리워드와 수량은 설문 조사자가 지급하기로 약속한 내용입니다.</li>
+            <li>리워드 관련 분쟁에 대해 설문이용은 일체의 책임을 지지 않습니다.</li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
