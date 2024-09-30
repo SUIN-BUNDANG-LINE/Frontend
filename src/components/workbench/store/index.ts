@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { v4 as uuid } from 'uuid';
 import { subscribeWithSelector } from 'zustand/middleware';
-import type { Field, Section, Store, TextField, CheckboxField, RadioField, RewardConfig } from '../types';
+import type { Field, Section, Store, TextField, CheckboxField, RadioField, Actions } from '../types';
 
 function getDefaultSection(): Section {
   return {
@@ -52,29 +52,6 @@ const DEFAULT_STORE: Store = {
 
   sections: [],
   fields: [],
-};
-
-export type Actions = {
-  initStore: ({ store }: { store: Store }) => void;
-
-  setter: ({ key, value }: { key: string; value: unknown }) => void;
-  rewardSetter: ({ updates }: { updates: Partial<RewardConfig> }) => void;
-
-  setSections: ({ sections }: { sections: Section[] }) => void;
-  setFields: ({ fields }: { fields: Field[] }) => void;
-
-  setSectionTitle: ({ sectionId, title }: { sectionId: string; title: string }) => void;
-  setSectionDescription: ({ sectionId, description }: { sectionId: string; description: string }) => void;
-
-  addSection: ({ index }: { index: number }) => void;
-  copySection: ({ index, section }: { index: number; section: Section }) => void;
-  editSection: ({ sectionId, updates }: { sectionId: string; updates: Partial<Section> }) => void;
-  deleteSection: ({ sectionId }: { sectionId: string }) => void;
-
-  addField: ({ sectionId, index, type }: { sectionId: string; index: number; type: Field['type'] }) => void;
-  copyField: ({ sectionId, index, field }: { sectionId: string; index: number; field: Field }) => void;
-  editField: ({ fieldId, updates }: { fieldId: string; updates: Partial<Field> }) => void;
-  deleteField: ({ fieldId }: { fieldId: string }) => void;
 };
 
 const useSurveyStore = create<Store & Actions>()(

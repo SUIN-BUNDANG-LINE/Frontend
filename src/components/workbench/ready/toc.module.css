@@ -20,13 +20,16 @@
 }
 
 .fieldList {
-  list-style-type: none;
   padding-left: 12px;
+  list-style-type: none;
 }
 
-.fieldItem {
-  height: 20px;
-  line-height: 20px;
+.fieldItem,
+.fieldEmpty {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  gap: 4px;
   font-size: 15px;
   color: var(--gray-md);
   padding: 3px 0;

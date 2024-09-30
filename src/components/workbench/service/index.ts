@@ -16,7 +16,7 @@ const useGetSurvey = (surveyId: string) => {
   });
 };
 
-const usePutSurvey = (surveyId: string, onSuccess: () => void, onError: () => void) => {
+const usePutSurvey = (surveyId: string, onSuccess: () => void, onError: (error: Error) => void) => {
   return useMutation({
     mutationFn: (survey: OutgoingSurvey) => fetchSurveyPut({ surveyId, survey }),
     onSuccess,
@@ -30,7 +30,7 @@ const useCreateSurvey = () => {
   });
 };
 
-const useStartSurvey = (surveyId: string, onSuccess: () => void, onError: () => void) => {
+const useStartSurvey = (surveyId: string, onSuccess: () => void, onError: (error: Error) => void) => {
   return useMutation({
     mutationFn: () => fetchSurveyStart({ surveyId }),
     onSuccess,
