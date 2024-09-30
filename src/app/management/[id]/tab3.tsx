@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEdit, FaRegCopy, FaRegStopCircle } from 'react-icons/fa';
 import useModal from '@/hooks/useModal';
 import Modal from '@/components/ui/modal/Modal';
@@ -6,18 +6,22 @@ import { fetchSurveyEdit, fetchSurveyFinish } from '@/services/management/fetch'
 import { showToast } from '@/utils/toast';
 import Button from '@/components/ui/button/Button';
 import { writeClipboard } from '@/utils/misc';
+import Loading from '@/components/ui/loading/Loading';
 import styles from './tab3.module.css';
 
 interface Tab3Props {
   surveyId: string;
-  initialIsFinished: boolean;
+  initialIsFinished: undefined | boolean;
 }
 
 function Tab3({ surveyId, initialIsFinished }: Tab3Props) {
   const { isOpen: isEditModalOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
   const { isOpen: isFinishModalOpen, openModal: openFinishModal, closeModal: closeFinishModal } = useModal();
+  const [isFinished, setIsFinished] = useState<boolean>();
 
-  const [isFinished, setIsFinished] = useState(initialIsFinished);
+  useEffect(() => {
+    setIsFinished(initialIsFinished);
+  }, [initialIsFinished]);
 
   const handleEditSurvey = async () => {
     closeEditModal();
@@ -45,6 +49,13 @@ function Tab3({ surveyId, initialIsFinished }: Tab3Props) {
     writeClipboard(surveyLink);
     showToast('success', '설문 참여 링크가 클립보드에 복사되었습니다.');
   };
+
+  if (initialIsFinished === undefined)
+    return (
+      <div className={styles.loading}>
+        <Loading message="설문 정보를 불러오는 중..." />
+      </div>
+    );
 
   return (
     <div className={styles.container}>
