@@ -29,7 +29,7 @@ function Tab2({ surveyId }: Props) {
     surveyId,
     () => {
       showToast('success', '설문지가 공개되었습니다!');
-      router.push(`/s/${surveyId}`);
+      router.push('/mypage');
     },
     (error: Error) => {
       setModalTitle('공개 실패');

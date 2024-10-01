@@ -57,7 +57,7 @@ function Header({ tab, tabHandler, errors, handleSubmit, isPending, surveyId }: 
     <>
       <div className={styles.maxUI}>
         <div className={styles.header}>
-          <button type="button" onClick={() => router.back()} className={styles.leave} aria-label="back">
+          <button type="button" onClick={() => router.push('/mypage')} className={styles.leave} aria-label="back">
             <Svg size="42px" path="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
           </button>
           <div className={styles.main}>
