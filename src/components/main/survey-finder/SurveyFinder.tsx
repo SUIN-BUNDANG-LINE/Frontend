@@ -6,9 +6,11 @@ import { replaceURLSearchParams } from '@/utils/url-search-params';
 import { useSurveysList } from '@/services/surveys';
 import Loading from '@/components/ui/loading/Loading';
 import Error from '@/components/ui/error/Error';
+import Button from '@/components/ui/button/Button';
 import List from './list/List';
 import Customize from './control/Customize';
 import Pagination from './control/Pagination';
+import styles from './SurveyFinder.module.css';
 
 const SORT_OPTIONS = [{ value: 'RECENT', label: '최신순' }];
 
@@ -48,17 +50,12 @@ export default function SurveyFinder() {
     }
     if (data.surveys.length === 0) {
       return (
-        <Error
-          message="조건에 맞는 설문조사를 찾을 수 없습니다."
-          buttons={[
-            {
-              text: '초기화',
-              fn: () => {
-                setPageHandler(1);
-              },
-            },
-          ]}
-        />
+        <div className={styles.empty}>
+          <div>조건에 맞는 설문조사를 하나도 찾지 못했습니다.</div>
+          <Button variant="primary" onClick={() => setPageHandler(1)}>
+            초기화
+          </Button>
+        </div>
       );
     }
     return <List surveys={surveys} />;

@@ -1,0 +1,20 @@
+.start {
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 700px;
+  margin: 12px auto;
+}
+
+.title {
+  font-size: 18px;
+  color: var(--gray-d);
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--gray);
+}
+
+.description {
+  color: var(--gray-d);
+  padding: 12px 0;
+}

@@ -1,5 +1,28 @@
 import { RewardConfig } from './shared';
 
+type Actions = {
+  initStore: ({ store }: { store: Store }) => void;
+
+  setter: ({ key, value }: { key: string; value: unknown }) => void;
+  rewardSetter: ({ updates }: { updates: Partial<RewardConfig> }) => void;
+
+  setSections: ({ sections }: { sections: Section[] }) => void;
+  setFields: ({ fields }: { fields: Field[] }) => void;
+
+  setSectionTitle: ({ sectionId, title }: { sectionId: string; title: string }) => void;
+  setSectionDescription: ({ sectionId, description }: { sectionId: string; description: string }) => void;
+
+  addSection: ({ index }: { index: number }) => void;
+  copySection: ({ index, section }: { index: number; section: Section }) => void;
+  editSection: ({ sectionId, updates }: { sectionId: string; updates: Partial<Section> }) => void;
+  deleteSection: ({ sectionId }: { sectionId: string }) => void;
+
+  addField: ({ sectionId, index, type }: { sectionId: string; index: number; type: Field['type'] }) => void;
+  copyField: ({ sectionId, index, field }: { sectionId: string; index: number; field: Field }) => void;
+  editField: ({ fieldId, updates }: { fieldId: string; updates: Partial<Field> }) => void;
+  deleteField: ({ fieldId }: { fieldId: string }) => void;
+};
+
 type Store = {
   // about survey
   title: string;
@@ -76,4 +99,5 @@ export type {
   Sequential,
   Manual,
   Conditional,
+  Actions,
 };

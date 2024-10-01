@@ -22,7 +22,7 @@ export default function Toc({
   const totalFields = toc.reduce((acc, curr) => acc + curr.fields.length, 0);
 
   const icon = (type: Field['type']) => {
-    return <Svg path={svgPaths[type]} size="18px" />;
+    return <Svg path={svgPaths[type]} size="20px" />;
   };
 
   return (
@@ -35,14 +35,15 @@ export default function Toc({
       </div>
       {toc.map(({ section, fields }) => (
         <div key={section.sectionId} className={styles.section}>
-          <h2 className={styles.sectionTitle}>{section.title || '제목 없는 섹션'}</h2>
+          <h2 className={styles.sectionTitle}>{section.title || '제목 없는 섹션'} </h2>
           <ul className={styles.fieldList}>
             {fields.map((field) => (
               <li key={field.fieldId} className={styles.fieldItem}>
                 {icon(field.type)} {field.title || '제목 없는 질문'}{' '}
-                {field.required && <span style={{ color: 'red' }}>*</span>}
+                {field.required && <span style={{ color: '#ff6666' }}>*</span>}
               </li>
             ))}
+            {fields.length === 0 && <span className={styles.fieldEmpty}>섹션에 질문이 없습니다.</span>}
           </ul>
         </div>
       ))}

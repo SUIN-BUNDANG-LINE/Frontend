@@ -51,7 +51,7 @@ export default function Body({ status, rewardConfig, onStart }: Props) {
           <FaRegCalendarAlt size="20px" />
           <div className={styles.status}>
             <div className={styles.endDate}>
-              {moment(finishedAt).format('YYYY년 MM월 DD일 hh시')}까지 응답을 받습니다.
+              {moment(finishedAt).format('YYYY년 MM월 DD일 HH시')}까지 응답을 받습니다.
             </div>
           </div>
         </div>

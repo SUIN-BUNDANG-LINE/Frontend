@@ -11,6 +11,8 @@ const useMySurveys = (statusForFilter: StatusForFilter, sortType: SortType) => {
     queryKey: queryKeys.mySurveys(statusForFilter, sortType),
     queryFn: () => getMySurveys(statusForFilter, sortType),
     placeholderData: keepPreviousData,
+    gcTime: 0,
+    staleTime: 0,
   });
 };
 

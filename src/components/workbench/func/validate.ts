@@ -87,6 +87,9 @@ export const validate = (store: Store): ValidationResult => {
         const date = moment(rewardConfig.finishedAt);
 
         if (rewardConfig.rewards.length === 0) reason.push('리워드를 1개 이상 설정해야 합니다.');
+        if (rewardConfig.rewards.reduce((a, c) => a + c.count, 0) > rewardConfig.targetParticipantCount) {
+          reason.push('총 리워드 개수는 최대 참여 인원보다 많을 수 없습니다.');
+        }
         if (!rewardConfig.targetParticipantCount) reason.push('최대 참여 인원은 1명 이상이어야 합니다.');
         if (
           !date.isValid() ||

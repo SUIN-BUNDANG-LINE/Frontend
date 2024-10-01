@@ -1,5 +1,4 @@
 import { FaSave, FaExternalLinkAlt } from 'react-icons/fa';
-import Link from 'next/link';
 import { ErrorDescriptor } from '../types';
 import styles from './submit.module.css';
 
@@ -28,10 +27,10 @@ export default function Submit({ errors, handleSubmit, isPending, surveyId }: Pr
           </div>
         )}
       </button>
-      <Link href={`/workbench/${surveyId}/preview`} className={styles.preview}>
+      <a target="_blank" href={`/workbench/${surveyId}/preview`} className={styles.preview} rel="noreferrer">
         <FaExternalLinkAlt />
         <div>미리보기</div>
-      </Link>
+      </a>
     </div>
   );
 }
