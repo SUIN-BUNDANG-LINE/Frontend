@@ -96,7 +96,7 @@
 }
 
 .feasibility > div > svg {
-  color: #000;
+  color: var(--gray-d);
 }
 
 @media screen and (min-width: 425px) {
@@ -104,13 +104,28 @@
     font-size: 14px;
     display: block;
     padding: 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media screen and (max-width: 1079px) {
+  .info {
+    flex-grow: 1;
+    width: auto;
+    overflow: hidden;
+  }
+
+  .item {
+    grid-template-columns: 100px 1fr;
   }
 }
 
 @media screen and (min-width: 1080px) {
   .item {
     width: 220px;
-    height: 360px;
+    height: 320px;
     display: flex;
     flex-direction: column;
     row-gap: 1rem;

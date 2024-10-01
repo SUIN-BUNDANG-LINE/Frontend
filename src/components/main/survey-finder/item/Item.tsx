@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { FaArrowUp, FaGift } from 'react-icons/fa';
+import { FaGift } from 'react-icons/fa';
 import { dateReader } from '@/utils/dates';
+import Tooltip from '@/components/ui/tooltip/Tooltip';
 import type { Survey } from '../types';
 import styles from './Item.module.css';
-import RewardTag from './RewardTag';
 
 export default function ListItem({ survey }: { survey: Survey }) {
   const { surveyId, thumbnail, title, description, targetParticipants, rewardCount, finishedAt, rewards } = survey;
@@ -26,21 +26,19 @@ export default function ListItem({ survey }: { survey: Survey }) {
           <div className={styles.title}>{title}</div>
           <div className={styles.time}>{finishedAt ? dateReader(finishedAt) : '응답 받는 중'}</div>
           <div className={styles.description}>{description}</div>
-          <div className={styles.rewards}>
-            {rewards.map((i) => (
-              <RewardTag reward={i} key={i.category} />
-            ))}
-          </div>
         </div>
         <div className={styles.feasibility}>
           {rewardCount > 0 && (
             <div>
-              <FaGift /> {rewardCount}
-            </div>
-          )}
-          {targetParticipants !== null && (
-            <div>
-              <FaArrowUp /> {targetParticipants}
+              <Tooltip
+                text={`${rewards
+                  .map((reward) => {
+                    const { items } = reward;
+                    return items.join(', ');
+                  })
+                  .join(', ')}`}>
+                <FaGift /> {targetParticipants !== null ? '즉시 추첨' : '리워드 지급'}
+              </Tooltip>
             </div>
           )}
         </div>
