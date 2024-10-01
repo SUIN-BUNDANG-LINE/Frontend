@@ -1,0 +1,38 @@
+.select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  text-align: left;
+}
+
+.select {
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.select:hover {
+  background-color: var(--gray-l);
+}
+
+.label {
+  width: 100%;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.label span {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.group {
+  width: 100%;
+  margin-bottom: 16px;
+}
