@@ -20,6 +20,12 @@
   text-align: center;
 }
 
+.title {
+  width: 100%;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
 .description {
   width: 100%;
   text-align: center;
@@ -28,7 +34,8 @@
   outline: none;
   resize: none;
   color: var(--gray-d);
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  max-height: 300px;
 }
 
 .shareButton {
@@ -38,8 +45,8 @@
   padding: 8px 12px;
   border-radius: 4px;
   background-color: var(--gray-l);
-  border: none; /* new */
-  cursor: pointer; /* new */
+  border: none;
+  cursor: pointer;
   transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
