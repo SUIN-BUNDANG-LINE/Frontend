@@ -1,0 +1,80 @@
+.rewardItemLeft {
+  width: 100%;
+  display: grid;
+  grid-template-rows: 20px 1fr;
+}
+
+.rewardItem {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.rewardItemContent {
+  text-align: left;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  padding-top: 6px;
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.rewardItemContent:hover {
+  background-color: var(--gray-l);
+}
+
+.rewardName {
+  width: 100%;
+  font-size: 14px;
+  text-align: left;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.rewardCategory {
+  color: var(--gray-md);
+  padding: 2px 0 2px 0;
+  border-radius: 2px;
+  font-size: 12px;
+  flex-grow: 1;
+  margin-right: 16px;
+}
+
+.rewardCount {
+  font-size: 14px;
+  color: var(--gray-darker);
+  font-weight: bold;
+  flex-grow: 0;
+  padding: 0 8px;
+}
+
+.rewardDelete {
+  background: none;
+  border: none;
+  color: var(--gray-darker);
+  cursor: pointer;
+  transition: color 0.2s ease;
+  padding-left: 12px;
+}
+
+.rewardDelete:hover {
+  color: var(--primary);
+}
+
+.rewardDelete:active {
+  color: var(--primary-dark);
+}
+
+.rewardFrozen {
+  padding-bottom: 18px;
+  font-size: 14px;
+}
