@@ -9,17 +9,14 @@ export default function SurveyCreateButton() {
   const mutation = useCreateSurvey();
 
   async function createNewSurvey() {
-    mutation.mutate(
-      {},
-      {
-        onSuccess: (data) => {
-          nextRouter.push(`/workbench/${data.surveyId}`);
-        },
-        onError: (error) => {
-          showToast('error', (error.cause as ErrorCause).message);
-        },
-      }
-    );
+    mutation.mutate(undefined, {
+      onSuccess: (data) => {
+        nextRouter.push(`/workbench/${data.surveyId}`);
+      },
+      onError: (error) => {
+        showToast('error', (error.cause as ErrorCause).message);
+      },
+    });
   }
 
   return (
