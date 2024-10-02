@@ -177,6 +177,7 @@ export default function RewardList({ readonly }: Props) {
         <label className={styles.label} htmlFor="reward-rewards">
           <span>리워드 목록</span>
           <div className={styles.rewardContainer}>
+            {rewards.length === 0 && <div style={{ color: 'var(--gray)' }}>아직 추가한 리워드가 없습니다.</div>}
             {rewards.map(({ name, category, count, key }) => (
               <RewardItem
                 name={name}
