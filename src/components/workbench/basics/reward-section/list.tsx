@@ -35,11 +35,11 @@ function ModalContent({ action, apply, init }: ModalProps) {
   })();
 
   const categoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategory(e.target.value.trimStart().slice(0, 20));
+    setCategory(e.target.value.trimStart());
   };
 
   const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value.trimStart().slice(0, 40));
+    setName(e.target.value.trimStart());
   };
 
   const countHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,8 +70,12 @@ function ModalContent({ action, apply, init }: ModalProps) {
             placeholder="커피, 치킨, 상품권..."
             value={category}
             onChange={categoryHandler}
+            maxLength={100}
           />
         </label>
+        <div className={styles.maxLength}>
+          <span>{category.length} / 100자</span>
+        </div>
       </div>
       <div className={styles.inputGroup}>
         <label htmlFor="new-reward-name" className={styles.label}>
@@ -83,8 +87,12 @@ function ModalContent({ action, apply, init }: ModalProps) {
             placeholder="스타벅스 아메리카노 T"
             value={name}
             onChange={nameHandler}
+            maxLength={100}
           />
         </label>
+        <div className={styles.maxLength}>
+          <span>{name.length} / 100자</span>
+        </div>
       </div>
       <div className={styles.inputGroup}>
         <label htmlFor="new-reward-count" className={styles.label}>

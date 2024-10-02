@@ -1,3 +1,15 @@
+.maxLength {
+  text-align: right;
+  font-size: 14px;
+}
+
+.maxLength > span {
+  color: var(--gray-md);
+  background-color: transparent;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
 .rewardContainer {
   width: 100%;
   display: flex;
