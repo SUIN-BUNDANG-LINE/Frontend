@@ -57,12 +57,12 @@ export default function MainSection() {
             className={styles.textarea}
             value={description}
             onChange={handleChange}
-            maxLength={1000}
+            maxLength={2000}
             placeholder="설문지 설명을 입력하세요"
           />
         </label>
         <div className={styles.maxLength}>
-          <span>{description.length} / 1000자</span>
+          <span>{description.length} / 2000자</span>
         </div>
       </div>
 

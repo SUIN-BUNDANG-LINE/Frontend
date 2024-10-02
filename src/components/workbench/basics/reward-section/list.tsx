@@ -35,11 +35,11 @@ function ModalContent({ action, apply, init }: ModalProps) {
   })();
 
   const categoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategory(e.target.value.trimStart().slice(0, 20));
+    setCategory(e.target.value.trimStart());
   };
 
   const nameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value.trimStart().slice(0, 40));
+    setName(e.target.value.trimStart());
   };
 
   const countHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,6 +87,7 @@ function ModalContent({ action, apply, init }: ModalProps) {
             placeholder="스타벅스 아메리카노 T"
             value={name}
             onChange={nameHandler}
+            maxLength={100}
           />
         </label>
         <div className={styles.maxLength}>
