@@ -1,9 +1,12 @@
 import * as cookies from 'cookies-next';
 import type { DefaultOptions } from 'cookies-next/lib/types';
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const defaultOptions: DefaultOptions = {
   path: '/',
   secure: true,
+  ...(isProduction && { domain: '.sulmoon.io' }), // 운영 환경에서만 domain 설정
 };
 
 export type CookieKey = 'user-profile' | 'and-more';
