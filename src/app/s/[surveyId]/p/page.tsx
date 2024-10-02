@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react';
 import { useForm } from '@/components/survey-p/hooks/useForm';
 import { useSurveysProgress, useSurveysResponse } from '@/services/surveys';
 import {
@@ -20,6 +19,7 @@ import Loading from '@/components/ui/loading/Loading';
 import type { ErrorCause } from '@/services/ky-wrapper';
 import Error from '@/components/ui/error/Error';
 import { showToast } from '@/utils/toast';
+import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react';
 
 export default function Page({ params }: { params: { surveyId: string } }) {
   const { surveyId } = params;
@@ -29,6 +29,12 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const mutation = useSurveysResponse(surveyId);
   const [surveyState] = useState(getSurveyState(surveyId));
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    isLoading: visitorLoading,
+    error: visitorError,
+    data: visitorData,
+  } = useVisitorData({ extendedResult: true }, { immediate: true });
 
   const { history: initialHistory, responses: initialResponses } = useMemo(() => {
     return loadInteractions(surveyId);
@@ -42,11 +48,6 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   });
 
   const [userResponse, setUserResponse] = useState<object | null>(null);
-  const {
-    isLoading: visitorLoading,
-    error: visitorError,
-    data: visitorData,
-  } = useVisitorData({ extendedResult: true }, { immediate: true });
 
   useEffect(() => {
     if (!survey) return;
@@ -81,7 +82,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     );
   }
 
-  if (isLoading || visitorLoading || !survey || !section) {
+  if (isLoading || !survey || !section || visitorLoading) {
     return <Loading message="내용을 불러오는 중..." />;
   }
 
@@ -132,6 +133,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
       if (!userResponse) return;
 
       const visitorId = visitorData?.visitorId || undefined;
+
       setIsSubmitting(true);
 
       mutation.mutate(
@@ -139,8 +141,13 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         {
           onSuccess: (data) => {
             clearInteractions(surveyId);
-            setSurveyState(surveyId, data.participantId);
-            nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
+            if (data.isImmediateDraw) {
+              setSurveyState(surveyId, data.participantId);
+              nextRouter.push(`/s/${surveyId}/draw?pid=${data.participantId}`);
+            } else {
+              setSurveyState(surveyId, '$');
+              nextRouter.push(`/s/${surveyId}`);
+            }
           },
           onError: (error) => {
             showToast('error', (error.cause as ErrorCause).message);

@@ -1,0 +1,39 @@
+.rejectMessage {
+  background-color: var(--gray-l);
+  padding: 8px;
+  color: var(--gray-d);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.errorList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.errorItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: none;
+}
+
+.errorItem:not(:first-child) {
+  margin-top: 12px;
+}
+
+.location {
+  color: var(--gray);
+  font-size: 14px;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+.close {
+  padding-top: 18px;
+  width: 100%;
+  text-align: center;
+}

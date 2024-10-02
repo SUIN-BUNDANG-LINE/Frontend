@@ -1,0 +1,35 @@
+.toolbar {
+  z-index: 1;
+  width: 48px;
+  margin: 12px;
+  background-color: white; /* Optional: to ensure visibility */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: add some shadow for visual effect */
+  border-radius: 8px;
+  padding: 12px 0;
+
+  text-align: center;
+}
+
+.title {
+  padding: 12px 0;
+  color: #5f6368;
+}
+
+.tools {
+  display: grid;
+  grid-template-rows: repeat(3, 42px);
+  align-items: center;
+  justify-content: center;
+}
+
+.tool {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.tool:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}

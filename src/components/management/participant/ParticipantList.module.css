@@ -1,0 +1,75 @@
+.participantList {
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #000;
+  font-weight: bold;
+}
+
+.participantTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.participantTable th,
+.participantTable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.participantTable th {
+  background-color: #f1f1f1;
+  font-weight: 600;
+  color: #555;
+}
+
+.participantTable td {
+  color: #666;
+}
+
+.participantTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.participantTable tr:hover {
+  background-color: #f1f7ff;
+}
+
+.viewButtonCell {
+  text-align: center;
+  padding: 0;
+}
+
+.viewButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: 600;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.viewButton:hover {
+  color: #0056b3;
+}
+
+.viewButton:focus {
+  outline: none;
+}
+
+.viewButton svg {
+  font-size: 14px;
+}

@@ -6,7 +6,7 @@
 .tooltip {
   visibility: hidden;
   width: max-content; /* This will make it as wide as its content */
-  max-width: 300px; /* Optional: set a maximum width */
+  max-width: 400px; /* Optional: set a maximum width */
   background-color: #555;
   color: #fff;
   text-align: center;
@@ -20,6 +20,7 @@
   opacity: 0;
   transition: opacity 0.3s;
   white-space: nowrap; /* Prevent wrapping by default */
+  text-overflow: ellipsis;
 }
 
 .container:hover .tooltip {

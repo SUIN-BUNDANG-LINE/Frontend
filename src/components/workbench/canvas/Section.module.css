@@ -1,0 +1,205 @@
+/* Section.module.css */
+
+.dragHandle {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Style for the draggable section container */
+.sectionContainer {
+  box-sizing: border-box;
+  transition: background-color 0.1s ease-in-out; /* Transition for hover effect */
+  width: 100%;
+  padding: 4px;
+  padding-top: 0;
+  min-width: 337px;
+  max-width: 768px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+/* Style for the section header */
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* Space below the header */
+  padding: 0 8px;
+}
+
+/* Style for the section title */
+.sectionTitle {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1.5rem; /* Larger font size for the title */
+  padding: 4px;
+  font-weight: bold;
+  color: #333; /* Darker color for the title */
+  margin: 0; /* Remove default margin */
+  border-left: 4px solid transparent;
+}
+
+.sectionTitle:hover,
+.sectionTitle:focus {
+  border-left: 4px solid var(--gray-d);
+}
+
+/* Style for the section description */
+.sectionDescription {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 1rem; /* Larger font size for the title */
+  padding: 4px;
+  color: #666; /* Darker color for the title */
+  margin: 0; /* Remove default margin */
+  border-left: 4px solid transparent;
+}
+
+.sectionDescription:hover,
+.sectionDescription:focus {
+  border-left: 4px solid var(--gray-d);
+}
+
+.fieldSummary {
+  cursor: pointer;
+  color: var(--gray-d);
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+.fieldSummary:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Style for the fields container */
+.fieldsContainer {
+  border-radius: 8px; /* Rounded corners */
+  transition: background-color 0.2s ease-in-out; /* Transition for hover effect */
+}
+
+/* Style for the list of fields */
+.fieldsList {
+  list-style: none; /* Remove bullet points */
+  padding: 4px 8px; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+}
+
+.sectionActions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.sectionActionsGroup {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  color: var(--gray-d);
+}
+
+.sectionAction {
+  border: none;
+  background-color: transparent;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  border-radius: 4px;
+  transition: color 0.1s ease-in-out;
+  color: var(--gray-d);
+}
+
+.fieldsListReplacer {
+  text-align: center;
+  padding: 8px 0;
+  margin: 0 12px;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--gray-d);
+  min-height: 36px;
+  line-height: 36px;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* Hover effect for section */
+.sectionContainer:hover {
+  border: 1px solid gray;
+}
+.sectionAction:hover {
+  background-color: #fff;
+  color: #000;
+}
+.fieldsContainer:hover .fieldsListReplacer {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.sectionContainer:hover .fieldsList {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* route */
+
+.routeWrapper {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.route {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  padding-top: 12px;
+  height: 32px;
+  line-height: 32px;
+  width: 100%;
+  border-top: 1px solid var(--gray-md);
+  text-align: left;
+}
+
+.route > div {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+
+/* add section */
+
+.addSection {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 0;
+  max-width: 768px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addSection button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--gray);
+  padding: 12px 12px;
+  transition: background-color 0.1s ease-in-out; /* Transition for hover effect */
+  border-radius: 4px;
+}
+
+.addSection button:hover {
+  background-color: var(--gray);
+  color: #fff;
+}
+
+.addSection.hidden button {
+  color: transparent;
+  background-color: transparent;
+  cursor: auto;
+}

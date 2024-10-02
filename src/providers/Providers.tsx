@@ -3,8 +3,8 @@
 import AuthProvider from './auth/AuthProvider';
 import type { User } from './auth/types';
 import ToastProvider from './ToastProvider';
-import ReactQueryClientProvider from './ReactQueryClientProvider';
 import FpjsProvider from './FpjsProvider';
+import ReactQueryClientProvider from './ReactQueryClientProvider';
 
 interface Props {
   init: {
@@ -16,12 +16,12 @@ export default function Providers({ children, init }: React.PropsWithChildren<Pr
   const { user } = init;
 
   return (
-    <FpjsProvider>
-      <ReactQueryClientProvider>
-        <AuthProvider init={user}>
-          <ToastProvider>{children}</ToastProvider>
-        </AuthProvider>
-      </ReactQueryClientProvider>
-    </FpjsProvider>
+    <ReactQueryClientProvider>
+      <AuthProvider init={user}>
+        <ToastProvider>
+          <FpjsProvider>{children}</FpjsProvider>
+        </ToastProvider>
+      </AuthProvider>
+    </ReactQueryClientProvider>
   );
 }

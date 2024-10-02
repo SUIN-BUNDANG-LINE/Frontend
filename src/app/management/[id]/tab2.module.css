@@ -1,0 +1,73 @@
+.container {
+  box-sizing: border-box;
+  border-radius: 8px;
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 12px;
+}
+
+.container div,
+.container label,
+.container input,
+.container textarea {
+  box-sizing: border-box;
+}
+
+.loading,
+.error {
+  display: flex;
+  justify-content: center;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.navButton {
+  background: rgb(255, 213, 33);
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.navButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.navButton:hover:not(:disabled) {
+  background: rgb(220, 183, 28);
+}
+
+.indexInput {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.participationDate {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+.calendarIcon {
+  font-size: 16px;
+  color: #0070f3;
+}

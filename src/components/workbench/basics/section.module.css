@@ -1,0 +1,75 @@
+.maxLength {
+  text-align: right;
+  font-size: 14px;
+}
+
+.maxLength > span {
+  color: var(--gray-md);
+  background-color: var(--gray-ml);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.warning {
+  background-color: var(--gray-ml);
+  padding: 8px;
+  text-align: center;
+  color: var(--gray-d);
+  font-style: italic;
+  margin-top: 16px;
+}
+
+.container div,
+.container label,
+.container input,
+.container textarea {
+  box-sizing: border-box;
+}
+
+.input,
+.textarea,
+.select,
+.inputFile {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+.input:focus,
+.textarea:focus,
+.inputFile:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 5px var(--primary);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.group {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.groupInfo span {
+  color: var(--gray-md);
+}
+
+.label {
+  width: 100%;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.label span {
+  display: block;
+  margin-bottom: 4px;
+}

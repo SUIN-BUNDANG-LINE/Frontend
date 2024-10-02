@@ -4,7 +4,7 @@ import { FpjsProvider as Provider, FingerprintJSPro } from '@fingerprintjs/finge
 
 export default function FpjsProvider({ children }: React.PropsWithChildren) {
   const apiKey = process.env.NEXT_PUBLIC_CREDENTIAL_API_KEY!;
-  const credentialServerUrl = process.env.NEXT_PUBLIC_CREDENTIAL_SERVER_URL!;
+  const credentialServerUrl = process.env.NEXT_PUBLIC_CREDENTIAL_SERVER_URL;
 
   return (
     <Provider

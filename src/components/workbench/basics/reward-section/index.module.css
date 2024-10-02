@@ -1,0 +1,53 @@
+/* basic styling */
+
+.input,
+.textarea,
+.select,
+.inputFile {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+}
+
+.input:focus,
+.textarea:focus,
+.inputFile:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 5px var(--primary);
+}
+
+.container div,
+.container label,
+.container input,
+.container textarea {
+  box-sizing: border-box;
+}
+
+.groupInfo span {
+  color: var(--gray-md);
+}
+
+.group {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.label {
+  width: 100%;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.label span {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* reward */

@@ -1,0 +1,25 @@
+.container {
+  padding: 24px 24px 0;
+  overflow-x: auto;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin: 0px, 8px;
+}
+
+.title > button{
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 20px;
+  height: 30px;
+}
+
+.content {
+  width: 100%;
+  min-width: fit-content;
+}

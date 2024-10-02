@@ -1,0 +1,39 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+
+.title {
+  line-height: 28px;
+  font-size: 18px;
+  margin: 6px 0;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.requiredTag {
+  display: inline-block;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 2px 4px;
+  margin: 0px 4px 0 0;
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 4px;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.requiredTag.valid {
+  background-color: var(--secondary);
+}
+
+.description {
+  font-size: 14px;
+  color: var(--gray-d);
+}
+
+.body {
+  padding: 12px 0;
+}

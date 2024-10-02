@@ -1,0 +1,32 @@
+.line {
+  height: 42px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  outline: none;
+  cursor: pointer;
+}
+
+.line:hover {
+  background-color: var(--gray-l);
+}
+
+.input {
+  height: 32px;
+  padding-left: 4px;
+  width: 50%;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid var(--gray);
+}
+
+.input:focus {
+  width: 80%;
+  border-color: var(--primary-alt);
+}

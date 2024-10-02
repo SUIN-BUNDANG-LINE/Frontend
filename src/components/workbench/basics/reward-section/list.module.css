@@ -1,0 +1,94 @@
+.maxLength {
+  text-align: right;
+  font-size: 14px;
+}
+
+.maxLength > span {
+  color: var(--gray-md);
+  background-color: transparent;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.rewardContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.newReward {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  background-color: #fff;
+  border: 1px solid var(--gray-light);
+  border-radius: 8px;
+}
+
+.newReward input {
+  box-sizing: border-box;
+  margin-top: 4px;
+}
+
+.newReward .inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.addButton {
+  padding: 10px;
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.addButton:hover {
+  background-color: var(--primary-dark);
+}
+
+.warning {
+  background-color: var(--gray-ml);
+  padding: 8px;
+  text-align: center;
+  color: var(--gray-d);
+  font-style: italic;
+  margin-top: 16px;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  text-align: left;
+}
+
+.label {
+  width: 100%;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.label span {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.group {
+  width: 100%;
+  margin-bottom: 16px;
+}

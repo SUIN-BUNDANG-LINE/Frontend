@@ -1,0 +1,32 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 24px 18px;
+}
+
+.submitArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+  border-color: transparent;
+  padding: 8px;
+  color: var(--gray-md);
+  cursor: pointer;
+}
+
+.back:hover {
+  text-decoration: underline;
+}

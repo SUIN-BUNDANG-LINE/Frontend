@@ -31,6 +31,7 @@
     "@typescript-eslint/camelcase": "off",
     "no-console": "warn",
     "react/require-default-props": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 }

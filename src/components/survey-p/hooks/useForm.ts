@@ -170,12 +170,13 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
         const route = routingTable.find((i) => i.content === keyResponse.selected[0]);
         if (!route) return { ok: false, reason: { code: 'FATAL', payload: 'route not found' } };
 
+        if (route.nextSid === null) {
+          return { ok: false, reason: { code: 'SUBMIT', payload: writeInteractionsResult() } };
+        }
+
         const newSection = surveySections!.find((i) => i.id === route.nextSid);
         if (newSection === undefined) {
           return { ok: false, reason: { code: 'FATAL', payload: 'new-section not found' } };
-        }
-        if (newSection === null) {
-          return { ok: false, reason: { code: 'SUBMIT', payload: writeInteractionsResult() } };
         }
 
         sectionsManager.push(newSection);
@@ -186,8 +187,6 @@ export const useForm = ({ surveySections, surveyQuestions, initialHistory, initi
     };
     return { isFirst, moveBack, moveNext };
   }, [getQuestion, getResponse, sectionsManager, surveyQuestions, surveySections, writeInteractionsResult]);
-
-  //
 
   return {
     section: sectionsManager.top(),

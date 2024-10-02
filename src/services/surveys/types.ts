@@ -9,12 +9,12 @@ interface SurveysListResponse {
   pageCount: number;
   surveys: {
     surveyId: string;
-    thumbnail: string;
+    thumbnail: string | null;
     title: string;
     description: string;
-    targetParticipants: number;
+    targetParticipants: number | null;
     rewardCount: number;
-    finishedAt: string;
+    finishedAt: string | null;
     rewards: {
       category: string;
       items: string[];
@@ -26,11 +26,19 @@ interface SurveysDetailsResponse {
   title: string;
   description: string;
   status: string;
-  finishedAt: string;
-  thumbnail: string;
-  currentParticipants: number;
-  targetParticipants: number;
-  rewards: { item: string; count: number }[];
+  type: RewardType;
+  finishedAt: string | null;
+  thumbnail: string | null;
+  currentParticipants: number | null;
+  targetParticipants: number | null;
+  rewards: Reward[];
+}
+
+type RewardType = 'NO_REWARD' | 'SELF_MANAGEMENT' | 'IMMEDIATE_DRAW';
+
+interface Reward {
+  item: string;
+  count: number;
 }
 
 type RDNumericalOrder = {
@@ -87,6 +95,7 @@ interface SurveysResponseParams {
 
 interface SurveysResponseResponse {
   participantId: string;
+  isImmediateDraw: boolean;
 }
 
 export type {
@@ -97,4 +106,6 @@ export type {
   SurveysResponseParams,
   SurveysResponseResponse,
   Question,
+  RewardType,
+  Reward,
 };

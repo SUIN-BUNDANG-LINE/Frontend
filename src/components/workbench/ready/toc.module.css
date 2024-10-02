@@ -1,0 +1,40 @@
+.tocContainer {
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 4px;
+  width: 100%;
+  max-width: 700px;
+  margin: 12px auto;
+}
+
+.summary {
+  font-size: 18px;
+  color: var(--gray-d);
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--gray);
+}
+
+.sectionTitle {
+  font-size: 18px;
+  color: var(--gray-d);
+}
+
+.fieldList {
+  padding-left: 12px;
+  list-style-type: none;
+}
+
+.fieldItem,
+.fieldEmpty {
+  display: flex;
+  height: 24px;
+  align-items: center;
+  gap: 4px;
+  font-size: 15px;
+  color: var(--gray-md);
+  padding: 3px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
