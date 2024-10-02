@@ -50,10 +50,18 @@
 
 .title {
   font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .description {
-  display: none;
+  font-size: 14px;
+  display: block;
+  padding: 4px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .time {
@@ -74,6 +82,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 1rem;
+  height: 17px;
 
   font-size: 14px;
 }
@@ -92,21 +101,25 @@
 }
 
 .feasibility > div > svg {
-  color: #000;
+  color: var(--gray-d);
 }
 
-@media screen and (min-width: 425px) {
-  .description {
-    font-size: 14px;
-    display: block;
-    padding: 4px 0;
+@media screen and (max-width: 1079px) {
+  .info {
+    flex-grow: 1;
+    width: auto;
+    overflow: hidden;
+  }
+
+  .item {
+    grid-template-columns: 100px 1fr;
   }
 }
 
 @media screen and (min-width: 1080px) {
   .item {
     width: 220px;
-    height: 360px;
+    height: 320px;
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
@@ -133,10 +146,10 @@
 
   .description {
     padding-top: 8px;
-  }
-
-  .rewards {
-    padding-top: 8px;
+    max-height: 60px;
+    overflow: hidden;
+    white-space: wrap;
+    text-overflow: ellipsis;
   }
 }
 
