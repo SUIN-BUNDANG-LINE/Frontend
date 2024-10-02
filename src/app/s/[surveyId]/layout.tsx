@@ -26,7 +26,7 @@ export async function generateMetadata(
     title,
     openGraph: {
       description,
-      images: [thumbnail, ...previousImages],
+      images: [thumbnail ?? '/path/to/default-image.png', ...previousImages], // thumbnail이 null인 경우 기본 이미지 사용
     },
   };
 }

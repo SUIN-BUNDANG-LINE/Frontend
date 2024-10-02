@@ -61,10 +61,12 @@ export default function PieChartComponent({ responses }: { responses: Response[]
         callbacks: {
           label: (context) => {
             const value = context.parsed;
-            const total = context.chart.data.datasets[context.datasetIndex].data.reduce(
-              (acc: number, val: number) => acc + val,
-              0
-            );
+            const total = (context.chart.data.datasets[0].data as number[]).reduce((acc, val) => {
+              if (typeof val === 'number') {
+                return acc + val;
+              }
+              return acc;
+            }, 0);
             const percentage = ((value / total) * 100).toFixed(1);
             return ` ${value} (${percentage}%)`;
           },
