@@ -31,7 +31,7 @@ function ModalContent({ action, apply, init }: ModalProps) {
     if (category.trim() === '' || name.trim() === '' || count === '') return false;
 
     const parsed = Number.parseInt(count, 10);
-    return parsed >= 1;
+    return parsed >= 1 && parsed <= 500;
   })();
 
   const categoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +93,7 @@ function ModalContent({ action, apply, init }: ModalProps) {
             id="new-reward-count"
             type="text"
             className={styles.input}
-            placeholder="1"
+            placeholder="최대 500"
             value={count}
             onChange={countHandler}
           />
