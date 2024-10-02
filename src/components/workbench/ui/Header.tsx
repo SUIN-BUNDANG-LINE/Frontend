@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import Svg from '../misc/Svg';
 import { useSurveyStore } from '../store';
-import styles from './header.module.css';
+import styles from './Header.module.css';
 import { ErrorDescriptor } from '../types';
 import Submit from './submit';
 
