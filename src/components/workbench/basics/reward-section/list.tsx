@@ -70,8 +70,12 @@ function ModalContent({ action, apply, init }: ModalProps) {
             placeholder="커피, 치킨, 상품권..."
             value={category}
             onChange={categoryHandler}
+            maxLength={100}
           />
         </label>
+        <div className={styles.maxLength}>
+          <span>{category.length} / 100자</span>
+        </div>
       </div>
       <div className={styles.inputGroup}>
         <label htmlFor="new-reward-name" className={styles.label}>
@@ -85,6 +89,9 @@ function ModalContent({ action, apply, init }: ModalProps) {
             onChange={nameHandler}
           />
         </label>
+        <div className={styles.maxLength}>
+          <span>{name.length} / 100자</span>
+        </div>
       </div>
       <div className={styles.inputGroup}>
         <label htmlFor="new-reward-count" className={styles.label}>

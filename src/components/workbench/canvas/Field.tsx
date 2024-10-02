@@ -30,6 +30,7 @@ function RenderTitle({ required, title, handleEdit, active }: TitleProps) {
         value={active || title !== '' ? title : '제목 없는 질문'}
         onChange={(e) => handleEdit({ title: e.target.value })}
         placeholder="질문을 입력해주세요."
+        maxLength={100}
       />
     </div>
   );
@@ -48,6 +49,7 @@ function RenderDescription({ description, handleEdit, active }: DescriptionProps
         value={active || description !== '' ? description : '질문 설명이 없습니다.'}
         onChange={(e) => handleEdit({ description: e.target.value })}
         placeholder="설명을 입력해주세요."
+        maxLength={1000}
       />
     </div>
   );
@@ -96,6 +98,7 @@ function RenderSelectableResponse({ type, options, handleEdit, active, other }: 
             value={active || content !== '' ? content : '빈 선택지'}
             onChange={(e) => handleContentEdit(id, e.target.value)}
             placeholder="선택지를 입력해주세요."
+            maxLength={100}
           />
           {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
           <button type="button" onClick={() => handleDelete(id)} className={styles.deleteSelectableResponseItem}>

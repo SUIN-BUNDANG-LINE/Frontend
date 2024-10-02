@@ -234,6 +234,7 @@ function SectionComponent({ section, index, isDraggingOver, activeState }: Props
                     className={styles.sectionTitle}
                     value={section.title}
                     placeholder="제목 없는 섹션"
+                    maxLength={100}
                     onChange={handleTitleChange}
                   />
                   <input
@@ -241,6 +242,7 @@ function SectionComponent({ section, index, isDraggingOver, activeState }: Props
                     className={styles.sectionDescription}
                     value={section.description}
                     placeholder="섹션 설명이 없습니다."
+                    maxLength={1000}
                     onChange={handleDescriptionChange}
                   />
                 </div>

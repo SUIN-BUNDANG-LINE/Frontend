@@ -39,9 +39,13 @@ export default function MainSection() {
             className={styles.input}
             value={title}
             onChange={handleChange}
+            maxLength={100}
             placeholder="설문지 제목을 입력하세요"
           />
         </label>
+        <div className={styles.maxLength}>
+          <span>{title.length} / 100자</span>
+        </div>
       </div>
 
       <div className={styles.group}>
@@ -53,9 +57,13 @@ export default function MainSection() {
             className={styles.textarea}
             value={description}
             onChange={handleChange}
+            maxLength={1000}
             placeholder="설문지 설명을 입력하세요"
           />
         </label>
+        <div className={styles.maxLength}>
+          <span>{description.length} / 1000자</span>
+        </div>
       </div>
 
       <Thumbnail />
@@ -69,9 +77,13 @@ export default function MainSection() {
             className={styles.textarea}
             value={finishMessage}
             onChange={handleChange}
+            maxLength={1000}
             placeholder="종료 메시지를 입력하세요"
           />
         </label>
+        <div className={styles.maxLength}>
+          <span>{finishMessage.length} / 1000자</span>
+        </div>
       </div>
     </>
   );

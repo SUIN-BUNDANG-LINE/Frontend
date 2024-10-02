@@ -1,3 +1,15 @@
+.maxLength {
+  text-align: right;
+  font-size: 14px;
+}
+
+.maxLength > span {
+  color: var(--gray-md);
+  background-color: var(--gray-ml);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
 .warning {
   background-color: var(--gray-ml);
   padding: 8px;
