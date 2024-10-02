@@ -19,6 +19,7 @@ import Loading from '@/components/ui/loading/Loading';
 import type { ErrorCause } from '@/services/ky-wrapper';
 import Error from '@/components/ui/error/Error';
 import { showToast } from '@/utils/toast';
+import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react';
 
 export default function Page({ params }: { params: { surveyId: string } }) {
   const { surveyId } = params;
@@ -28,6 +29,12 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const mutation = useSurveysResponse(surveyId);
   const [surveyState] = useState(getSurveyState(surveyId));
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    isLoading: visitorLoading,
+    error: visitorError,
+    data: visitorData,
+  } = useVisitorData({ extendedResult: true }, { immediate: true });
 
   const { history: initialHistory, responses: initialResponses } = useMemo(() => {
     return loadInteractions(surveyId);
@@ -63,7 +70,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     return <Loading message="내용을 불러오는 중..." />;
   }
 
-  if (isError) {
+  if (isError || visitorError) {
     return (
       <Error
         message="내용을 불러오지 못했습니다."
@@ -75,7 +82,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     );
   }
 
-  if (isLoading || !survey || !section) {
+  if (isLoading || !survey || !section || visitorLoading) {
     return <Loading message="내용을 불러오는 중..." />;
   }
 
@@ -125,10 +132,12 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     const onSubmit = () => {
       if (!userResponse) return;
 
+      const visitorId = visitorData?.visitorId || undefined;
+
       setIsSubmitting(true);
 
       mutation.mutate(
-        { ...userResponse },
+        { ...userResponse, visitorId },
         {
           onSuccess: (data) => {
             clearInteractions(surveyId);

@@ -9,11 +9,11 @@ const providers = [
     name: '구글',
     provider: 'google',
   },
-  {
-    href: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/login/oauth/naver?redirect_path=/`,
-    name: '네이버',
-    provider: 'naver',
-  },
+  // {
+  //   href: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/login/oauth/naver?redirect_path=/`,
+  //   name: '네이버',
+  //   provider: 'naver',
+  // },
   {
     href: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/login/oauth/kakao?redirect_path=/`,
     name: '카카오',
