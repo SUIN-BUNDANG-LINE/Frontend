@@ -7,6 +7,10 @@
   margin: 12px auto;
 }
 
+.container {
+  margin-top: 108px;
+}
+
 .title {
   font-size: 18px;
   color: var(--gray-d);
