@@ -146,7 +146,7 @@ export default function Page() {
           onSortChange={setSortType}
         />
         <Table<MyPageSurveyInfo>
-          gridTemplateColumns="minmax(245px, 1fr) 120px 140px 70px 50px"
+          gridTemplateColumns="minmax(245px, 1fr) 120px 140px 70px 40px"
           columnNames={['제목', '상태', '수정일', '응답 수', '액션']}
           data={mySurveyInfos}
           dataMapper={createdMapper}

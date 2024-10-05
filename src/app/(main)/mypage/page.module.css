@@ -2,6 +2,7 @@
   background-color: inherit; /* 부모 요소의 배경색을 따름 */
   border: none;
   cursor: pointer;
+  padding: 6px;
 }
 
 .buttonGroup > button:hover {
@@ -11,7 +12,7 @@
 .buttonGroup {
   display: flex;
   gap: 5px;
-  justify-content: center;
+  justify-content: left;
 }
 
 .modalActions {
