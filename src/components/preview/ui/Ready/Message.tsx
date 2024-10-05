@@ -6,8 +6,7 @@ export default function Message({ message }: { message: string }) {
   const resize = () => {
     const textarea = document.getElementById('textarea');
     if (!textarea) return;
-    textarea.style.height = 'auto';
-    textarea.style.height = `${textarea.scrollHeight}px`;
+    textarea.style.height = `${textarea.scrollHeight + 2}px`;
   };
 
   React.useEffect(() => {

@@ -38,10 +38,12 @@
 .heads .top .title {
   font-size: 20px;
   font-weight: 400;
+  word-break: break-all;
 }
 
 .heads .bottom {
   font-size: 15px;
   padding-top: 12px;
   color: var(--gray-d);
+  word-break: break-all;
 }
