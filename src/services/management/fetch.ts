@@ -13,4 +13,8 @@ const fetchSurveyFinish = async ({ surveyId }: { surveyId: string }) => {
   return kyWrapper.patch<EmptyResponse>(URL);
 };
 
-export { fetchSurveyEdit, fetchSurveyFinish };
+const fetchSurveyDelete = async ({ surveyId }: { surveyId: string }) => {
+  return kyWrapper.delete(makeUrl(['surveys', 'workbench', 'delete', surveyId]));
+};
+
+export { fetchSurveyEdit, fetchSurveyFinish, fetchSurveyDelete };
