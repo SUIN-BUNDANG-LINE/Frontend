@@ -46,7 +46,9 @@
   border-radius: 2px;
   font-size: 12px;
   flex-grow: 1;
-  margin-right: 16px;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .rewardCount {
