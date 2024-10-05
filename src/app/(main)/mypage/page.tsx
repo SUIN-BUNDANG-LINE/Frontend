@@ -30,18 +30,18 @@ const createdMapper = (arg: MyPageSurveyInfo) => {
       <Link
         href={['제작 중', '수정 중'].includes(arg.status) ? `/workbench/${arg.id}` : `/management/${arg.id}`}
         style={{ textDecoration: 'none', color: 'inherit' }}>
-        <span style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '42px 1fr', alignItems: 'center' }}>
           <Image
-            src={arg.thumbnail !== null ? arg.thumbnail : '/assets/default-thumbnail.webp'}
+            src={arg.thumbnail || '/assets/default-thumbnail.webp'}
             width="35"
             height="35"
             style={{ borderRadius: 10, marginRight: '10px' }}
             alt=""
           />
           <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', paddingRight: '8px' }}>
-            {arg.title}
+            {arg.title || '제목 없는 설문'}
           </span>
-        </span>
+        </div>
       </Link>
       <span>{arg.status}</span>
       <span>{arg.updatedAt}</span>

@@ -138,7 +138,6 @@ export default function RewardList({ readonly }: Props) {
   const [editTarget, setEditTarget] = React.useState<RewardWithKey>();
 
   const apply = (reward: Reward, target?: string) => {
-    console.log(reward, target);
     if (target) {
       const newRewards = rewards.map((i) => (i.key === target ? reward : i));
       setter({ updates: { rewards: newRewards } });
@@ -194,6 +193,7 @@ export default function RewardList({ readonly }: Props) {
                 key={key}
                 deleteHandler={getDeleteHandler(key)}
                 editHandler={getEditHandler(key)}
+                readonly={readonly}
               />
             ))}
           </div>

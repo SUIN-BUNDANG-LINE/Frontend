@@ -13,7 +13,7 @@ export default function ReadyToSubmit({ message, pop, submitHandler }: Props) {
   return (
     <div className={styles.wrapper}>
       <h2>제출할 준비가 되었습니다!</h2>
-      <Message message={message} />
+      {message.trim() !== '' && <Message message={message} />}
       <div className={styles.submitArea}>
         <Button
           onClick={submitHandler}

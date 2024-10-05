@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Svg from '../misc/Svg';
 import { useSurveyStore } from '../store';
 import styles from './Header.module.css';
@@ -51,15 +51,14 @@ type Props = {
 
 function Header({ tab, tabHandler, errors, handleSubmit, isPending, surveyId }: Props) {
   const title = useSurveyStore((state) => state.title);
-  const router = useRouter();
 
   return (
     <>
       <div className={styles.maxUI}>
         <div className={styles.header}>
-          <button type="button" onClick={() => router.push('/mypage')} className={styles.leave} aria-label="back">
+          <Link href="/mypage" className={styles.leave}>
             <Svg size="42px" path="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
-          </button>
+          </Link>
           <div className={styles.main}>
             <div className={styles.title}>{title || '제목 없는 설문'}</div>
             <Menu tab={tab} tabHandler={tabHandler} />
@@ -72,9 +71,9 @@ function Header({ tab, tabHandler, errors, handleSubmit, isPending, surveyId }: 
         <div className={styles.header}>
           <div className={styles.top}>
             <div className={styles.left}>
-              <div className={styles.leave}>
+              <Link href="/mypage" className={styles.leave}>
                 <Svg size="42px" path="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
-              </div>
+              </Link>
               <div className={styles.title}>{title || '제목 없는 설문'}</div>
             </div>
             <Submit errors={errors} handleSubmit={handleSubmit} isPending={isPending} surveyId={surveyId} />

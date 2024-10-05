@@ -1,44 +1,60 @@
-.container {
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  margin: 20px auto;
-  text-align: center;
-}
-
-.container h1 {
-  font-size: 24px;
-  color: #333;
-}
-
-.creator {
-  border-radius: 4px;
-  background-color: var(--gray-l);
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
+  box-sizing: border-box;
   width: 100%;
-  padding: 8px;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 24px 18px;
 }
 
-.title {
-  padding: 8px;
-  margin-bottom: 8px;
-  font-weight: 500;
+.container {
+  width: 100%;
+  max-width: 720px;
+}
+
+.from {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px;
+  font-size: 18px;
 }
 
 .message {
-  padding: 8px;
+  width: 100%;
+  display: flex;
+  text-align: justify;
+  line-height: 22px;
+  outline: none;
+  resize: none;
+  color: var(--gray-d);
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #fff;
+  border: 1px solid var(--primary);
+  box-sizing: border-box;
 }
 
-.submit {
-  padding-top: 16px;
+.submitArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: transparent;
+  border-color: transparent;
+  padding: 8px;
+  color: var(--gray-md);
+  cursor: pointer;
+}
+
+.back:hover {
+  text-decoration: underline;
 }

@@ -27,6 +27,11 @@
   justify-content: center;
 }
 
+.option > div:last-child {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
 .marker {
   width: 20px;
   height: 20px;

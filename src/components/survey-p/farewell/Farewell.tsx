@@ -1,21 +1,54 @@
-import Wrapper from '@/components/layout/Wrapper';
+import React from 'react';
+import { FaRegSmile } from 'react-icons/fa';
+import Button from '@/components/ui/button/Button';
+import { FaPen, FaRocket } from 'react-icons/fa6';
 import styles from './Farewell.module.css';
 
-interface Props {
+type Props = {
   message: string;
-}
+  disabled: boolean;
+  next: () => void;
+  back: () => void;
+};
 
-export default function Farewell({ message }: Props) {
+export default function Message({ message, next, back, disabled }: Props) {
+  const resize = () => {
+    const textarea = document.getElementById('textarea');
+    if (!textarea) return;
+    textarea.style.height = `${textarea.scrollHeight + 2}px`;
+  };
+
+  React.useEffect(() => {
+    resize();
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
+  }, []);
+
   return (
-    <Wrapper>
+    <div className={styles.wrapper}>
+      <h2>제출할 준비가 되었습니다!</h2>
       <div className={styles.container}>
-        <h1>응답 완료!</h1>
-        <div className={styles.creator}>
-          <div className={styles.title}>&lt;제작자의 메시지&gt;</div>
-          <div className={styles.message}>{message}</div>
+        <div className={styles.from}>
+          <FaRegSmile /> 제작자의 메시지
         </div>
-        <div className={styles.submit}>제출하면 설문 참여가 완료됩니다.</div>
+        <textarea id="textarea" className={styles.message} value={message} readOnly />
       </div>
-    </Wrapper>
+      <div className={styles.submitArea}>
+        <Button
+          onClick={next}
+          variant="primary"
+          width="140px"
+          height="48px"
+          disabled={disabled}
+          style={{ fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <FaRocket />
+          <span>제출하기</span>
+        </Button>
+        <button onClick={back} type="button" className={styles.back} disabled={disabled}>
+          <FaPen />
+          <span>응답 수정하기</span>
+        </button>
+      </div>
+    </div>
   );
 }

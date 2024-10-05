@@ -32,6 +32,8 @@
 .description {
   font-size: 14px;
   color: var(--gray-d);
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .body {

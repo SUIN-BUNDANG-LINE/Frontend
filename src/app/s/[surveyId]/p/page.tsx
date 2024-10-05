@@ -158,19 +158,12 @@ export default function Page({ params }: { params: { surveyId: string } }) {
     };
 
     return (
-      <>
-        <Farewell message={survey.finishMessage} />
-        <Navigator
-          backText="응답 수정"
-          backAction={() => setUserResponse(null)}
-          nextText={isSubmitting ? '제출 중...' : '제출'}
-          nextAction={onSubmit}
-          disablePrev={isSubmitting}
-          disableNext={isSubmitting}
-          centered
-        />
-        {isSubmitting}
-      </>
+      <Farewell
+        message={survey.finishMessage}
+        back={() => setUserResponse(null)}
+        next={onSubmit}
+        disabled={isSubmitting}
+      />
     );
   }
 }
