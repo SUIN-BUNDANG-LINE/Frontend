@@ -31,8 +31,8 @@ export default function MiscSection() {
       <Image
         src="/assets/what_isvisible_does.png"
         alt="예시"
-        width={0}
-        height={0}
+        width={676}
+        height={422.5}
         style={{ width: '100%', height: 'auto', margin: '12px 0' }}
       />
     </div>
