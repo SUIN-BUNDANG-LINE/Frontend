@@ -11,12 +11,13 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export default function AuthProvider({ children, init }: React.PropsWithChildren<{ init?: User }>) {
-  const { hasCookie, getCookie } = useCookie();
+  const { hasCookie, getCookie, deleteCookie } = useCookie();
   const [user, setUser] = useState<User | null>(init || null);
 
   useEffect(() => {
     (async () => {
       if (user) return;
+      if (hasCookie('user-profile') && !hasCookie('JSESSIONID')) deleteCookie('user-profile');
       if (hasCookie('user-profile')) {
         try {
           const data = JSON.parse(decodeBase64(getCookie('user-profile')!));

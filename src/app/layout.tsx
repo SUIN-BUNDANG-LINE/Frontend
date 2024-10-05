@@ -19,7 +19,7 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
   const cookieStore = cookies();
   let user: undefined | User;
 
-  if (cookieStore.has('user-profile')) {
+  if (cookieStore.has('user-profile') && cookieStore.has('JSESSIONID')) {
     try {
       const { value } = cookieStore.get('user-profile')!;
       const data = JSON.parse(decodeBase64(value));
