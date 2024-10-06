@@ -1,0 +1,23 @@
+.buttonGroup > button {
+  background-color: inherit; /* 부모 요소의 배경색을 따름 */
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.buttonGroup > button:hover {
+  color: #ff4444; /* hover 시 배경색 */
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 5px;
+  justify-content: left;
+}
+
+.modalActions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 16px;
+}

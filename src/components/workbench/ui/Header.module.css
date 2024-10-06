@@ -6,6 +6,7 @@
   display: block;
   background-color: var(--gray-l);
   z-index: 999;
+  width: 100%;
 
   /* Header Styles */
   .header {
@@ -118,6 +119,7 @@
   height: 108px;
   background-color: var(--gray-l);
   z-index: 999;
+  width: 100%;
 
   display: none;
 
