@@ -11,6 +11,7 @@ import { replaceURLSearchParams } from '@/utils/url-search-params';
 import { showToast } from '@/utils/toast';
 import { ErrorCause } from '@/services/ky-wrapper';
 import { Footer } from '@/components/layout/main';
+import Draft from '@/components/workbench/draft';
 import Tab1 from './tab1';
 import Tab0 from './tab0';
 import Tab2 from './tab2';
@@ -29,6 +30,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
   // Tab state
   const [tab, setTab] = React.useState(getTabFromSearchParams(searchParams));
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [ai, setAi] = React.useState<null | 'draft' | 'edit'>('draft');
 
   const tabHandler = (newTab: number) => {
     setTab(newTab);
@@ -96,22 +99,29 @@ export default function Page({ params }: { params: { id: string } }) {
     router.push('/mypage');
   }
 
-  return (
-    <div className={styles.app}>
-      <Header
-        tab={tab}
-        tabHandler={tabHandler}
-        isPending={isPending}
-        errors={[]}
-        handleSubmit={handleSubmit}
-        surveyId={id}
-      />
-      {content}
-      {tab !== 1 && (
-        <div className={styles.footer}>
-          <Footer />
+  switch (ai) {
+    case 'draft':
+      return (
+        <div className={styles.app}>
+          <Draft />
         </div>
-      )}
-    </div>
-  );
+      );
+    default:
+      <div className={styles.app}>
+        <Header
+          tab={tab}
+          tabHandler={tabHandler}
+          isPending={isPending}
+          errors={[]}
+          handleSubmit={handleSubmit}
+          surveyId={id}
+        />
+        {content}
+        {tab !== 1 && (
+          <div className={styles.footer}>
+            <Footer />
+          </div>
+        )}
+      </div>;
+  }
 }
