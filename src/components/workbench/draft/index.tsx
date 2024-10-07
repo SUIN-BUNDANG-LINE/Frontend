@@ -4,7 +4,8 @@ import Svg from '../misc/Svg';
 import ProvideData from './provide-data';
 import { FormData } from './types';
 import { DEFAULT_FORM_DATA } from '../misc/placeholders';
-import { ImportedSurvey } from '../types';
+import { Store } from '../types';
+import Approve from './approve';
 
 export default function Draft() {
   const [phase, setPhase] = React.useState(1);
@@ -16,7 +17,7 @@ export default function Draft() {
 
   const [formData, setFormData] = React.useState<FormData>(DEFAULT_FORM_DATA);
   const [dataType, setDataType] = React.useState<'text' | 'file'>('text');
-  const [survey, setSurvey] = React.useState<ImportedSurvey | null>(null);
+  const [survey, setSurvey] = React.useState<Store | null>(null);
 
   const abort = () => {
     // ProvideData를 강제 unmount시켜 query cancel
@@ -57,7 +58,15 @@ export default function Draft() {
             setSurvey={setSurvey}
           />
         )}
-        {phase === 2 && <textarea value={survey ? JSON.stringify(survey, null, 2) : ''} />}
+        {phase === 2 && survey && (
+          <Approve
+            survey={survey}
+            back={() => {
+              setSurvey(null);
+              setPhase(1);
+            }}
+          />
+        )}
       </div>
     </div>
   );

@@ -3,8 +3,9 @@ import { showToast } from '@/utils/toast';
 import styles from './provide-data.module.css';
 import { FormData } from './types';
 import { useGenerateSurvey } from '../service';
-import { ImportedSurvey } from '../types';
+import { ImportedSurvey, Store } from '../types';
 import { DEFAULT_FORM_DATA } from '../misc/placeholders';
+import { cin } from '../func';
 
 const MAX_LENGTH = {
   occupation: 100,
@@ -20,7 +21,7 @@ type Props = {
   dataType: 'file' | 'text';
   setDataType: React.Dispatch<React.SetStateAction<'file' | 'text'>>;
   setPhase: React.Dispatch<React.SetStateAction<number>>;
-  setSurvey: React.Dispatch<React.SetStateAction<ImportedSurvey | null>>;
+  setSurvey: React.Dispatch<React.SetStateAction<Store | null>>;
 };
 
 export default function ProvideData({
@@ -35,7 +36,7 @@ export default function ProvideData({
   const { mutate, isPending: pending } = useGenerateSurvey({
     onSuccess: (data: ImportedSurvey) => {
       setPhase(2);
-      setSurvey(data);
+      setSurvey(cin(data));
     },
     onError: (error: Error) => {
       console.error(error);
