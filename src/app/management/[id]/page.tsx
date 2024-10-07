@@ -6,6 +6,7 @@ import { replaceURLSearchParams, deleteURLSearchParam } from '@/utils/url-search
 import { useGetSurvey } from '@/components/workbench/service';
 import Header from '@/components/management/ui/Header';
 import { showToast } from '@/utils/toast';
+import { Footer } from '@/components/layout/main';
 import styles from './page.module.css';
 import Tab0 from './tab0';
 import Tab1 from './tab1';
@@ -47,6 +48,9 @@ export default function Page({ params }: { params: { id: string } }) {
     <div className={styles.app}>
       <Header tab={tab} tabHandler={tabHandler} title={data?.title} />
       {content}
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </div>
   );
 }

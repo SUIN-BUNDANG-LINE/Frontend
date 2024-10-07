@@ -60,7 +60,7 @@ function Tab2({ surveyId }: Props) {
   }, [store]);
 
   return (
-    <>
+    <div className={styles.container}>
       <Modal isOpen={isOpen} onClose={closeModal} title={modalTitle}>
         <StartSurveyFailedModal errors={errors} rejectMessage={rejectMessage} onClose={closeModal} />
       </Modal>
@@ -101,7 +101,7 @@ function Tab2({ surveyId }: Props) {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

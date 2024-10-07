@@ -8,17 +8,20 @@ import styles from './thumbnail.module.css';
 import { useSurveyStore } from '../../store';
 
 export default function Thumbnail() {
+  const [message, setMessage] = React.useState('');
   const { thumbnail, setter } = useSurveyStore((state) => ({
     thumbnail: state.thumbnail,
     setter: state.setter,
   }));
 
-  const { mutate, isPending, isSuccess } = useFileUpload({
+  const { mutate } = useFileUpload({
     onSuccess: (data: FileUploadResponse) => {
       setter({ key: 'thumbnail', value: data.fileUrl });
+      setMessage('썸네일이 변경되었습니다. 반영되는데 몇 초 걸릴 수 있습니다.');
     },
     onError: (error: Error) => {
       showToast('error', `파일을 업로드하지 못했습니다: ${(error.cause as ErrorCause).message}`);
+      setMessage('파일을 업로드하지 못했습니다.');
     },
   });
 
@@ -29,6 +32,7 @@ export default function Thumbnail() {
     formData.append('file', e.target.files[0]);
 
     mutate(formData);
+    setMessage('업로드 중...');
   };
 
   return (
@@ -56,12 +60,20 @@ export default function Thumbnail() {
                 accept="image/*"
               />
               <div className={styles.button}>업로드</div>
-              {isPending && <div className={styles.uploadMsg}>업로드 중...</div>}
-              {isSuccess && (
-                <div className={styles.uploadMsg}>썸네일이 변경되었습니다. 반영되는데 몇 초 걸릴 수 있습니다.</div>
-              )}
             </label>
+            <button
+              type="button"
+              className={styles.button2}
+              disabled={!thumbnail}
+              onClick={() => {
+                if (!thumbnail) return;
+                setter({ key: 'thumbnail', value: null });
+                setMessage('썸네일을 삭제했습니다.');
+              }}>
+              초기화
+            </button>
           </div>
+          {message !== '' && <div className={styles.uploadMsg}>{message}</div>}
         </div>
       </label>
     </div>

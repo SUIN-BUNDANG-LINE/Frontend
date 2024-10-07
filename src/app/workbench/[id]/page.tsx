@@ -10,6 +10,7 @@ import { ReadonlyURLSearchParams, useRouter, useSearchParams } from 'next/naviga
 import { replaceURLSearchParams } from '@/utils/url-search-params';
 import { showToast } from '@/utils/toast';
 import { ErrorCause } from '@/services/ky-wrapper';
+import { Footer } from '@/components/layout/main';
 import Tab1 from './tab1';
 import Tab0 from './tab0';
 import Tab2 from './tab2';
@@ -106,6 +107,11 @@ export default function Page({ params }: { params: { id: string } }) {
         surveyId={id}
       />
       {content}
+      {tab !== 1 && (
+        <div className={styles.footer}>
+          <Footer />
+        </div>
+      )}
     </div>
   );
 }

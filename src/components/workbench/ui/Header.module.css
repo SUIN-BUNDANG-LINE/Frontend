@@ -1,7 +1,12 @@
 /* Global Styles */
 .maxUI {
+  position: fixed;
+  top: 0;
   height: 108px;
   display: block;
+  background-color: var(--gray-l);
+  z-index: 999;
+  width: 100%;
 
   /* Header Styles */
   .header {
@@ -109,7 +114,13 @@
 
 /* Global Styles */
 .simpleUI {
+  position: fixed;
+  top: 0;
   height: 108px;
+  background-color: var(--gray-l);
+  z-index: 999;
+  width: 100%;
+
   display: none;
 
   /* Header Styles */

@@ -1,8 +1,9 @@
 .navigator {
-  width: 320px;
+  max-width: 320px;
   padding: 12px;
   display: flex;
   column-gap: 8px;
+  box-sizing: border-box;
 }
 
 .navigator.centered {
