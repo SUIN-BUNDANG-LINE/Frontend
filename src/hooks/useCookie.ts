@@ -9,7 +9,7 @@ const defaultOptions: DefaultOptions = {
   ...(isProduction && { domain: '.sulmoon.io' }), // 운영 환경에서만 domain 설정
 };
 
-export type CookieKey = 'user-profile' | 'and-more';
+export type CookieKey = 'user-profile' | 'and-more' | 'JSESSIONID';
 
 export const useCookie = () => {
   const getCookie = (key: CookieKey, options?: DefaultOptions) => {
