@@ -1,11 +1,12 @@
 import Button from '@/components/ui/button/Button';
 import { showToast } from '@/utils/toast';
+import { ErrorCause } from '@/services/ky-wrapper';
 import styles from './provide-data.module.css';
 import { FormData } from './types';
-import { useGenerateSurvey } from '../service';
-import { ImportedSurvey, Store } from '../types';
-import { DEFAULT_FORM_DATA } from '../misc/placeholders';
-import { cin } from '../func';
+import { useGenerateSurvey } from '../../service';
+import { ImportedSurvey, Store } from '../../types';
+import { DEFAULT_FORM_DATA } from '../../misc/placeholders';
+import { cin } from '../../func';
 
 const MAX_LENGTH = {
   occupation: 100,
@@ -40,6 +41,7 @@ export default function ProvideData({
     },
     onError: (error: Error) => {
       console.error(error);
+      console.error(error.cause as ErrorCause);
     },
   });
 

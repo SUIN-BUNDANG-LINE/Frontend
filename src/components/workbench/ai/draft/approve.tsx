@@ -2,10 +2,10 @@ import Section from '@/components/preview/ui/Participate/Section';
 import Field from '@/components/preview/ui/Participate/Field';
 import React from 'react';
 import Button from '@/components/ui/button/Button';
-import { Store } from '../types';
+import { Store } from '../../types';
 import styles from './approve.module.css';
-import Svg from '../misc/Svg';
-import { useSurveyStore } from '../store';
+import Svg from '../../misc/Svg';
+import { useSurveyStore } from '../../store';
 
 type Props = {
   survey: Store;

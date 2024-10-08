@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './index.module.css';
-import Svg from '../misc/Svg';
+import Svg from '../../misc/Svg';
 import ProvideData from './provide-data';
 import { FormData } from './types';
-import { DEFAULT_FORM_DATA } from '../misc/placeholders';
-import { Store } from '../types';
+import { DEFAULT_FORM_DATA } from '../../misc/placeholders';
+import { Store } from '../../types';
 import Approve from './approve';
 
 export default function Draft() {

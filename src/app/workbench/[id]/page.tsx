@@ -11,7 +11,7 @@ import { replaceURLSearchParams } from '@/utils/url-search-params';
 import { showToast } from '@/utils/toast';
 import { ErrorCause } from '@/services/ky-wrapper';
 import { Footer } from '@/components/layout/main';
-import Draft from '@/components/workbench/draft';
+import Draft from '@/components/workbench/ai/draft';
 import Tab1 from './tab1';
 import Tab0 from './tab0';
 import Tab2 from './tab2';
