@@ -10,9 +10,10 @@ import { useSurveyStore } from '../../store';
 type Props = {
   survey: Store;
   back: () => void;
+  closeAi: () => void;
 };
 
-export default function Approve({ survey, back }: Props) {
+export default function Approve({ survey, back, closeAi }: Props) {
   const { sections, fields } = survey;
   const initStore = useSurveyStore((state) => state.initStore);
 
@@ -41,7 +42,7 @@ export default function Approve({ survey, back }: Props) {
     if (aiEdit) {
       // send to ai edit tab
     } else {
-      // close ai page
+      closeAi();
     }
   };
 

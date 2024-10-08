@@ -32,21 +32,36 @@
 }
 
 .isEmpty {
-  padding: 12px 0;
+  padding: 16px 0;
+  color: var(--gray-d);
 }
 
-.startFromScratch {
-  padding: 24px 12px;
+.getStarted .buttons {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-flow: row wrap;
   gap: 8px;
-  border-radius: 4px;
-  border: none;
-  background-color: var(--primary);
-  cursor: pointer;
-  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.startFromScratch:hover {
-  background-color: var(--primary-alt);
+.getStarted button {
+  width: 200px;
+  height: 64px;
+
+  color: var(--gray-d);
+
+  border-radius: 4px;
+  border: none;
+  background-color: var(--gray-ml);
+  cursor: pointer;
+  transition:
+    background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+    color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.getStarted button:hover {
+  background-color: var(--gray);
+  color: #fff;
 }

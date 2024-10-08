@@ -52,7 +52,7 @@ export default function ProvideData({
   const { mutate: fileMut, isPending: filePending } = useFileUpload({
     onSuccess: (data: FileUploadResponse) => {
       setFormData((pre) => ({ ...pre, file: data.fileUrl }));
-      setFileMessage('파일이 정상적으로 입력되었습니다!');
+      setFileMessage('파일이 업로드 되었습니다.');
     },
     onError: (error: Error) => {
       setFileMessage(`파일을 업로드하지 못했습니다. ${(error.cause as ErrorCause).message}`);

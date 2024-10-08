@@ -31,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
   // Tab state
   const [tab, setTab] = React.useState(getTabFromSearchParams(searchParams));
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [ai, setAi] = React.useState<null | 'draft' | 'edit'>('draft');
+  const [ai, setAi] = React.useState<null | 'draft' | 'edit'>(null);
 
   const tabHandler = (newTab: number) => {
     setTab(newTab);
@@ -86,7 +86,7 @@ export default function Page({ params }: { params: { id: string } }) {
       case 0:
         return <Tab0 />;
       case 1:
-        return <Tab1 />;
+        return <Tab1 openDraft={() => setAi('draft')} />;
       case 2:
         return <Tab2 surveyId={id} />;
       default:
@@ -99,29 +99,26 @@ export default function Page({ params }: { params: { id: string } }) {
     router.push('/mypage');
   }
 
-  switch (ai) {
-    case 'draft':
-      return (
-        <div className={styles.app}>
-          <Draft />
-        </div>
-      );
-    default:
-      <div className={styles.app}>
-        <Header
-          tab={tab}
-          tabHandler={tabHandler}
-          isPending={isPending}
-          errors={[]}
-          handleSubmit={handleSubmit}
-          surveyId={id}
-        />
-        {content}
-        {tab !== 1 && (
-          <div className={styles.footer}>
-            <Footer />
-          </div>
-        )}
-      </div>;
+  if (ai === 'draft') {
+    return <Draft closeAi={() => setAi(null)} openDraft={() => setAi('draft')} openEdit={() => setAi('edit')} />;
   }
+
+  return (
+    <div className={styles.app}>
+      <Header
+        tab={tab}
+        tabHandler={tabHandler}
+        isPending={isPending}
+        errors={[]}
+        handleSubmit={handleSubmit}
+        surveyId={id}
+      />
+      {content}
+      {tab !== 1 && (
+        <div className={styles.footer}>
+          <Footer />
+        </div>
+      )}
+    </div>
+  );
 }

@@ -7,10 +7,13 @@ import Toolbar from '@/components/workbench/canvas/Toolbar';
 import Canvas from '@/components/workbench/canvas/Canvas';
 import React from 'react';
 import Loading from '@/components/ui/loading/Loading';
-import { LuBaby } from 'react-icons/lu';
 import styles from './tab1.module.css';
 
-function Tab1() {
+type Props = {
+  openDraft: () => void;
+};
+
+function Tab1({ openDraft }: Props) {
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
@@ -110,10 +113,15 @@ function Tab1() {
   if (sections.length === 0) {
     return (
       <div className={styles.getStarted}>
-        <div className={styles.isEmpty}>표시할 내용이 없습니다.</div>
-        <button type="button" onClick={startFromScratch} className={styles.startFromScratch}>
-          <LuBaby size="32px" /> 빈 설문지로 시작하기
-        </button>
+        <div className={styles.isEmpty}>아직 표시할 내용이 없습니다.</div>
+        <div className={styles.buttons}>
+          <button type="button" onClick={startFromScratch} className={styles.startFromScratch}>
+            빈 설문지로 시작하기 →
+          </button>
+          <button type="button" onClick={openDraft} className={styles.startWithAi}>
+            AI로 초안 만들기 →
+          </button>
+        </div>
       </div>
     );
   }
