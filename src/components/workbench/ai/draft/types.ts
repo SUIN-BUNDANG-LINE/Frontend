@@ -3,5 +3,5 @@ export type FormData = {
   affiliation: string;
   prompt: string;
   data: string;
-  file: File | null;
+  file: string | null;
 };

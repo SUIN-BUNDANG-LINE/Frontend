@@ -153,3 +153,52 @@
   padding: 2px 4px;
   border-radius: 2px;
 }
+
+.fileWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileWrapper > span {
+  font-size: 14px;
+  padding: 4px 0;
+  color: var(--gray-md);
+}
+
+.fileWrapper .fileInputHidden {
+  display: none;
+}
+
+.fileWrapper .fileInput {
+  display: inline-block;
+  text-align: center;
+  line-height: 38px;
+  width: 72px;
+  height: 38px;
+  border: none;
+  background-color: var(--primary);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.fileWrapper .fileInput:hover {
+  background-color: var(--primary-alt);
+}
+
+.fileWrapper.disabled .fileInput {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fileWrapper.disabled .fileInput:hover {
+  background-color: var(--primary);
+}
+
+.fileMessage {
+  padding-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--gray-d);
+}

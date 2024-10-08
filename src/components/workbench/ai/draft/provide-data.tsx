@@ -1,8 +1,11 @@
 import Button from '@/components/ui/button/Button';
 import { showToast } from '@/utils/toast';
 import { ErrorCause } from '@/services/ky-wrapper';
+import { useFileUpload } from '@/services/s3';
+import { FileUploadResponse } from '@/services/s3/types';
+import React from 'react';
 import styles from './provide-data.module.css';
-import { FormData } from './types';
+import type { FormData } from './types';
 import { useGenerateSurvey } from '../../service';
 import { ImportedSurvey, Store } from '../../types';
 import { DEFAULT_FORM_DATA } from '../../misc/placeholders';
@@ -34,14 +37,25 @@ export default function ProvideData({
   setPhase,
   setSurvey,
 }: Props) {
-  const { mutate, isPending: pending } = useGenerateSurvey({
+  const [fileMessage, setFileMessage] = React.useState('파일을 업로드 해주세요.');
+
+  const { mutate: surveyMut, isPending: pending } = useGenerateSurvey({
     onSuccess: (data: ImportedSurvey) => {
       setPhase(2);
       setSurvey(cin(data));
     },
     onError: (error: Error) => {
-      console.error(error);
-      console.error(error.cause as ErrorCause);
+      showToast('error', `설문을 생성하지 못했습니다: ${(error.cause as ErrorCause).message}`);
+    },
+  });
+
+  const { mutate: fileMut, isPending: filePending } = useFileUpload({
+    onSuccess: (data: FileUploadResponse) => {
+      setFormData((pre) => ({ ...pre, file: data.fileUrl }));
+      setFileMessage('파일이 정상적으로 입력되었습니다!');
+    },
+    onError: (error: Error) => {
+      setFileMessage(`파일을 업로드하지 못했습니다. ${(error.cause as ErrorCause).message}`);
     },
   });
 
@@ -64,13 +78,36 @@ export default function ProvideData({
         textDocument: formData.data,
         userPrompt: formData.prompt,
       };
-      mutate({ method, formData: data });
+      surveyMut({ method, formData: data });
+    }
+
+    if (dataType === 'file') {
+      const method = 'file-url';
+      const data = {
+        job: formData.occupation,
+        groupName: formData.affiliation,
+        fileUrl: formData.file!,
+        userPrompt: formData.prompt,
+      };
+      surveyMut({ method, formData: data });
     }
   };
 
   const update = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((pre) => ({ ...pre, [name]: value }));
+  };
+
+  const fileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (!files || files.length !== 1) return;
+
+    const data = new FormData();
+    data.append('file', files[0]);
+
+    setFileMessage('업로드 중...');
+
+    fileMut(data);
   };
 
   return (
@@ -122,10 +159,21 @@ export default function ProvideData({
               </>
             )}
             {dataType === 'file' && (
-              <>
-                <span>pdf, txt 파일만 업로드 할 수 있습니다.</span>
-                <input type="file" accept=".pdf, .txt" />
-              </>
+              <div className={`${styles.fileWrapper} ${pending || filePending ? styles.disabled : ''}`}>
+                <label htmlFor="file-input">
+                  <input
+                    className={styles.fileInputHidden}
+                    id="file-input"
+                    type="file"
+                    accept=".pdf, .txt"
+                    onChange={fileHandler}
+                    disabled={pending || filePending}
+                  />
+                  <div className={styles.fileInput}>업로드</div>
+                  <span className={styles.fileMessage}>{fileMessage}</span>
+                </label>
+                <span>* pdf, txt 파일만 업로드 할 수 있습니다.</span>
+              </div>
             )}
           </li>
           <li className={styles.field}>
