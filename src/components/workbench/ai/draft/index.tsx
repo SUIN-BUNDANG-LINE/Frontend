@@ -22,7 +22,7 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
   */
 
   const [formData, setFormData] = React.useState<FormData>(DEFAULT_FORM_DATA);
-  const [dataType, setDataType] = React.useState<'text' | 'file'>('text');
+  const [dataType, setDataType] = React.useState<'text' | 'file'>('file');
   const [survey, setSurvey] = React.useState<Store | null>(null);
 
   React.useEffect(() => {
