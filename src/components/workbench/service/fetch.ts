@@ -22,22 +22,19 @@ const fetchGenerateSurvey = async ({
   method,
   formData,
   surveyId,
+  signal,
 }: {
   method: 'text-document' | 'file-url';
   formData: { target: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
   surveyId: string;
+  signal: AbortSignal;
 }) => {
-  // return new Promise<ImportedSurvey>((resolve) => {
-  //   setTimeout(() => {
-  //     console.log(method, formData);
-  //     resolve(DUMMY);
-  //   }, 3000);
-  // });
   const { target, ...rest } = formData;
   const tempFormData = { ...rest, job: target };
   return kyWrapper.post<ImportedSurvey>(makeUrl(['ai', 'generate', 'survey', method, surveyId]), {
     json: tempFormData,
     timeout: 60000,
+    signal,
   });
 };
 

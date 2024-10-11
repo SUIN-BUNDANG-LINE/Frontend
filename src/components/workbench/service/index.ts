@@ -52,10 +52,12 @@ const useGenerateSurvey = ({
     mutationFn: ({
       method,
       formData,
+      signal,
     }: {
       method: 'text-document' | 'file-url';
       formData: { target: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
-    }) => fetchGenerateSurvey({ method, formData, surveyId }),
+      signal: AbortSignal;
+    }) => fetchGenerateSurvey({ method, formData, surveyId, signal }),
     onSuccess,
     onError,
   });

@@ -26,9 +26,10 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
   const [dataType, setDataType] = React.useState<'text' | 'file'>('text');
   const [survey, setSurvey] = React.useState<Store | null>(null);
 
+  const abortController = new AbortController();
+
   const abort = () => {
-    // ProvideData를 강제 unmount시켜 query cancel
-    setPhase(0);
+    abortController.abort();
   };
 
   React.useEffect(() => {
@@ -78,6 +79,7 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
             setPhase={setPhase}
             setSurvey={setSurvey}
             surveyId={surveyId}
+            signal={abortController.signal}
           />
         )}
         {phase === 2 && survey && (

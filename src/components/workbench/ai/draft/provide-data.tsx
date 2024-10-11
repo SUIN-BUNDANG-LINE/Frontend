@@ -27,6 +27,7 @@ type Props = {
   setPhase: React.Dispatch<React.SetStateAction<number>>;
   setSurvey: React.Dispatch<React.SetStateAction<Store | null>>;
   surveyId: string;
+  signal: AbortSignal;
 };
 
 export default function ProvideData({
@@ -38,8 +39,10 @@ export default function ProvideData({
   setPhase,
   setSurvey,
   surveyId,
+  signal,
 }: Props) {
   const [fileMessage, setFileMessage] = React.useState('파일을 업로드 해주세요.');
+  const [elapsedTime, setElapsedTime] = React.useState(0);
 
   const { mutate: surveyMut, isPending: pending } = useGenerateSurvey({
     onSuccess: (data: ImportedSurvey) => {
@@ -51,6 +54,18 @@ export default function ProvideData({
     },
     surveyId,
   });
+
+  React.useEffect(() => {
+    if (!pending) return () => {};
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const timer = setInterval(() => {
+      setElapsedTime((prev) => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [pending]);
 
   const { mutate: fileMut, isPending: filePending } = useFileUpload({
     onSuccess: (data: FileUploadResponse) => {
@@ -81,7 +96,7 @@ export default function ProvideData({
         textDocument: formData.data,
         userPrompt: formData.prompt,
       };
-      surveyMut({ method, formData: data });
+      surveyMut({ method, formData: data, signal });
     }
 
     if (dataType === 'file') {
@@ -92,7 +107,7 @@ export default function ProvideData({
         fileUrl: formData.file!,
         userPrompt: formData.prompt,
       };
-      surveyMut({ method, formData: data });
+      surveyMut({ method, formData: data, signal });
     }
   };
 
@@ -115,6 +130,17 @@ export default function ProvideData({
 
   return (
     <div className={styles.body}>
+      {pending && (
+        <div className={styles.pending}>
+          <div className={styles.loader} />
+          <h3>설문을 생성하는 중...</h3>
+          <p>{elapsedTime}초 경과</p>
+          <p>약 30초 정도 소요됩니다. 잠시만 기다려주세요.</p>
+          <button type="button" onClick={abort}>
+            생성 포기
+          </button>
+        </div>
+      )}
       <div className={styles.introduction}>
         <h3>어떤 질문을 해야 할지 막막하신가요?</h3>
         <p>
@@ -236,11 +262,6 @@ export default function ProvideData({
           </Button>
         </div>
       </form>
-      {pending && (
-        <button type="button" onClick={abort}>
-          생성 포기
-        </button>
-      )}
     </div>
   );
 }
