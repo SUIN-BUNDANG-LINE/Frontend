@@ -226,11 +226,11 @@ export default function ProvideData({
             </div>
           </li>
           <li className={styles.field}>
-            <div>직업</div>
-            <p>직업을 입력하면 최적화된 설문을 만드는데 도움이 됩니다.</p>
+            <div>참여 대상</div>
+            <p>설문에 참여할 대상을 입력하면 최적화된 설문을 만드는데 도움이 됩니다.</p>
             <input
               type="text"
-              placeholder="대학생, 대학원생, 공무원..."
+              placeholder="대학생, 20대 남성, 행사 참석자..."
               maxLength={MAX_LENGTH.target}
               value={formData.target}
               name="target"
