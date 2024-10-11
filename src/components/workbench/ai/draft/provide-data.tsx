@@ -141,9 +141,9 @@ export default function ProvideData({
           <h3>설문을 생성하는 중...</h3>
           <p>{elapsedTime}초 경과</p>
           <p>약 30초 정도 소요됩니다. 잠시만 기다려주세요.</p>
-          <button type="button" onClick={abort}>
+          <Button variant="secondary" onClick={abort}>
             생성 포기
-          </button>
+          </Button>
         </div>
       )}
       <div className={styles.introduction}>

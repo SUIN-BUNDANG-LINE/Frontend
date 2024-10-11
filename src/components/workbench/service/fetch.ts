@@ -29,10 +29,8 @@ const fetchGenerateSurvey = async ({
   surveyId: string;
   signal: AbortSignal;
 }) => {
-  const { target, ...rest } = formData;
-  const tempFormData = { ...rest, job: target };
   return kyWrapper.post<ImportedSurvey>(makeUrl(['ai', 'generate', 'survey', method, surveyId]), {
-    json: tempFormData,
+    json: formData,
     timeout: 60000,
     signal,
   });

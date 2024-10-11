@@ -84,6 +84,7 @@ export default function Approve({ survey, back, closeAi }: Props) {
         <div className={styles.heads}>
           <h3 className={styles.title}>{survey.title}</h3>
           <textarea id="textarea" value={survey.description} className={styles.description} readOnly />
+          <textarea id="textarea2" value={survey.finishMessage} className={styles.description} readOnly />
         </div>
         <br />
         <div className={styles.legend}>
