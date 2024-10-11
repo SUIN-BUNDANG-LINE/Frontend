@@ -55,7 +55,6 @@ export default function ProvideData({
       setSurvey(cin(data));
     },
     onError: (error: Error) => {
-      console.log((error.cause as ErrorCause).code);
       showToast('error', `설문을 생성하지 못했습니다: ${(error.cause as ErrorCause).message}`);
     },
     surveyId,
