@@ -41,19 +41,21 @@ const useStartSurvey = (surveyId: string, onSuccess: () => void, onError: (error
 const useGenerateSurvey = ({
   onSuccess,
   onError,
+  surveyId,
 }: {
   onSuccess: (data: ImportedSurvey) => void;
   onError: (error: Error) => void;
+  surveyId: string;
 }) => {
   return useMutation({
-    mutationKey: ['ai', 'generate', 'survey'],
+    mutationKey: ['ai', 'generate', 'survey', surveyId],
     mutationFn: ({
       method,
       formData,
     }: {
       method: 'text-document' | 'file-url';
-      formData: { job: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
-    }) => fetchGenerateSurvey({ method, formData }),
+      formData: { target: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
+    }) => fetchGenerateSurvey({ method, formData, surveyId }),
     onSuccess,
     onError,
   });

@@ -21,9 +21,11 @@ const fetchSurveyStart = async ({ surveyId }: { surveyId: string }) => {
 const fetchGenerateSurvey = async ({
   method,
   formData,
+  surveyId,
 }: {
   method: 'text-document' | 'file-url';
-  formData: { job: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
+  formData: { target: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
+  surveyId: string;
 }) => {
   // return new Promise<ImportedSurvey>((resolve) => {
   //   setTimeout(() => {
@@ -31,8 +33,10 @@ const fetchGenerateSurvey = async ({
   //     resolve(DUMMY);
   //   }, 3000);
   // });
-  return kyWrapper.post<ImportedSurvey>(makeUrl(['ai', 'generate', 'survey', method]), {
-    json: formData,
+  const { target, ...rest } = formData;
+  const tempFormData = { ...rest, job: target };
+  return kyWrapper.post<ImportedSurvey>(makeUrl(['ai', 'generate', 'survey', method, surveyId]), {
+    json: tempFormData,
     timeout: 60000,
   });
 };

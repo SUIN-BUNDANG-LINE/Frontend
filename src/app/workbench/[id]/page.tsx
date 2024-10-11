@@ -100,7 +100,14 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   if (ai === 'draft') {
-    return <Draft closeAi={() => setAi(null)} openDraft={() => setAi('draft')} openEdit={() => setAi('edit')} />;
+    return (
+      <Draft
+        closeAi={() => setAi(null)}
+        openDraft={() => setAi('draft')}
+        openEdit={() => setAi('edit')}
+        surveyId={id}
+      />
+    );
   }
 
   return (

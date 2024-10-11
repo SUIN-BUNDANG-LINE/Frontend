@@ -1,5 +1,5 @@
 export type FormData = {
-  occupation: string;
+  target: string;
   affiliation: string;
   prompt: string;
   data: string;

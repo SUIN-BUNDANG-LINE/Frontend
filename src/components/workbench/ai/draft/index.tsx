@@ -11,9 +11,10 @@ type Props = {
   openEdit: () => void;
   openDraft: () => void;
   closeAi: () => void;
+  surveyId: string;
 };
 
-export default function Draft({ openEdit, openDraft, closeAi }: Props) {
+export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props) {
   const [phase, setPhase] = React.useState(1);
   /*
     phase 0 : pending
@@ -76,6 +77,7 @@ export default function Draft({ openEdit, openDraft, closeAi }: Props) {
             setDataType={setDataType}
             setPhase={setPhase}
             setSurvey={setSurvey}
+            surveyId={surveyId}
           />
         )}
         {phase === 2 && survey && (

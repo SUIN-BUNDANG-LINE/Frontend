@@ -12,7 +12,7 @@ import { DEFAULT_FORM_DATA } from '../../misc/placeholders';
 import { cin } from '../../func';
 
 const MAX_LENGTH = {
-  occupation: 100,
+  target: 100,
   affiliation: 100,
   data: 12000,
   prompt: 1000,
@@ -26,6 +26,7 @@ type Props = {
   setDataType: React.Dispatch<React.SetStateAction<'file' | 'text'>>;
   setPhase: React.Dispatch<React.SetStateAction<number>>;
   setSurvey: React.Dispatch<React.SetStateAction<Store | null>>;
+  surveyId: string;
 };
 
 export default function ProvideData({
@@ -36,6 +37,7 @@ export default function ProvideData({
   setDataType,
   setPhase,
   setSurvey,
+  surveyId,
 }: Props) {
   const [fileMessage, setFileMessage] = React.useState('파일을 업로드 해주세요.');
 
@@ -47,6 +49,7 @@ export default function ProvideData({
     onError: (error: Error) => {
       showToast('error', `설문을 생성하지 못했습니다: ${(error.cause as ErrorCause).message}`);
     },
+    surveyId,
   });
 
   const { mutate: fileMut, isPending: filePending } = useFileUpload({
@@ -73,7 +76,7 @@ export default function ProvideData({
     if (dataType === 'text') {
       const method = 'text-document';
       const data = {
-        job: formData.occupation,
+        target: formData.target,
         groupName: formData.affiliation,
         textDocument: formData.data,
         userPrompt: formData.prompt,
@@ -84,7 +87,7 @@ export default function ProvideData({
     if (dataType === 'file') {
       const method = 'file-url';
       const data = {
-        job: formData.occupation,
+        target: formData.target,
         groupName: formData.affiliation,
         fileUrl: formData.file!,
         userPrompt: formData.prompt,
@@ -197,14 +200,14 @@ export default function ProvideData({
             <input
               type="text"
               placeholder="대학생, 대학원생, 공무원..."
-              maxLength={MAX_LENGTH.occupation}
-              value={formData.occupation}
-              name="occupation"
+              maxLength={MAX_LENGTH.target}
+              value={formData.target}
+              name="target"
               onChange={update}
               disabled={pending}
             />
             <div className={styles.maxLength}>
-              <span>{formData.occupation.length} / 100자</span>
+              <span>{formData.target.length} / 100자</span>
             </div>
           </li>
           <li className={styles.field}>
