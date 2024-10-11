@@ -17,7 +17,6 @@ type Props = {
 export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props) {
   const [phase, setPhase] = React.useState(1);
   /*
-    phase 0 : pending
     phase 1 : 기본 상태 (데이터 입력)
     phase 2 : 미리 보기, 적용 여부 선택
   */
@@ -25,12 +24,6 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
   const [formData, setFormData] = React.useState<FormData>(DEFAULT_FORM_DATA);
   const [dataType, setDataType] = React.useState<'text' | 'file'>('text');
   const [survey, setSurvey] = React.useState<Store | null>(null);
-
-  const abortController = new AbortController();
-
-  const abort = () => {
-    abortController.abort();
-  };
 
   React.useEffect(() => {
     if (phase === 0) setPhase(1);
@@ -71,7 +64,6 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
         </div>
         {phase === 1 && (
           <ProvideData
-            abort={abort}
             formData={formData}
             setFormData={setFormData}
             dataType={dataType}
@@ -79,7 +71,6 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
             setPhase={setPhase}
             setSurvey={setSurvey}
             surveyId={surveyId}
-            signal={abortController.signal}
           />
         )}
         {phase === 2 && survey && (

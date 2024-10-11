@@ -19,7 +19,6 @@ const MAX_LENGTH = {
 };
 
 type Props = {
-  abort: () => void;
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   dataType: 'file' | 'text';
@@ -27,11 +26,9 @@ type Props = {
   setPhase: React.Dispatch<React.SetStateAction<number>>;
   setSurvey: React.Dispatch<React.SetStateAction<Store | null>>;
   surveyId: string;
-  signal: AbortSignal;
 };
 
 export default function ProvideData({
-  abort,
   formData,
   setFormData,
   dataType,
@@ -39,10 +36,18 @@ export default function ProvideData({
   setPhase,
   setSurvey,
   surveyId,
-  signal,
 }: Props) {
   const [fileMessage, setFileMessage] = React.useState('파일을 업로드 해주세요.');
   const [elapsedTime, setElapsedTime] = React.useState(0);
+
+  const abortController = React.useRef<AbortController>(new AbortController());
+
+  const abort = () => {
+    abortController.current.abort();
+    // abort가 최초 1번만 호출돼서 일단은 강제 unmount로 우회...
+    // TODO : 이유 알아보기
+    setPhase(0);
+  };
 
   const { mutate: surveyMut, isPending: pending } = useGenerateSurvey({
     onSuccess: (data: ImportedSurvey) => {
@@ -50,6 +55,7 @@ export default function ProvideData({
       setSurvey(cin(data));
     },
     onError: (error: Error) => {
+      console.log((error.cause as ErrorCause).code);
       showToast('error', `설문을 생성하지 못했습니다: ${(error.cause as ErrorCause).message}`);
     },
     surveyId,
@@ -96,7 +102,7 @@ export default function ProvideData({
         textDocument: formData.data,
         userPrompt: formData.prompt,
       };
-      surveyMut({ method, formData: data, signal });
+      surveyMut({ method, formData: data, signal: abortController.current.signal });
     }
 
     if (dataType === 'file') {
@@ -107,7 +113,7 @@ export default function ProvideData({
         fileUrl: formData.file!,
         userPrompt: formData.prompt,
       };
-      surveyMut({ method, formData: data, signal });
+      surveyMut({ method, formData: data, signal: abortController.current.signal });
     }
   };
 
