@@ -3,10 +3,11 @@
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useSurveyStore } from '@/components/workbench/store';
 import { Field } from '@/components/workbench/types';
-import Toolbar from '@/components/workbench/canvas/Toolbar';
+// import Toolbar from '@/components/workbench/canvas/Toolbar';
 import Canvas from '@/components/workbench/canvas/Canvas';
 import React from 'react';
 import Loading from '@/components/ui/loading/Loading';
+import Toolbar2 from '@/components/workbench/canvas/Toolbar2';
 import styles from './tab1.module.css';
 
 type Props = {
@@ -131,7 +132,7 @@ function Tab1({ openDraft }: Props) {
       <div className={styles.container}>
         <DragDropContext onDragEnd={onDragEnd}>
           <>
-            <Toolbar />
+            <Toolbar2 openDraft={openDraft} />
             <Canvas />
           </>
         </DragDropContext>

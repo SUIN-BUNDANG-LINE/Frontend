@@ -7,19 +7,17 @@
 }
 
 .container {
-  width: 100%;
-  min-height: calc(100vh - 108px);
-  display: grid;
-  grid-template-columns: minmax(82px, calc(50vw - 390px)) 1fr;
-  align-items: center;
-  justify-content: flex-start;
-}
+  position: relative;
 
-.container > div:first-child {
-  justify-self: flex-end;
-}
-.container > div:last-child {
-  justify-self: flex-start;
+  width: 100%;
+  height: calc(100vh - 108px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+
+  padding-left: 96px;
 }
 
 .getStarted {

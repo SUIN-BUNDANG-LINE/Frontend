@@ -1,10 +1,15 @@
 .canvas {
-  height: calc(100vh - 108px);
+  height: 100%;
   width: 100%;
-  min-width: 238px;
+  min-width: 320px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-  padding-right: 8px;
+  align-items: center;
+}
+
+@media screen and (max-width: 1079px) {
+  /* .canvas {
+    padding-left: 48px !important;
+  } */
 }
