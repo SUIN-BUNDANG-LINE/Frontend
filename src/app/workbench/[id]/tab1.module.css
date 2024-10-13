@@ -4,6 +4,9 @@
   justify-content: center;
   width: 100%;
   margin-top: 108px;
+
+  box-sizing: border-box;
+  padding-left: calc((100vw - 1366px) / 2);
 }
 
 .container {
