@@ -48,7 +48,7 @@ export default function Tab1({
         targetParticipant={targetParticipant}
         winningCount={winners.length}
       />
-      {isImmediateDraw && <WinnerList winners={winners} />}
+      {isImmediateDraw && !visitorId && <WinnerList winners={winners} />}
       <ParticipantList participants={participants} setTab={setTab} />
     </div>
   );
