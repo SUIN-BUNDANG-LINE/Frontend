@@ -7,9 +7,10 @@ type Props = {
   tabHandler: (newTab: number) => void;
   title: string | undefined;
   isGuest: boolean;
+  surveyId: string;
 };
 
-export default function Header({ tab, tabHandler, title, isGuest }: Props) {
+export default function Header({ tab, tabHandler, title, isGuest, surveyId }: Props) {
   const tabData = [
     {
       label: '통계 보기',
@@ -35,7 +36,7 @@ export default function Header({ tab, tabHandler, title, isGuest }: Props) {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.first}>
-          <Link href="/mypage">
+          <Link href={isGuest ? `/s/${surveyId}` : '/mypage'}>
             <svg xmlns="http://www.w3.org/2000/svg" height="42px" viewBox="0 -960 960 960" width="42px" fill="#5f6368">
               <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
             </svg>

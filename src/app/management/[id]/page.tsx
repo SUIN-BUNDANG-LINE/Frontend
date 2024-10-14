@@ -78,7 +78,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className={styles.app}>
-      <Header tab={tab} tabHandler={tabHandler} title={data?.title} isGuest={isGuest} />
+      <Header tab={tab} tabHandler={tabHandler} title={data?.title} isGuest={isGuest} surveyId={id} />
       {content}
       <div className={styles.footer}>
         <Footer />
