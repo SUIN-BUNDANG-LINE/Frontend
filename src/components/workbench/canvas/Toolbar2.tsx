@@ -1,4 +1,4 @@
-import { Draggable, Droppable } from '@hello-pangea/dnd';
+import { Draggable, DraggableStateSnapshot, DraggableStyle, Droppable } from '@hello-pangea/dnd';
 import Svg from '../misc/Svg';
 import styles from './Toolbar2.module.css';
 
@@ -24,6 +24,18 @@ type Props = {
   openDraft: () => void;
 };
 
+function getStyle(style: DraggableStyle | undefined, snapshot: DraggableStateSnapshot) {
+  if (!snapshot.isDropAnimating || !snapshot.dropAnimation) {
+    return style;
+  }
+  const { curve } = snapshot.dropAnimation;
+
+  return {
+    ...style,
+    transition: `all ${curve} 0.001s`,
+  };
+}
+
 export default function Toolbar2({ openDraft }: Props) {
   return (
     <div className={styles.toolbar}>
@@ -40,12 +52,7 @@ export default function Toolbar2({ openDraft }: Props) {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       className={styles.tool}
-                      style={{
-                        ...provided.draggableProps.style,
-                        transform: snapshot.isDragging
-                          ? provided.draggableProps.style?.transform
-                          : 'translate(0px, 0px)',
-                      }}>
+                      style={getStyle(provided.draggableProps.style, snapshot)}>
                       <Svg path={field.path} size="32px" />
                       <div className={styles.name}>{field.name}</div>
                     </div>
