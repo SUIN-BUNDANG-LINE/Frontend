@@ -11,7 +11,7 @@ const fetchSurveyPut = async ({ surveyId, survey }: { surveyId: string; survey: 
 };
 
 const fetchSurveyGet = async ({ surveyId }: { surveyId: string }) => {
-  return kyWrapper.get<ImportedSurvey>(makeUrl(['surveys', 'workbench', surveyId]));
+  return kyWrapper.get<ImportedSurvey>(makeUrl(['surveys', 'make-info', surveyId]));
 };
 
 const fetchSurveyStart = async ({ surveyId }: { surveyId: string }) => {

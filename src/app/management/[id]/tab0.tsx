@@ -8,10 +8,10 @@ import Error from '@/components/ui/error/Error';
 import FilterManager from '@/components/management/result/FilterManager';
 import styles from './tab0.module.css';
 
-export default function Tab0({ surveyId }: { surveyId: string }) {
+export default function Tab0({ surveyId, visitorId }: { surveyId: string; visitorId: string | undefined }) {
   const [resultFilter, setResultFilter] = useState<ResultFilter>({ questionFilters: [] });
   const [isManualSearch, setIsManualSearch] = useState(false);
-  const { data, isLoading, isError, refetch } = useSurveyResult(surveyId, resultFilter, undefined);
+  const { data, isLoading, isError, refetch } = useSurveyResult(surveyId, resultFilter, undefined, visitorId);
 
   const handleSearch = (filters: QuestionFilter[]) => {
     setResultFilter({ questionFilters: filters });
