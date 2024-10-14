@@ -11,6 +11,7 @@ interface Survey {
   targetParticipants: number | null;
   rewardCount: number;
   finishedAt: string | null;
+  isResultOpen: boolean;
   rewards: Reward[];
 }
 

@@ -15,6 +15,7 @@ interface SurveysListResponse {
     targetParticipants: number | null;
     rewardCount: number;
     finishedAt: string | null;
+    isResultOpen: boolean;
     rewards: {
       category: string;
       items: string[];
