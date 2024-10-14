@@ -3,17 +3,35 @@ import { useSurveyStore } from '../../store';
 import styles from './index.module.css';
 
 export default function MiscSection() {
-  const { isVisible, setter } = useSurveyStore((state) => ({
+  const { isVisible, isResultOpen, setter } = useSurveyStore((state) => ({
     isVisible: state.isVisible,
+    isResultOpen: state.isResultOpen,
     setter: state.setter,
   }));
 
-  const changeHandler = () => {
+  const isResultOpenChangeHandler = () => {
+    setter({ key: 'isResultOpen', value: !isResultOpen });
+  };
+
+  const isVisibleChangeHandler = () => {
     setter({ key: 'isVisible', value: !isVisible });
   };
 
   return (
     <div className={styles.group}>
+      <label className={styles.checkboxLabel} htmlFor="survey-is-result">
+        <input
+          id="survey-is-result-open"
+          type="checkbox"
+          name="isResultOpen"
+          className={styles.checkbox}
+          checked={isResultOpen}
+          onChange={isResultOpenChangeHandler}
+        />
+        설문 결과 공개
+      </label>
+      <div className={styles.description}>설문 참여자가 설문 참여 후 설문의 결과를 볼 수 있습니다.</div>
+      <hr />
       <label className={styles.checkboxLabel} htmlFor="survey-is-visible">
         <input
           id="survey-is-visible"
@@ -21,7 +39,7 @@ export default function MiscSection() {
           name="isVisible"
           className={styles.checkbox}
           checked={isVisible}
-          onChange={changeHandler}
+          onChange={isVisibleChangeHandler}
         />
         설문지를 설문이용에 공개하는데 동의합니다. (권장)
       </label>

@@ -164,7 +164,8 @@ const cout = (store: Store): OutgoingSurvey => {
     }
   };
 
-  const { title, description, thumbnail, finishMessage, isVisible, rewardConfig, sections, fields } = store;
+  const { title, description, thumbnail, finishMessage, isVisible, isResultOpen, rewardConfig, sections, fields } =
+    store;
 
   return {
     title,
@@ -172,6 +173,7 @@ const cout = (store: Store): OutgoingSurvey => {
     thumbnail,
     finishMessage,
     isVisible,
+    isResultOpen,
     rewardSetting: normalizeReward(rewardConfig),
     sections: getSections(sections, fields),
   };

@@ -10,6 +10,7 @@ type ImportedSurvey = {
   status: Status;
   finishMessage: string;
   isVisible: boolean;
+  isResultOpen: boolean;
   rewardSetting: RewardConfig;
   sections: Section[];
 };

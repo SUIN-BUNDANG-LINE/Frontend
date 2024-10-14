@@ -32,6 +32,7 @@ type Store = {
   finishMessage: string;
   status: 'NOT_STARTED' | 'IN_PROGRESS' | 'IN_MODIFICATION' | 'CLOSED';
   isVisible: boolean;
+  isResultOpen: boolean;
 
   // reward
   rewardConfig: RewardConfig;

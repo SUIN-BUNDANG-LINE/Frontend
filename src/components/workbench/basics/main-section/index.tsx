@@ -8,6 +8,7 @@ export default function MainSection() {
     description: state.description,
     finishMessage: state.finishMessage,
     isVisible: state.isVisible,
+    isResultOpen: state.isResultOpen,
     setter: state.setter,
   }));
 
