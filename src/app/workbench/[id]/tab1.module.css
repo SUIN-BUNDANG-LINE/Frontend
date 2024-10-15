@@ -3,30 +3,26 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: fit-content;
   margin-top: 108px;
 
   box-sizing: border-box;
   padding-left: calc((100vw - 1366px) / 2);
+
+  background-color: #f3f3f3;
 }
 
 .container {
   position: relative;
-
   width: 100%;
-  height: calc(100vh - 108px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
 
-  padding-left: 96px;
-  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 96px 1fr;
 }
 
 @media screen and (max-width: 429px) {
   .container {
-    padding-left: 52px !important;
+    grid-template-columns: 52px 1fr;
   }
 }
 

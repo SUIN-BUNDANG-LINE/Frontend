@@ -129,14 +129,15 @@ function Tab1({ openDraft }: Props) {
 
   return (
     <div className={styles.main}>
-      <div className={styles.container}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <>
-            <Toolbar2 openDraft={openDraft} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className={styles.container}>
+          <Toolbar2 openDraft={openDraft} />
+          <div />
+          <div className={styles.canvas}>
             <Canvas />
-          </>
-        </DragDropContext>
-      </div>
+          </div>
+        </div>
+      </DragDropContext>
     </div>
   );
 }

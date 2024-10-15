@@ -1,4 +1,5 @@
 import { Draggable, DraggableStateSnapshot, DraggableStyle, Droppable } from '@hello-pangea/dnd';
+import React from 'react';
 import Svg from '../misc/Svg';
 import styles from './Toolbar2.module.css';
 
@@ -38,8 +39,21 @@ function getStyle(style: DraggableStyle | undefined, snapshot: DraggableStateSna
 }
 
 export default function Toolbar2({ openDraft }: Props) {
+  const [scroll, setScroll] = React.useState(0);
+
+  const handleScroll = () => {
+    setScroll(window.scrollY);
+  };
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className={styles.toolbar}>
+    <div className={styles.toolbar} style={{ top: `${scroll}px` }}>
       <div className={styles.title}>질문 추가</div>
       <Droppable droppableId="toolbar" direction="vertical" type="field" isDropDisabled>
         {(droppableProvided) => (
