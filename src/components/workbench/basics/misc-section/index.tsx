@@ -28,9 +28,9 @@ export default function MiscSection() {
           checked={isResultOpen}
           onChange={isResultOpenChangeHandler}
         />
-        설문 결과 공개
+        설문 통계 공개
       </label>
-      <div className={styles.description}>설문 참여자가 설문 참여 후 설문의 결과를 볼 수 있습니다.</div>
+      <div className={styles.description}>설문 참여자가 설문 참여 후 설문의 통계를 볼 수 있습니다.</div>
       <hr />
       <label className={styles.checkboxLabel} htmlFor="survey-is-visible">
         <input
