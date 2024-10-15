@@ -32,6 +32,7 @@ function getStyle(style: DraggableStyle | undefined, snapshot: DraggableStateSna
 
   return {
     ...style,
+    transform: 'translate(0px, 0px)',
     transition: `all ${curve} 0.001s`,
   };
 }
@@ -52,12 +53,16 @@ export default function Toolbar2({ openDraft }: Props) {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       className={styles.tool}
-                      style={getStyle(provided.draggableProps.style, snapshot)}>
+                      style={
+                        snapshot.isDragging
+                          ? getStyle(provided.draggableProps.style, snapshot)
+                          : { transform: 'translate(0px, 0px)' }
+                      }>
                       <Svg path={field.path} size="32px" />
                       <div className={styles.name}>{field.name}</div>
                     </div>
                     {snapshot.isDragging && (
-                      <div className={styles.placeholder}>
+                      <div className={styles.placeholder} style={{ transform: 'none !important' }}>
                         <Svg path={field.path} size="32px" />
                         <div className={styles.name}>{field.name}</div>
                       </div>
