@@ -3,6 +3,12 @@ import ky, { HTTPError, type KyInstance, type Options } from 'ky';
 const beforeError = async (error: HTTPError) => {
   const res = error;
 
+  if (res.response.status === 401) {
+    // eslint-disable-next-line no-alert
+    alert('로그인이 필요합니다!');
+    window.location.href = '/login';
+  }
+
   try {
     res.cause = await error.response.json<ErrorCause>();
   } catch (e) {
