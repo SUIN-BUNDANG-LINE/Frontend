@@ -50,12 +50,12 @@ export default async function Layout({ children }: Readonly<{ children: React.Re
   const refreshTokenString = cookieStore.get('refresh-token')?.value;
   const refreshToken = getPayload(refreshTokenString);
 
-  // 엑세스 토큰과 리프레시 토큰이 유효하면 통과
-  if (accessToken && refreshToken && accessToken.sub && accessToken.nickname) {
+  // 엑세스 토큰이 유효하면 통과
+  if (accessToken && accessToken.sub && accessToken.nickname) {
     user = { id: accessToken.sub, nickname: accessToken.nickname };
   }
   // 리프레시 토큰은 유효한데 엑세스 토큰이 유효하지 않은 경우
-  else if (!accessToken && refreshToken) {
+  else if (refreshToken) {
     try {
       // 유저 프로필 API 호출해서 엑세스 토큰 재발급
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/user/profile`, {
