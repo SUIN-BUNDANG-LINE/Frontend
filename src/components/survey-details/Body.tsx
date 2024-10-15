@@ -17,7 +17,7 @@ interface Props {
   finishedAt: string | null;
   rewards: Reward[];
   onStart: () => void;
-  onClickResultButton: () => void;
+  viewResult: () => void;
   surveyId: string;
   isResultOpen: boolean;
 }
@@ -32,7 +32,7 @@ export default function Body({
   onStart,
   surveyId,
   isResultOpen,
-  onClickResultButton,
+  viewResult,
 }: Props) {
   const isParticipated = getSurveyState(surveyId) === '$';
   const isInProgress = status === 'IN_PROGRESS';
@@ -101,7 +101,9 @@ export default function Body({
   })();
 
   const getParticipateButtonText = () => {
-    if (isParticipated) return '참여완료';
+    if (isParticipated) {
+      return isResultOpen ? '통계보기' : '참여완료';
+    }
     if (isInProgress) return '참여하기';
     return '참여불가';
   };
@@ -113,21 +115,13 @@ export default function Body({
           variant="primary"
           width="100%"
           height="48px"
-          onClick={onStart}
-          disabled={isParticipated || !isInProgress}>
+          onClick={() => {
+            if (isParticipated && isResultOpen) viewResult();
+            else onStart();
+          }}
+          disabled={(isParticipated && !isResultOpen) || !isInProgress}>
           {getParticipateButtonText()}
         </Button>
-        {isResultOpen && (
-          <Button
-            variant="primary"
-            width="100%"
-            height="48px"
-            onClick={onClickResultButton}
-            disabled={!isParticipated && isInProgress}
-            style={{ marginTop: '12px', backgroundColor: '#0070f3', color: 'white' }}>
-            통계 보기
-          </Button>
-        )}
         <Link href="/" className={styles.link}>
           <span>설문이용 메인으로</span>
           <FaExternalLinkSquareAlt size="12px" />

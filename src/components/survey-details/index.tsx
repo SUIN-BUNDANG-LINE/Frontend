@@ -34,10 +34,12 @@ export default function DetailsViewer({ data, surveyId }: Props) {
         currentParticipantCount={currentParticipants}
         finishedAt={finishedAt}
         rewards={rewards}
-        onStart={() => router.push(`/s/${surveyId}/p`)}
+        onStart={() => {
+          router.push(`/s/${surveyId}/p`);
+        }}
         surveyId={surveyId}
         isResultOpen={isResultOpen}
-        onClickResultButton={() => router.push(`/management/${surveyId}?isGuest=true`)}
+        viewResult={() => router.push(`/management/${surveyId}?isGuest=true`)}
       />
     </>
   );
