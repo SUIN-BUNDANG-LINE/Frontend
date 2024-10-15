@@ -9,7 +9,7 @@
   box-sizing: border-box;
   padding-left: calc((100vw - 1366px) / 2);
 
-  background-color: #f3f3f3;
+  /* background-color: #f3f3f3; */
 }
 
 .container {
