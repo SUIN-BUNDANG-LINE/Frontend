@@ -1,11 +1,11 @@
-import Section from '@/components/preview/ui/Participate/Section';
-import Field from '@/components/preview/ui/Participate/Field';
+// import Field from '@/components/preview/ui/Participate/Field';
 import React from 'react';
 import Button from '@/components/ui/button/Button';
 import { Store } from '../../types';
 import styles from './approve.module.css';
 import Svg from '../../misc/Svg';
 import { useSurveyStore } from '../../store';
+import Preview from '../preview';
 
 type Props = {
   survey: Store;
@@ -29,13 +29,6 @@ export default function Approve({ survey, back, closeAi }: Props) {
     window.addEventListener('resize', resize);
     return () => window.removeEventListener('resize', resize);
   }, []);
-
-  const fakeDispatch = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    set: ({ fieldId, content, other }: { fieldId: string; content: string; other: boolean }) => {},
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    clear: ({ fieldId, content, other }: { fieldId: string; content: string; other: boolean }) => {},
-  };
 
   const approve = (aiEdit?: true) => {
     initStore({ store: survey });
@@ -82,9 +75,15 @@ export default function Approve({ survey, back, closeAi }: Props) {
           <p>마음에 드는 설문 제목과 설명이 생성되었는지 확인해보세요.</p>
         </div>
         <div className={styles.heads}>
-          <h3 className={styles.title}>{survey.title}</h3>
-          <textarea id="textarea" value={survey.description} className={styles.description} readOnly />
-          <textarea id="textarea2" value={survey.finishMessage} className={styles.description} readOnly />
+          <div className={styles.headsHeading}>제목과 설명</div>
+          <div className={styles.headsContent}>
+            <h3 className={styles.title}>{survey.title}</h3>
+            <textarea id="textarea" value={survey.description} className={styles.description} readOnly />
+          </div>
+          <div className={styles.headsHeading}>종료 메시지</div>
+          <div className={styles.headsContent}>
+            <textarea id="textarea2" value={survey.finishMessage} className={styles.description} readOnly />
+          </div>
         </div>
         <br />
         <div className={styles.legend}>
@@ -96,15 +95,7 @@ export default function Approve({ survey, back, closeAi }: Props) {
           <h3>설문지 영역</h3>
           <p>마음에 드는 섹션과 문항이 생성되었는지 확인해보세요.</p>
         </div>
-        {sections.map(({ sectionId, title, description }) => (
-          <Section key={sectionId} title={title} description={description}>
-            {fields
-              .filter((i) => i.sectionId === sectionId)
-              .map((field) => (
-                <Field key={field.fieldId} field={field} dispatch={fakeDispatch} responses={[]} valid={false} />
-              ))}
-          </Section>
-        ))}
+        <Preview sections={sections} fields={fields} />
       </div>
     </div>
   );

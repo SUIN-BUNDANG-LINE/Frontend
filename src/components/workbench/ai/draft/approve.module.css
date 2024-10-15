@@ -70,23 +70,34 @@
 .heads {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
-  padding: 18px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.headsHeading {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0 8px 12px;
+  font-size: 14px;
+  background-color: #dddddd;
+  margin-top: 8px;
+}
+
+.headsContent {
+  box-sizing: border-box;
+  padding: 12px;
+  padding-bottom: 0;
+  width: 100%;
   background-color: #fff;
 }
 
-.title,
-.description {
-  max-width: 720px;
-  text-align: center;
-}
-
-.description {
+.description,
+.finishMessage {
   width: 100%;
-  text-align: center;
   line-height: 22px;
   border: none;
   outline: none;
@@ -94,4 +105,5 @@
   color: var(--gray-d);
   margin-bottom: 15px;
   max-height: 300px;
+  color: var(--gray-md);
 }

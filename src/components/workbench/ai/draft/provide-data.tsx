@@ -164,17 +164,17 @@ export default function ProvideData({
             <div className={styles.dataTypeBtns}>
               <button
                 type="button"
-                onClick={() => setDataType('text')}
-                className={dataType === 'text' ? styles.active : ''}
-                disabled={pending}>
-                텍스트 입력
-              </button>
-              <button
-                type="button"
                 onClick={() => setDataType('file')}
                 className={dataType === 'file' ? styles.active : ''}
                 disabled={pending}>
                 파일 업로드
+              </button>
+              <button
+                type="button"
+                onClick={() => setDataType('text')}
+                className={dataType === 'text' ? styles.active : ''}
+                disabled={pending}>
+                텍스트 입력
               </button>
             </div>
             {dataType === 'text' && (

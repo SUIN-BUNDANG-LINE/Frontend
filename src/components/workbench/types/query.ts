@@ -62,4 +62,4 @@ type Question = {
 
 type QuestionType = 'TEXT_RESPONSE' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
 
-export type { ImportedSurvey, OutgoingSurvey, RouteDetails, Question };
+export type { ImportedSurvey, OutgoingSurvey, RouteDetails, Question, RouteByNumerical, RouteByChoice, RouteByUser };
