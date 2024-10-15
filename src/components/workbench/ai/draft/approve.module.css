@@ -70,23 +70,15 @@
 .heads {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
   padding: 18px;
-  background-color: #fff;
-}
-
-.title,
-.description {
-  max-width: 720px;
-  text-align: center;
 }
 
 .description {
   width: 100%;
-  text-align: center;
   line-height: 22px;
   border: none;
   outline: none;

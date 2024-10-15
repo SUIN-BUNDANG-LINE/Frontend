@@ -13,12 +13,7 @@ export default function Preview({ sections, fields }: Props) {
     <div className={styles.container}>
       {sections.map(({ sectionId, title, description }, si) => (
         <>
-          <Section
-            index={`${si + 1}`}
-            key={sectionId}
-            newSection={{ sectionId, title, description }}
-            changeType="DELETED"
-          />
+          <Section index={`${si + 1}`} key={sectionId} newSection={{ sectionId, title, description }} />
           {fields
             .filter((field) => field.sectionId === sectionId)
             .map((field, fi) => (

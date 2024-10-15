@@ -75,6 +75,7 @@ export default function Approve({ survey, back, closeAi }: Props) {
           <p>마음에 드는 설문 제목과 설명이 생성되었는지 확인해보세요.</p>
         </div>
         <div className={styles.heads}>
+          <div>제목과 설명</div>
           <h3 className={styles.title}>{survey.title}</h3>
           <textarea id="textarea" value={survey.description} className={styles.description} readOnly />
           <textarea id="textarea2" value={survey.finishMessage} className={styles.description} readOnly />

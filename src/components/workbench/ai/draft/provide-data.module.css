@@ -81,6 +81,7 @@
   border: none;
   font-size: 14px;
   background-color: transparent;
+  border: 1px solid var(--gray);
   color: var(--gray-d);
   transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
   cursor: pointer;
