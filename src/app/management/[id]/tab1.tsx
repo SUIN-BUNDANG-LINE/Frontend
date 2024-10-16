@@ -11,11 +11,13 @@ import styles from './tab1.module.css';
 export default function Tab1({
   surveyId,
   setTab,
+  visitorId,
 }: {
   surveyId: string;
   setTab: React.Dispatch<React.SetStateAction<number>>;
+  visitorId: string | undefined;
 }) {
-  const { data, isLoading, isError, refetch } = useParticipants(surveyId);
+  const { data, isLoading, isError, refetch } = useParticipants(surveyId, visitorId);
 
   if (isLoading)
     return (
@@ -46,7 +48,7 @@ export default function Tab1({
         targetParticipant={targetParticipant}
         winningCount={winners.length}
       />
-      {isImmediateDraw && <WinnerList winners={winners} />}
+      {isImmediateDraw && !visitorId && <WinnerList winners={winners} />}
       <ParticipantList participants={participants} setTab={setTab} />
     </div>
   );

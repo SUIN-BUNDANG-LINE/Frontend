@@ -124,3 +124,12 @@
   padding: 8px 24px;
   box-sizing: border-box;
 }
+
+.viewResultButton {
+  background-color: #0070F3; /* 배경색 */
+  color: #FFFFFF; /* 폰트 색 */
+}
+
+.viewResultButton:hover {
+  background-color: #0056b3;
+}

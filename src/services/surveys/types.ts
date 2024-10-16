@@ -15,6 +15,7 @@ interface SurveysListResponse {
     targetParticipants: number | null;
     rewardCount: number;
     finishedAt: string | null;
+    isResultOpen: boolean;
     rewards: {
       category: string;
       items: string[];
@@ -32,6 +33,7 @@ interface SurveysDetailsResponse {
   currentParticipants: number | null;
   targetParticipants: number | null;
   rewards: Reward[];
+  isResultOpen: boolean;
 }
 
 type RewardType = 'NO_REWARD' | 'SELF_MANAGEMENT' | 'IMMEDIATE_DRAW';

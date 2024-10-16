@@ -11,8 +11,18 @@ interface Props {
 export default function DetailsViewer({ data, surveyId }: Props) {
   const router = useRouter();
 
-  const { title, description, status, type, finishedAt, currentParticipants, targetParticipants, rewards, thumbnail } =
-    data;
+  const {
+    title,
+    description,
+    status,
+    type,
+    finishedAt,
+    currentParticipants,
+    targetParticipants,
+    rewards,
+    thumbnail,
+    isResultOpen,
+  } = data;
 
   return (
     <>
@@ -24,8 +34,12 @@ export default function DetailsViewer({ data, surveyId }: Props) {
         currentParticipantCount={currentParticipants}
         finishedAt={finishedAt}
         rewards={rewards}
-        onStart={() => router.push(`/s/${surveyId}/p`)}
+        onStart={() => {
+          router.push(`/s/${surveyId}/p`);
+        }}
         surveyId={surveyId}
+        isResultOpen={isResultOpen}
+        viewResult={() => router.push(`/management/${surveyId}?guest=true`)}
       />
     </>
   );

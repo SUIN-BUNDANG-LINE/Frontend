@@ -11,6 +11,7 @@ export const extractStore = (state: Store & Actions) => ({
   finishMessage: state.finishMessage,
   status: state.status,
   isVisible: state.isVisible,
+  isResultOpen: state.isResultOpen,
   rewardConfig: state.rewardConfig,
   sections: state.sections,
   fields: state.fields,

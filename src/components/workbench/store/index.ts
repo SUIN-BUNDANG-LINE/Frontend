@@ -41,6 +41,7 @@ const DEFAULT_STORE: Store = {
   finishMessage: '',
   status: 'NOT_STARTED' as const,
   isVisible: true,
+  isResultOpen: false,
   publishedAt: null,
 
   rewardConfig: {

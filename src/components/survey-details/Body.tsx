@@ -2,7 +2,7 @@ import Button from '@/components/ui/button/Button';
 import { FaExternalLinkSquareAlt, FaGift, FaRegCalendarAlt } from 'react-icons/fa';
 import { GiSpeakerOff } from 'react-icons/gi';
 import moment from 'moment';
-import { FaPeopleGroup } from 'react-icons/fa6';
+import { FaChartSimple, FaPeopleGroup } from 'react-icons/fa6';
 import { Reward, RewardType } from '@/services/surveys/types';
 import Link from 'next/link';
 import { statusReader } from '@/utils/enumReader';
@@ -17,7 +17,9 @@ interface Props {
   finishedAt: string | null;
   rewards: Reward[];
   onStart: () => void;
+  viewResult: () => void;
   surveyId: string;
+  isResultOpen: boolean;
 }
 
 export default function Body({
@@ -29,6 +31,8 @@ export default function Body({
   rewards,
   onStart,
   surveyId,
+  isResultOpen,
+  viewResult,
 }: Props) {
   const isParticipated = getSurveyState(surveyId) === '$';
   const isInProgress = status === 'IN_PROGRESS';
@@ -46,6 +50,15 @@ export default function Body({
         </div>
       </div>
     );
+
+  const ResultOpenComponent = isResultOpen ? (
+    <div className={styles.descriptor}>
+      <FaChartSimple size="20px" />
+      <div className={styles.status} style={{ fontSize: '14px' }}>
+        설문에 참여한 뒤 통계를 볼 수 있습니다!
+      </div>
+    </div>
+  ) : undefined;
 
   const RewardComponent = (() => {
     if (type === 'NO_REWARD' || finishedAt === null) return undefined;
@@ -90,7 +103,9 @@ export default function Body({
   })();
 
   const getParticipateButtonText = () => {
-    if (isParticipated) return '참여완료';
+    if (isParticipated) {
+      return isResultOpen ? '통계보기' : '참여완료';
+    }
     if (isInProgress) return '참여하기';
     return '참여불가';
   };
@@ -102,17 +117,21 @@ export default function Body({
           variant="primary"
           width="100%"
           height="48px"
-          onClick={onStart}
-          disabled={isParticipated || !isInProgress}>
+          onClick={() => {
+            if (isParticipated && isResultOpen) viewResult();
+            else onStart();
+          }}
+          disabled={(isParticipated && !isResultOpen) || !isInProgress}>
           {getParticipateButtonText()}
         </Button>
         <Link href="/" className={styles.link}>
           <span>설문이용 메인으로</span>
           <FaExternalLinkSquareAlt size="12px" />
         </Link>
-        {(StatusComponent || RewardComponent) && <hr className={styles.hr} />}
+        {(StatusComponent || RewardComponent || ResultOpenComponent) && <hr className={styles.hr} />}
         {StatusComponent}
         {RewardComponent}
+        {ResultOpenComponent}
       </div>
       {['IMMEDIATE_DRAW', 'SELF_MANAGEMENT'].includes(type) && (
         <div className={styles.clause}>

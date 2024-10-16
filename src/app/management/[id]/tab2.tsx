@@ -10,13 +10,21 @@ import Loading from '@/components/ui/loading/Loading';
 import Error from '@/components/ui/error/Error';
 import styles from './tab2.module.css';
 
-export default function Tab2({ surveyId, participantId }: { surveyId: string; participantId: string | null }) {
+export default function Tab2({
+  surveyId,
+  participantId,
+  visitorId,
+}: {
+  surveyId: string;
+  participantId: string | null;
+  visitorId: string | undefined;
+}) {
   const {
     data: participantData,
     isLoading: participantsIsLoading,
     isError: participantsIsError,
     refetch: participantsRefetch,
-  } = useParticipants(surveyId);
+  } = useParticipants(surveyId, visitorId);
 
   const participants = useMemo(() => {
     return participantData?.participants || [];
@@ -50,6 +58,7 @@ export default function Tab2({ surveyId, participantId }: { surveyId: string; pa
     surveyId,
     { questionFilters: [] },
     currentParticipantId,
+    visitorId,
     {
       enabled: !!currentParticipantId, // currentParticipantId가 있을 때만 쿼리 실행
     }
