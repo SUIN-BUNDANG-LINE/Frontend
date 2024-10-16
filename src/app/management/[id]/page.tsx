@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const searchParams = useSearchParams();
   const [tab, setTab] = React.useState(getTabFromSearchParams(searchParams));
-  const isGuest = searchParams.get('isGuest') === 'true';
+  const isGuest = searchParams.get('guest') === 'true';
   const { data } = useGetSurvey(id);
 
   const tabHandler = (newTab: number) => {

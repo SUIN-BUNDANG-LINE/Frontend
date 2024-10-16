@@ -53,8 +53,10 @@ export default function Body({
 
   const ResultOpenComponent = isResultOpen ? (
     <div className={styles.descriptor}>
-      <FaChartSimple size="24px" />
-      <div className={styles.status}>설문에 참여한 뒤 통계를 볼 수 있습니다!</div>
+      <FaChartSimple size="20px" />
+      <div className={styles.status} style={{ fontSize: '14px' }}>
+        설문에 참여한 뒤 통계를 볼 수 있습니다!
+      </div>
     </div>
   ) : undefined;
 
@@ -128,8 +130,8 @@ export default function Body({
         </Link>
         {(StatusComponent || RewardComponent || ResultOpenComponent) && <hr className={styles.hr} />}
         {StatusComponent}
-        {ResultOpenComponent}
         {RewardComponent}
+        {ResultOpenComponent}
       </div>
       {['IMMEDIATE_DRAW', 'SELF_MANAGEMENT'].includes(type) && (
         <div className={styles.clause}>

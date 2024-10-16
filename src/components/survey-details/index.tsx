@@ -39,7 +39,7 @@ export default function DetailsViewer({ data, surveyId }: Props) {
         }}
         surveyId={surveyId}
         isResultOpen={isResultOpen}
-        viewResult={() => router.push(`/management/${surveyId}?isGuest=true`)}
+        viewResult={() => router.push(`/management/${surveyId}?guest=true`)}
       />
     </>
   );

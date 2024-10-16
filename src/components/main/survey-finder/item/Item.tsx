@@ -34,7 +34,7 @@ export default function ListItem({ survey }: { survey: Survey }) {
       />
       <div className={styles.info}>
         <div>
-          <div className={styles.title}>{title}</div>
+          <div className={styles.title}>{title || '제목 없는 설문'}</div>
           <div className={styles.time}>{finishedAt ? dateReader(finishedAt) : '응답 받는 중'}</div>
           <div className={styles.description}>{description}</div>
         </div>
