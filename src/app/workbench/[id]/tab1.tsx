@@ -12,9 +12,10 @@ import styles from './tab1.module.css';
 
 type Props = {
   openDraft: () => void;
+  openChat: () => void;
 };
 
-function Tab1({ openDraft }: Props) {
+function Tab1({ openDraft, openChat }: Props) {
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
@@ -131,7 +132,7 @@ function Tab1({ openDraft }: Props) {
     <div className={styles.main}>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className={styles.container}>
-          <Toolbar2 openDraft={openDraft} />
+          <Toolbar2 openDraft={openDraft} openChat={openChat} />
           <div />
           <div className={styles.canvas}>
             <Canvas />
