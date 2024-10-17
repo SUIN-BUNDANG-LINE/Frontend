@@ -1,0 +1,138 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.heading h3 {
+  margin-bottom: 0;
+}
+
+.target {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.targetBtns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.target p {
+  color: var(--gray-md);
+  margin-bottom: 8px;
+}
+
+.target button {
+  border: none;
+  outline: none;
+  min-width: 42px;
+  height: 32px;
+  border-radius: 4px;
+  margin: 2px;
+  font-size: 14px;
+  background-color: transparent;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.target button:not(.active):hover {
+  background-color: var(--gray-ml);
+  cursor: pointer;
+}
+
+.target button.active {
+  background-color: var(--gray);
+  color: #fff;
+  cursor: text;
+}
+
+.target select {
+  height: 100%;
+  width: 100%;
+  padding-left: 6px;
+  color: var(--gray-d);
+  border: none;
+  outline: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-left: 4px;
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.target select:hover,
+.target select:active {
+  border: 1px solid var(--gray);
+  background-color: var(--gray-l);
+  cursor: pointer;
+}
+
+.chat {
+  width: 100%;
+}
+
+.chat p {
+  color: var(--gray-md);
+  margin-bottom: 8px;
+}
+
+.chatbox {
+  display: grid;
+  grid-template-columns: 1fr 48px;
+  width: 100%;
+  height: 48px;
+}
+
+.chatbox button {
+  width: 100%;
+  border: none;
+  background-color: #fff;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.chatbox button:first-child {
+  color: var(--gray-d);
+  padding-left: 20px;
+  border-radius: 24px 0 0 24px;
+}
+
+.chatbox:hover button:first-child {
+  background-color: var(--gray-l);
+  border: 1px solid var(--gray);
+  border-right-color: transparent;
+}
+
+.chatbox:hover button:last-child {
+  background-color: var(--gray-l);
+  border: 1px solid var(--gray);
+  border-left-color: transparent;
+}
+
+.submit {
+  border-radius: 0 24px 24px 0;
+}
+
+.arrow {
+  background-color: var(--gray-md);
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
+}
+
+.arrow:hover {
+  background-color: var(--gray-d);
+}

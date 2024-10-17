@@ -4,6 +4,7 @@ import React from 'react';
 import { showToast } from '@/utils/toast';
 import styles from './index.module.css';
 import Svg from '../../misc/Svg';
+import Request from './request';
 
 type Props = {
   openDraft: () => void;
@@ -47,6 +48,9 @@ export default function Chat({ openDraft, openChat, closeAi, surveyId }: Props) 
               <Svg path="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
             </button>
           </div>
+        </div>
+        <div className={styles.body}>
+          <Request />
         </div>
       </div>
     </div>
