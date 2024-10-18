@@ -1,5 +1,5 @@
 import { kyWrapper } from '../ky-wrapper';
-import { makeUrl } from '../utils';
+import { makeUrl, makeUrlWithUndefined } from '../utils';
 import type {
   SurveysListResponse,
   SurveysListParams,
@@ -9,8 +9,8 @@ import type {
   SurveysProgressResponse,
 } from './types';
 
-const fetchSurveysList = async ({ size = 8, page, sortType = 'RECENT', isAsc = false }: SurveysListParams) => {
-  const URL = makeUrl(['surveys', 'list'], { size, page, sortType, isAsc });
+const fetchSurveysList = async ({ size = 8, page, sortType = 'RECENT', reward, resultOpen }: SurveysListParams) => {
+  const URL = makeUrlWithUndefined(['surveys', 'list'], { size, page, sortType, reward, resultOpen });
   return kyWrapper.get<SurveysListResponse>(URL);
 };
 

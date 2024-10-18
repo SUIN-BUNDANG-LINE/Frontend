@@ -5,20 +5,28 @@ import type { SurveysListParams, SurveysProgressResponse } from './types';
 
 const queryKeys = {
   root: ['surveys'],
-  list: (sort: string, page: number) => [...queryKeys.root, 'list', sort, page],
+  list: (sort: string, page: number, reward: boolean | undefined, resultOpen: boolean | undefined) => [
+    ...queryKeys.root,
+    'list',
+    sort,
+    page,
+    reward,
+    resultOpen,
+  ],
   details: (surveyId: string) => [...queryKeys.root, 'details', surveyId],
   progress: (surveyId: string) => [...queryKeys.root, 'progress', surveyId],
 };
 
-const useSurveysList = (sort: string, page: number) => {
+const useSurveysList = (sort: string, page: number, reward: boolean | undefined, resultOpen: boolean | undefined) => {
   return useQuery({
-    queryKey: queryKeys.list(sort, page),
+    queryKey: queryKeys.list(sort, page, reward, resultOpen),
     queryFn: () =>
       fetchSurveysList({
         size: 8,
         sortType: sort as SurveysListParams['sortType'],
         page: page - 1,
-        isAsc: false,
+        reward,
+        resultOpen,
       }),
     placeholderData: keepPreviousData,
   });

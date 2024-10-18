@@ -2,7 +2,8 @@ interface SurveysListParams {
   size: number;
   page: number;
   sortType: 'RECENT';
-  isAsc: boolean;
+  reward: boolean | undefined;
+  resultOpen: boolean | undefined;
 }
 
 interface SurveysListResponse {
