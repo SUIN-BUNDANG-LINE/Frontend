@@ -6,9 +6,11 @@ import styles from './request.module.css';
 type Props = {
   request: RequestType;
   actions: Actions;
+  submit: () => void;
+  pending: boolean;
 };
 
-export default function Request({ request, actions }: Props) {
+export default function Request({ request, actions, submit, pending }: Props) {
   const [openModal, setOpenModal] = React.useState(false);
 
   return (
@@ -51,7 +53,7 @@ export default function Request({ request, actions }: Props) {
               {request.userPrompt.length === 0 && <span className={styles.placeholder}>요청사항 입력...</span>}
               {request.userPrompt.length !== 0 && <span className={styles.prompt}>{request.userPrompt}</span>}
             </button>
-            <button type="button" className={styles.submit}>
+            <button type="button" className={styles.submit} onClick={submit} disabled={pending}>
               <div className={styles.arrow}>↑</div>
             </button>
           </div>

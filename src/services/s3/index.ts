@@ -9,7 +9,6 @@ const beforeError = async (error: HTTPError) => {
   try {
     res.cause = await error.response.json<ErrorCause>();
   } catch (e) {
-    console.log(e);
     res.cause = { code: undefined, errors: undefined, message: '알 수 없는 오류가 발생했습니다.' };
     if (res.response.status === 413) res.cause = { code: undefined, errors: undefined, message: '파일이 너무 큽니다.' };
   }

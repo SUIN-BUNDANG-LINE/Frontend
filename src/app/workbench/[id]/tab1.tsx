@@ -3,7 +3,6 @@
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useSurveyStore } from '@/components/workbench/store';
 import { Field } from '@/components/workbench/types';
-// import Toolbar from '@/components/workbench/canvas/Toolbar';
 import Canvas from '@/components/workbench/canvas/Canvas';
 import React from 'react';
 import Loading from '@/components/ui/loading/Loading';
@@ -22,12 +21,14 @@ function Tab1({ openDraft, openChat }: Props) {
     setIsClient(true);
   }, []);
 
-  const sections = useSurveyStore((state) => state.sections);
-  const fields = useSurveyStore((state) => state.fields);
-  const setSections = useSurveyStore((state) => state.setSections);
-  const setFields = useSurveyStore((state) => state.setFields);
-  const addField = useSurveyStore((state) => state.addField);
-  const addSection = useSurveyStore((state) => state.addSection);
+  const { sections, fields, setSections, setFields, addField, addSection } = useSurveyStore((state) => ({
+    sections: state.sections,
+    fields: state.fields,
+    setSections: state.setSections,
+    setFields: state.setFields,
+    addField: state.addField,
+    addSection: state.addSection,
+  }));
 
   const startFromScratch = () => {
     addSection({ index: 0 });

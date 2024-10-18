@@ -7,8 +7,8 @@ import CheckboxResponse from './checkbox-response';
 
 type Props = {
   index: string;
-  oldField?: F;
-  newField: F;
+  oldField: F;
+  newField?: F;
   changeType?: ChangeType;
 };
 
@@ -36,7 +36,7 @@ export default function Field(props: Props) {
     );
   }
 
-  const gridTemplateColumns = `repeat(${oldField ? 2 : 1}, 1fr)`;
+  const gridTemplateColumns = `repeat(${newField ? 2 : 1}, 1fr)`;
 
   return (
     <div className={`${styles.container} ${styles[changeType]}`}>
@@ -44,8 +44,8 @@ export default function Field(props: Props) {
         <span>질문 {index && index}</span>
       </div>
       <div className={styles.content} style={{ gridTemplateColumns }}>
-        {oldField && getContent(oldField)}
-        {getContent(newField)}
+        {getContent(oldField)}
+        {newField && getContent(newField)}
       </div>
     </div>
   );

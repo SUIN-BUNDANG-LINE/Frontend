@@ -2,23 +2,35 @@
 
 import React from 'react';
 import { showToast } from '@/utils/toast';
+import { useChat } from '@/services/ai';
 import styles from './index.module.css';
 import Svg from '../../misc/Svg';
 import Request from './request';
 import type { Actions, Request as RequestType } from '../types/chat';
+import { Store } from '../../types';
+import Preview from '../preview';
 
 type Props = {
   openDraft: () => void;
   closeAi: () => void;
   surveyId: string;
+  store: Store;
 };
 
-export default function Chat({ openDraft, closeAi, surveyId }: Props) {
+export default function Chat({ openDraft, closeAi, surveyId, store }: Props) {
   const [request, setRequest] = React.useState<RequestType>({
     isEditGeneratedResult: false,
     userPrompt: '',
     modificationTargetId: surveyId,
     surveyId,
+  });
+
+  const { mutate, isPending } = useChat({
+    onSuccess: (data) => console.log(data),
+    onError: (error) => {
+      console.error(error);
+      console.log(error.cause);
+    },
   });
 
   const actions: Actions = {
@@ -33,6 +45,10 @@ export default function Chat({ openDraft, closeAi, surveyId }: Props) {
 
   const draftHandler = () => {
     openDraft();
+  };
+
+  const submit = () => {
+    mutate(request);
   };
 
   return (
@@ -55,12 +71,14 @@ export default function Chat({ openDraft, closeAi, surveyId }: Props) {
           </button>
         </div>
       </div>
-      <div className={styles.body}>
-        <div>
-          <textarea />
+      <div className={styles.previewWrapper}>
+        <div className={styles.preview}>
+          <h3>미리보기</h3>
+          <p>클릭해서 수정 대상을 지정할 수 있습니다.</p>
+          <Preview sections={store.sections} fields={store.fields} />
         </div>
-        <Request request={request} actions={actions} />
       </div>
+      <Request request={request} actions={actions} submit={submit} pending={isPending} />
     </div>
   );
 }

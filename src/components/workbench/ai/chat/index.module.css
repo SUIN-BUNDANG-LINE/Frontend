@@ -1,11 +1,7 @@
-/* Wrapper for the entire component */
-
 .container {
-  margin: auto;
   box-sizing: border-box;
-  padding: 0 12px;
+  background-color: var(--gray-l);
   width: 100%;
-  max-width: var(--container-width);
   min-height: 100vh;
 }
 
@@ -16,7 +12,8 @@
   align-items: center;
   box-sizing: border-box;
   padding: 16px 12px;
-  width: 100%;
+  margin: auto;
+  box-sizing: border-box;
   max-width: var(--container-width);
   border-bottom: 1px solid #9ca3af;
 }
@@ -44,9 +41,9 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
   border-radius: 4px;
   color: var(--gray-d);
+  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .tabSwitch button:hover {
@@ -62,16 +59,16 @@
 }
 
 .right button {
-  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-  border-radius: 50%;
   width: 38px;
   height: 38px;
+  border: none;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  border: none;
   cursor: pointer;
+  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .right button:hover {
@@ -83,11 +80,39 @@
   height: 100%;
   box-sizing: border-box;
   padding: 12px;
-}
-
-.body {
-  height: calc(100vh - 71px);
-
+  max-height: calc(100vh - 71px);
   display: grid;
   grid-template-rows: 1fr auto;
+}
+
+.previewWrapper {
+  min-height: 240px;
+  max-height: calc(100vh - 71px - 240px);
+  overflow-y: auto;
+  transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+}
+
+.previewWrapper:hover {
+  background-color: #f9f9f9;
+  border-top: 1px solid var(--gray);
+  border-bottom: 1px solid var(--gray);
+}
+
+.preview {
+  margin: auto;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 12px;
+  max-width: var(--container-width);
+}
+
+.preview h3 {
+  margin-bottom: 0;
+}
+
+.preview p {
+  color: var(--gray-md);
+  font-size: 14px;
 }

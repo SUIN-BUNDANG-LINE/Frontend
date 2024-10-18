@@ -4,6 +4,12 @@
   flex-direction: column;
   gap: 4px;
   margin-bottom: 8px;
+
+  margin: auto;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 12px;
+  max-width: var(--container-width);
 }
 
 .heading h3 {
@@ -17,16 +23,17 @@
   align-items: flex-start;
 }
 
+.target p {
+  color: var(--gray-md);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
 .targetBtns {
   width: 100%;
   display: flex;
   align-items: center;
   height: 40px;
-}
-
-.target p {
-  color: var(--gray-md);
-  margin-bottom: 8px;
 }
 
 .target button {
@@ -79,6 +86,7 @@
 .chat p {
   color: var(--gray-md);
   margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .chatbox {
@@ -96,7 +104,6 @@
   cursor: pointer;
   border: 1px solid transparent;
   transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide overflowed content */
   text-overflow: ellipsis;
@@ -139,6 +146,10 @@
 
 .arrow:hover {
   background-color: var(--gray-d);
+}
+
+.submit:disabled .arrow {
+  background-color: var(--gray);
 }
 
 .placeholder {

@@ -31,7 +31,6 @@ export default function Page({ params }: { params: { id: string } }) {
 
   // Tab state
   const [tab, setTab] = React.useState(getTabFromSearchParams(searchParams));
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ai, setAi] = React.useState<null | 'draft' | 'chat'>(null);
 
   const tabHandler = (newTab: number) => {
@@ -112,7 +111,7 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   if (ai === 'chat') {
-    return <Chat closeAi={() => setAi(null)} openDraft={() => setAi('draft')} surveyId={id} />;
+    return <Chat closeAi={() => setAi(null)} openDraft={() => setAi('draft')} store={store} surveyId={id} />;
   }
 
   return (
