@@ -46,18 +46,18 @@ export type Question = {
   modifiedData: null | QuestionData;
 };
 
-type SurveyData = {
+export type SurveyData = {
   title: string;
   description: string;
   finishMessage: string;
 };
 
-type SectionData = {
+export type SectionData = {
   title: string;
   description: string;
 };
 
-type QuestionData = {
+export type QuestionData = {
   type: 'TEXT_RESPONSE' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
   title: string;
   description: string;

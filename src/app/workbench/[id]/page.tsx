@@ -111,7 +111,15 @@ export default function Page({ params }: { params: { id: string } }) {
   }
 
   if (ai === 'chat') {
-    return <Chat closeAi={() => setAi(null)} openDraft={() => setAi('draft')} store={store} surveyId={id} />;
+    return (
+      <Chat
+        closeAi={() => setAi(null)}
+        openDraft={() => setAi('draft')}
+        store={store}
+        initStore={initStore}
+        surveyId={id}
+      />
+    );
   }
 
   return (

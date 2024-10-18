@@ -3,21 +3,25 @@
 import React from 'react';
 import { showToast } from '@/utils/toast';
 import { useChat } from '@/services/ai';
+import { ErrorCause } from '@/services/ky-wrapper';
 import styles from './index.module.css';
 import Svg from '../../misc/Svg';
 import Request from './request';
 import type { Actions, Request as RequestType } from '../types/chat';
 import { Store } from '../../types';
 import Preview from '../preview';
+import { CSurvey } from '../types/preview';
+import { convert } from '../func/convert';
 
 type Props = {
   openDraft: () => void;
   closeAi: () => void;
   surveyId: string;
   store: Store;
+  initStore: ({ store }: { store: Store }) => void;
 };
 
-export default function Chat({ openDraft, closeAi, surveyId, store }: Props) {
+export default function Chat({ openDraft, closeAi, surveyId, store, initStore }: Props) {
   const [request, setRequest] = React.useState<RequestType>({
     isEditGeneratedResult: false,
     userPrompt: '',
@@ -25,11 +29,15 @@ export default function Chat({ openDraft, closeAi, surveyId, store }: Props) {
     surveyId,
   });
 
+  const [response, setResponse] = React.useState<CSurvey | null>(null);
+
   const { mutate, isPending } = useChat({
-    onSuccess: (data) => console.log(data),
+    onSuccess: (data) => {
+      setResponse(convert(data));
+    },
     onError: (error) => {
-      console.error(error);
-      console.log(error.cause);
+      const { message } = (error.cause as ErrorCause) || '알 수 없는 오류가 발생했습니다.';
+      showToast('error', message);
     },
   });
 
@@ -75,10 +83,18 @@ export default function Chat({ openDraft, closeAi, surveyId, store }: Props) {
         <div className={styles.preview}>
           <h3>미리보기</h3>
           <p>클릭해서 수정 대상을 지정할 수 있습니다.</p>
-          <Preview sections={store.sections} fields={store.fields} />
+          {!response && <Preview sections={store.sections} fields={store.fields} />}
+          {response && <Preview survey={response} actions={actions} />}
         </div>
       </div>
-      <Request request={request} actions={actions} submit={submit} pending={isPending} />
+      <Request
+        request={request}
+        actions={actions}
+        submit={submit}
+        pending={isPending}
+        store={store}
+        response={response}
+      />
     </div>
   );
 }

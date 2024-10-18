@@ -95,3 +95,17 @@
     background-color: #ffe1e1;
   }
 }
+
+.container.CREATED {
+  .heading {
+    background-color: #aff192;
+  }
+
+  .section:last-child {
+    background-color: #f2ffde;
+  }
+
+  .section:last-child:hover {
+    background-color: #e8fbca;
+  }
+}

@@ -112,3 +112,17 @@
     background-color: #ffe1e1;
   }
 }
+
+.container.CREATED {
+  .heading {
+    background-color: #aff192;
+  }
+
+  .field:last-child {
+    background-color: #f2ffde;
+  }
+
+  .field:last-child:hover {
+    background-color: #e8fbca;
+  }
+}

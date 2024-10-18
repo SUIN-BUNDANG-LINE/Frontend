@@ -4,23 +4,35 @@ import { ChangeType, Field as F } from '../types/preview';
 import TextResponse from './text-response';
 import RadioResponse from './radio-response';
 import CheckboxResponse from './checkbox-response';
+import { Actions } from '../types/chat';
 
 type Props = {
   index: string;
-  oldField: F;
-  newField?: F;
+  oldField: F | null;
+  newField?: F | null;
   changeType?: ChangeType;
+  actions?: Actions;
 };
 
 export default function Field(props: Props) {
-  const { index, oldField, newField } = props;
+  const { index, oldField, newField, actions } = props;
   const changeType = props.changeType || 'UNCHANGED';
 
-  function getContent(field: F) {
-    const { title, description, required } = field;
+  function getPlaceholder() {
+    return <div className={styles.field} />;
+  }
+
+  function getContent(field: F, isNew: boolean) {
+    const { title, description, required, fieldId } = field;
 
     return (
-      <button type="button" className={styles.field}>
+      <button
+        type="button"
+        className={styles.field}
+        onClick={() => {
+          actions!.setBase(isNew);
+          actions!.setTarget(fieldId);
+        }}>
         <div className={styles.heads}>
           <div className={styles.title}>
             {required && <span className={styles.required}>필수</span>} {title || '제목 없는 질문'}
@@ -36,7 +48,7 @@ export default function Field(props: Props) {
     );
   }
 
-  const gridTemplateColumns = `repeat(${newField ? 2 : 1}, 1fr)`;
+  const gridTemplateColumns = `repeat(${typeof newField !== 'undefined' ? 2 : 1}, 1fr)`;
 
   return (
     <div className={`${styles.container} ${styles[changeType]}`}>
@@ -44,8 +56,8 @@ export default function Field(props: Props) {
         <span>질문 {index && index}</span>
       </div>
       <div className={styles.content} style={{ gridTemplateColumns }}>
-        {getContent(oldField)}
-        {newField && getContent(newField)}
+        {oldField ? getContent(oldField, false) : getPlaceholder()}
+        {typeof newField !== 'undefined' && (newField ? getContent(newField, true) : getPlaceholder())}
       </div>
     </div>
   );

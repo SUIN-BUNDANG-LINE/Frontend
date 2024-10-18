@@ -17,8 +17,8 @@ export type Field = F;
 
 // compare
 
-export type CQuestion = {
-  questionId: string;
+export type CField = {
+  fieldId: string;
   changeType: ChangeType;
   old: null | F;
   new: null | F;
@@ -27,9 +27,9 @@ export type CQuestion = {
 export type CSection = {
   sectionId: string;
   changeType: ChangeType;
-  old: null | { title: string; description: string };
-  new: null | { title: string; description: string };
-  questions: CQuestion[];
+  old: null | { sectionId: string; title: string; description: string };
+  new: null | { sectionId: string; title: string; description: string };
+  fields: CField[];
 };
 
 export type CSurvey = {
