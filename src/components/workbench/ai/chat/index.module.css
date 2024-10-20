@@ -116,3 +116,7 @@
   color: var(--gray-md);
   font-size: 14px;
 }
+
+.placeholder {
+  height: 120px;
+}

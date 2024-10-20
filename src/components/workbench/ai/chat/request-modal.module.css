@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 10000;
 }
 
 .chatbox {
@@ -62,12 +63,17 @@
   justify-content: center;
   font-weight: bolder;
   transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-  cursor: pointer;
   border: none;
 }
 
-.submit:hover {
+.submit:not(:disabled):hover {
+  cursor: pointer;
   background-color: var(--gray-d);
+}
+
+.submit:disabled {
+  cursor: not-allowed;
+  background-color: var(--gray);
 }
 
 @keyframes appear {
@@ -101,7 +107,15 @@
   border-radius: 4px;
 }
 
-.actions button:hover {
+.actions button:not(disabled):hover {
   /* border: 1px solid #fff; */
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.actions button:disabled {
+  opacity: 0.5;
+}
+
+.actions button:disabled:hover {
+  cursor: not-allowed;
 }

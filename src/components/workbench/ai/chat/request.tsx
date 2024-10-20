@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '@/components/ui/button/Button';
 import type { Actions, Request as RequestType } from '../types/chat';
 import RequestModal from './request-modal';
 import styles from './request.module.css';
@@ -12,9 +13,11 @@ type Props = {
   pending: boolean;
   store: Store;
   response: CSurvey | null;
+  phase: number;
+  approve: () => void;
 };
 
-export default function Request({ request, actions, submit, pending, store, response }: Props) {
+export default function Request({ request, actions, submit, pending, store, response, phase, approve }: Props) {
   const [openModal, setOpenModal] = React.useState(false);
 
   const options = React.useMemo(() => {
@@ -44,14 +47,14 @@ export default function Request({ request, actions, submit, pending, store, resp
       if (section.old) {
         result.push({
           value: section.sectionId,
-          label: section.old.title ? `질문 "${section.old.title}"` : '제목 없는 섹션',
+          label: section.old.title ? `섹션 "${section.old.title}"` : '제목 없는 섹션',
           base: 'old',
         });
       }
       if (section.new) {
         result.push({
           value: section.sectionId,
-          label: section.new.title ? `질문 "${section.new.title}"` : '제목 없는 섹션',
+          label: section.new.title ? `섹션 "${section.new.title}"` : '제목 없는 섹션',
           base: 'new',
         });
       }
@@ -74,6 +77,15 @@ export default function Request({ request, actions, submit, pending, store, resp
     return result;
   }, [request.surveyId, response, store.fields, store.sections]);
 
+  if (phase === 1) {
+    return (
+      <div className={styles.pending}>
+        <div className={styles.loader} />
+        <p>AI의 답변을 기다리는 중...</p>
+      </div>
+    );
+  }
+
   return (
     <>
       {openModal && (
@@ -81,9 +93,18 @@ export default function Request({ request, actions, submit, pending, store, resp
           prompt={request.userPrompt}
           setPrompt={actions.setPrompt}
           closeModal={() => setOpenModal(false)}
+          submit={submit}
         />
       )}
       <div className={styles.wrapper}>
+        {response && (
+          <div className={styles.approve}>
+            <Button variant="primary" onClick={approve}>
+              생성된 설문 저장
+            </Button>
+            <p>생성된 설문이 마음에 든다면 꼭 저장해주세요!</p>
+          </div>
+        )}
         <div className={styles.heading}>
           <h3>요청하기</h3>
         </div>
@@ -120,7 +141,11 @@ export default function Request({ request, actions, submit, pending, store, resp
               {request.userPrompt.length === 0 && <span className={styles.placeholder}>요청사항 입력...</span>}
               {request.userPrompt.length !== 0 && <span className={styles.prompt}>{request.userPrompt}</span>}
             </button>
-            <button type="button" className={styles.submit} onClick={submit} disabled={pending}>
+            <button
+              type="button"
+              className={styles.submit}
+              onClick={submit}
+              disabled={pending || request.userPrompt.length === 0}>
               <div className={styles.arrow}>↑</div>
             </button>
           </div>

@@ -11,7 +11,7 @@ import type { Actions, Request as RequestType } from '../types/chat';
 import { Store } from '../../types';
 import Preview from '../preview';
 import { CSurvey } from '../types/preview';
-import { convert } from '../func/convert';
+import { convertToCompare, convertToStore } from '../func/convert';
 
 type Props = {
   openDraft: () => void;
@@ -31,13 +31,17 @@ export default function Chat({ openDraft, closeAi, surveyId, store, initStore }:
 
   const [response, setResponse] = React.useState<CSurvey | null>(null);
 
+  const [phase, setPhase] = React.useState<number>(0);
+
   const { mutate, isPending } = useChat({
     onSuccess: (data) => {
-      setResponse(convert(data));
+      setResponse(convertToCompare(data));
+      setPhase(2);
     },
     onError: (error) => {
       const { message } = (error.cause as ErrorCause) || '알 수 없는 오류가 발생했습니다.';
       showToast('error', message);
+      setPhase(0);
     },
   });
 
@@ -56,7 +60,15 @@ export default function Chat({ openDraft, closeAi, surveyId, store, initStore }:
   };
 
   const submit = () => {
+    setPhase(1);
     mutate(request);
+  };
+
+  const approve = () => {
+    if (!response) return;
+    initStore({ store: convertToStore(store, response) });
+    setResponse(null);
+    setPhase(0);
   };
 
   return (
@@ -85,6 +97,7 @@ export default function Chat({ openDraft, closeAi, surveyId, store, initStore }:
           <p>클릭해서 수정 대상을 지정할 수 있습니다.</p>
           {!response && <Preview sections={store.sections} fields={store.fields} actions={actions} />}
           {response && <Preview survey={response} actions={actions} />}
+          {response && <div className={styles.placeholder} />}
         </div>
       </div>
       <Request
@@ -94,6 +107,8 @@ export default function Chat({ openDraft, closeAi, surveyId, store, initStore }:
         pending={isPending}
         store={store}
         response={response}
+        phase={phase}
+        approve={approve}
       />
     </div>
   );

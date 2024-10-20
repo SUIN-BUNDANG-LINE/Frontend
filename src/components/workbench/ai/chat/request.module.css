@@ -10,10 +10,21 @@
   width: 100%;
   padding: 0 12px;
   max-width: var(--container-width);
+
+  position: relative;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  justify-content: space-between;
+  padding-top: 12px;
 }
 
 .heading h3 {
-  margin-bottom: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .target {
@@ -158,4 +169,52 @@
 
 .prompt {
   color: var(--gray-d);
+}
+
+.pending {
+  width: 100%;
+  height: 212px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, var(--primary) 94%, #0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%, var(--primary));
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+}
+
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.approve {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  bottom: 224px;
+  right: 0;
+  background-color: #fff;
+  padding: 12px;
+  margin-right: 28px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: var(--box-shadow);
+}
+
+.approve p {
+  font-size: 14px;
+  color: var(--gray-md);
+  margin: 8px 0;
 }

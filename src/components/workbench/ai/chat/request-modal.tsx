@@ -6,9 +6,10 @@ type Props = {
   prompt: string;
   setPrompt: (arg: string) => void;
   closeModal: () => void;
+  submit: () => void;
 };
 
-export default function RequestModal({ prompt, setPrompt, closeModal }: Props) {
+export default function RequestModal({ prompt, setPrompt, closeModal, submit }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPrompt(e.target.value);
     e.target.style.height = 'inherit';
@@ -22,6 +23,11 @@ export default function RequestModal({ prompt, setPrompt, closeModal }: Props) {
       textarea.selectionStart = textarea.value.length;
     }
   }, []);
+
+  const submitAndClose = () => {
+    submit();
+    closeModal();
+  };
 
   return (
     <div className={styles.overlay} onClick={closeModal}>
@@ -37,7 +43,7 @@ export default function RequestModal({ prompt, setPrompt, closeModal }: Props) {
             maxLength={1000}
           />
           <div className={styles.right}>
-            <button type="button" className={styles.submit}>
+            <button type="button" className={styles.submit} onClick={submitAndClose} disabled={prompt.length === 0}>
               ↑
             </button>
           </div>
@@ -46,7 +52,7 @@ export default function RequestModal({ prompt, setPrompt, closeModal }: Props) {
           <button type="button" onClick={closeModal}>
             저장하고 닫기
           </button>
-          <button type="button" onClick={closeModal}>
+          <button type="button" onClick={submitAndClose} disabled={prompt.length === 0}>
             전송
           </button>
         </div>
