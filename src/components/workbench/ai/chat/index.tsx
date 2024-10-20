@@ -95,7 +95,18 @@ export default function Chat({ openDraft, closeAi, surveyId, store, initStore }:
         <div className={styles.preview}>
           <h3>미리보기</h3>
           <p>클릭해서 수정 대상을 지정할 수 있습니다.</p>
-          {!response && <Preview sections={store.sections} fields={store.fields} actions={actions} />}
+          {!response && (
+            <Preview
+              store={{
+                sections: store.sections,
+                fields: store.fields,
+                title: store.title,
+                description: store.description,
+                finishMessage: store.finishMessage,
+              }}
+              actions={actions}
+            />
+          )}
           {response && <Preview survey={response} actions={actions} />}
           {response && <div className={styles.placeholder} />}
         </div>

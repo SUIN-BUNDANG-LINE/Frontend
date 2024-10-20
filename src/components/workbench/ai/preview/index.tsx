@@ -3,25 +3,25 @@ import Section from './section';
 import styles from './index.module.css';
 import Field from './field';
 import type { Actions } from '../types/chat';
+import SurveyInfo from './survey-info';
 
 type Props =
   | {
       survey: CSurvey;
       actions: Actions;
-      sections?: undefined;
-      fields?: undefined;
+      store?: undefined;
     }
   | {
       survey?: undefined;
       actions?: Actions;
-      sections: S[];
-      fields: F[];
+      store: { sections: S[]; fields: F[]; title: string; description: string; finishMessage: string };
     };
 
-export default function Preview({ sections, actions, fields, survey }: Props) {
+export default function Preview({ store, actions, survey }: Props) {
   if (survey) {
     return (
       <div className={styles.container}>
+        <SurveyInfo oldData={survey.old} newData={survey.new} changeType={survey.changeType} actions={actions} />
         {survey.sections.map((section, si) => (
           <>
             <Section
@@ -48,8 +48,11 @@ export default function Preview({ sections, actions, fields, survey }: Props) {
     );
   }
 
+  const { sections, fields, title: sTitle, description: sDescription, finishMessage } = store;
+
   return (
     <div className={styles.container}>
+      <SurveyInfo oldData={{ title: sTitle, description: sDescription, finishMessage }} actions={actions} />
       {sections.map(({ sectionId, title, description }, si) => (
         <>
           <Section
