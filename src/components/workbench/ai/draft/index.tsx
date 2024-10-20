@@ -81,6 +81,7 @@ export default function Draft({ openDraft, openChat, closeAi, surveyId }: Props)
               setPhase(1);
             }}
             closeAi={closeAi}
+            openChat={openChat}
           />
         )}
       </div>
