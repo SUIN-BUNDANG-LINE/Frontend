@@ -8,13 +8,13 @@ import { Store } from '../../types';
 import Approve from './approve';
 
 type Props = {
-  openEdit: () => void;
   openDraft: () => void;
+  openChat: () => void;
   closeAi: () => void;
   surveyId: string;
 };
 
-export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props) {
+export default function Draft({ openDraft, openChat, closeAi, surveyId }: Props) {
   const [phase, setPhase] = React.useState(1);
   /*
     phase 1 : 기본 상태 (데이터 입력)
@@ -37,8 +37,8 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
     openDraft();
   };
 
-  const editHandler = () => {
-    openEdit();
+  const chatHandler = () => {
+    openChat();
   };
 
   return (
@@ -51,7 +51,7 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
               <button type="button" onClick={draftHandler} disabled>
                 초안 생성
               </button>
-              <button type="button" onClick={editHandler}>
+              <button type="button" onClick={chatHandler}>
                 AI 편집
               </button>
             </div>
@@ -81,6 +81,7 @@ export default function Draft({ openEdit, openDraft, closeAi, surveyId }: Props)
               setPhase(1);
             }}
             closeAi={closeAi}
+            openChat={openChat}
           />
         )}
       </div>

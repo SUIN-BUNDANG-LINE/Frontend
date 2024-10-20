@@ -54,6 +54,13 @@
   padding: 4px 0;
 }
 
+.finishMessage {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--gray-d);
+  padding: 4px 0;
+}
+
 /* highlight */
 
 .heading {

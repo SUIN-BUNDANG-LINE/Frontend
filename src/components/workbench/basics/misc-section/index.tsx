@@ -51,8 +51,8 @@ export default function MiscSection() {
         src="/assets/what_isvisible_does.png"
         alt="예시"
         width={676}
-        height={422.5}
-        style={{ width: '100%', height: 'auto', margin: '12px 0' }}
+        height={422}
+        style={{ width: '100%', height: 'auto', margin: '12px 0', boxShadow: 'var(--box-shadow)' }}
       />
     </div>
   );

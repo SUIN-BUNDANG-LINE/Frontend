@@ -1,0 +1,220 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+
+  margin: auto;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 12px;
+  max-width: var(--container-width);
+
+  position: relative;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  justify-content: space-between;
+  padding-top: 12px;
+}
+
+.heading h3 {
+  padding: 0;
+  margin: 0;
+}
+
+.target {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.target p {
+  color: var(--gray-md);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.targetBtns {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.target button {
+  border: none;
+  outline: none;
+  min-width: 42px;
+  height: 32px;
+  border-radius: 4px;
+  margin: 2px;
+  font-size: 14px;
+  background-color: transparent;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.target button:not(.active):hover {
+  background-color: var(--gray-ml);
+  cursor: pointer;
+}
+
+.target button.active {
+  background-color: var(--gray);
+  color: #fff;
+  cursor: text;
+}
+
+.target select {
+  height: 100%;
+  width: 100%;
+  padding-left: 6px;
+  color: var(--gray-d);
+  border: none;
+  outline: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-left: 4px;
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.target select:hover,
+.target select:active {
+  border: 1px solid var(--gray);
+  background-color: var(--gray-l);
+  cursor: pointer;
+}
+
+.chat {
+  width: 100%;
+}
+
+.chat p {
+  color: var(--gray-md);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.chatbox {
+  display: grid;
+  grid-template-columns: 1fr 48px;
+  width: 100%;
+  height: 48px;
+}
+
+.chatbox button {
+  width: 100%;
+  border: none;
+  background-color: #fff;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowed content */
+  text-overflow: ellipsis;
+}
+
+.chatbox button:first-child {
+  padding-left: 20px;
+  border-radius: 24px 0 0 24px;
+}
+
+.chatbox:hover button:first-child {
+  background-color: var(--gray-l);
+  border: 1px solid var(--gray);
+  border-right-color: transparent;
+}
+
+.chatbox:hover button:last-child {
+  background-color: var(--gray-l);
+  border: 1px solid var(--gray);
+  border-left-color: transparent;
+}
+
+.submit {
+  border-radius: 0 24px 24px 0;
+}
+
+.arrow {
+  background-color: var(--gray-md);
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
+}
+
+.arrow:hover {
+  background-color: var(--gray-d);
+}
+
+.submit:disabled .arrow {
+  background-color: var(--gray);
+}
+
+.placeholder {
+  color: var(--gray-md);
+}
+
+.prompt {
+  color: var(--gray-d);
+}
+
+.pending {
+  width: 100%;
+  height: 212px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, var(--primary) 94%, #0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%, var(--primary));
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+}
+
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.approve {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  bottom: 224px;
+  right: 0;
+  background-color: #fff;
+  padding: 12px;
+  margin-right: 28px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: var(--box-shadow);
+}
+
+.approve p {
+  font-size: 14px;
+  color: var(--gray-md);
+  margin: 8px 0;
+}
