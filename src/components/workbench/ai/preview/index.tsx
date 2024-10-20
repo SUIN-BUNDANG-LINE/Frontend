@@ -52,11 +52,21 @@ export default function Preview({ sections, actions, fields, survey }: Props) {
     <div className={styles.container}>
       {sections.map(({ sectionId, title, description }, si) => (
         <>
-          <Section index={`${si + 1}`} key={sectionId} oldSection={{ sectionId, title, description }} />
+          <Section
+            index={`${si + 1}`}
+            key={sectionId}
+            oldSection={{ sectionId, title, description }}
+            actions={actions}
+          />
           {fields
             .filter((field) => field.sectionId === sectionId)
             .map((field, fi) => (
-              <Field index={`${si + 1}-${fi + 1}`} key={field.fieldId + Math.random()} oldField={field} />
+              <Field
+                index={`${si + 1}-${fi + 1}`}
+                key={field.fieldId + Math.random()}
+                oldField={field}
+                actions={actions}
+              />
             ))}
         </>
       ))}

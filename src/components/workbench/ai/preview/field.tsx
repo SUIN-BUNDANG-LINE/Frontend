@@ -30,8 +30,9 @@ export default function Field(props: Props) {
         type="button"
         className={styles.field}
         onClick={() => {
-          actions!.setBase(isNew);
-          actions!.setTarget(fieldId);
+          if (!actions) return;
+          actions.setBase(isNew);
+          actions.setTarget(fieldId);
         }}>
         <div className={styles.heads}>
           <div className={styles.title}>

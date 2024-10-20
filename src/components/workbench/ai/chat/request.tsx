@@ -72,7 +72,7 @@ export default function Request({ request, actions, submit, pending, store, resp
     });
 
     return result;
-  }, [response]);
+  }, [request.surveyId, response, store.fields, store.sections]);
 
   return (
     <>

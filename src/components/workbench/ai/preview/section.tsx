@@ -30,8 +30,9 @@ export default function Section(props: Props) {
         type="button"
         className={cname}
         onClick={() => {
-          actions!.setBase(isNew);
-          actions!.setTarget(sectionId);
+          if (!actions) return;
+          actions.setBase(isNew);
+          actions.setTarget(sectionId);
         }}>
         <div className={styles.title}>{title || '제목 없는 섹션'}</div>
         <div className={styles.description}>{description}</div>
