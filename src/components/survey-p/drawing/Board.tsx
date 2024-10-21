@@ -54,7 +54,7 @@ export default function Board({ selected, setSelected, tickets }: Props) {
           </div>
         ))}
       </div>
-      <div className={styles.tip}>* 가로로 스크롤하면 더 많은 추첨권이 보입니다.</div>
+      <div className={styles.tip}>* 스크롤하면 더 많은 추첨권이 보입니다.</div>
     </>
   );
 }

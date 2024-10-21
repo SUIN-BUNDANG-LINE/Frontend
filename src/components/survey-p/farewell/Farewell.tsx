@@ -27,12 +27,14 @@ export default function Message({ message, next, back, disabled }: Props) {
   return (
     <div className={styles.wrapper}>
       <h2>제출할 준비가 되었습니다!</h2>
-      <div className={styles.container}>
-        <div className={styles.from}>
-          <FaRegSmile /> 제작자의 메시지
+      {message.length !== 0 && (
+        <div className={styles.container}>
+          <div className={styles.from}>
+            <FaRegSmile /> 제작자의 메시지
+          </div>
+          <textarea id="textarea" className={styles.message} value={message} readOnly />
         </div>
-        <textarea id="textarea" className={styles.message} value={message} readOnly />
-      </div>
+      )}
       <div className={styles.submitArea}>
         <Button
           onClick={next}
