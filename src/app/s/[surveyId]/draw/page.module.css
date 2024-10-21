@@ -62,3 +62,26 @@
 
   color: var(--error);
 }
+
+.rewards {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  column-gap: 4px;
+}
+
+.rewardItem {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--gray);
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+  background-color: var(--gray-l);
+}
+
+.rewardItem span:last-child {
+  margin-left: 4px;
+  font-size: 14px;
+  color: var(--gray-md);
+}

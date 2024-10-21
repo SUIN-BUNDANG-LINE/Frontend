@@ -11,10 +11,14 @@ import { ErrorCause } from '@/services/ky-wrapper';
 import { getSurveyState, setSurveyState } from '@/components/survey-p/funcs/storage';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useSurveysDetails } from '@/services/surveys';
+import { showToast } from '@/utils/toast';
+import { v4 } from 'uuid';
 import styles from './page.module.css';
 
 export default function Page({ params }: { params: { surveyId: string } }) {
+  const [isClient, setIsClient] = useState(false);
   const searchParams = useSearchParams();
   const nextRouter = useRouter();
 
@@ -22,7 +26,8 @@ export default function Page({ params }: { params: { surveyId: string } }) {
   const pid = searchParams.get('pid') ? decodeURIComponent(searchParams.get('pid')!) : null;
   const [surveyState] = useState(getSurveyState(surveyId));
 
-  const { data: drawingInfo, isLoading, error: drawingError, isError, refetch } = useDrawingInfo(surveyId);
+  const drawingInfo = useDrawingInfo(surveyId);
+  const surveyDetails = useSurveysDetails(surveyId);
   const mutation = useDrawingDraw(pid || '');
 
   const [phone, setPhone] = useState<string>('');
@@ -32,28 +37,36 @@ export default function Page({ params }: { params: { surveyId: string } }) {
 
   const phoneRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => setIsClient(true), []);
+
+  // Hydration 문제 해결
+  if (!isClient) {
+    return <Loading message="추첨 페이지를 불러오는 중..." />;
+  }
+
+  // 참여자 ID 혹은 참여 기록이 없으면 돌아가기
   if (!pid || !surveyState) {
-    return (
-      <Error message="부정한 접근입니다." buttons={[{ text: '나가기', fn: () => nextRouter.push(`/s/${surveyId}`) }]} />
-    );
+    showToast('error', '추첨에 참여할 수 없습니다.');
+    nextRouter.push(`/s/${surveyId}`);
+    return <div />;
   }
 
+  // 이미 추첨에 참여했으면 돌아가기
   if (surveyState === '$') {
-    return (
-      <Error
-        message="이미 참여한 추첨입니다."
-        buttons={[{ text: '나가기', fn: () => nextRouter.push(`/s/${surveyId}`) }]}
-      />
-    );
+    showToast('error', '추첨에 이미 참여했습니다.');
+    nextRouter.push(`/s/${surveyId}`);
+    return <div />;
   }
 
-  if (isLoading) {
-    return <Loading message="추첨 페이지를 로드하는 중..." />;
+  // 정보를 아직 불러오지 못했으면 로드 메시지
+  if (drawingInfo.isLoading || surveyDetails.isLoading) {
+    return <Loading message="추첨 정보를 불러오는 중..." />;
   }
 
-  if (isError || !drawingInfo) {
-    const t = (drawingError?.cause as ErrorCause).message || '추첨 페이지를 불러오지 못했습니다.';
-    return <Error message={t} buttons={[{ text: '재시도', fn: refetch }]} />;
+  // 에러가 발생했거나 data에 문제가 있으면 에러
+  if (drawingInfo.isError || surveyDetails.isError || !drawingInfo.data || !surveyDetails.data) {
+    const t = drawingInfo.error ? (drawingInfo.error.cause as ErrorCause).message : '추첨 정보를 불러오지 못했습니다.';
+    return <Error message={t} buttons={[{ text: '재시도', fn: () => window.location.reload() }]} />;
   }
 
   const validPhone = phone.length === 8;
@@ -74,7 +87,11 @@ export default function Page({ params }: { params: { surveyId: string } }) {
         onSuccess(data) {
           setSurveyState(surveyId, '$');
           if (data.isWon) {
-            nextRouter.push(`/s/${surveyId}/result?reward=${encodeURIComponent(data.rewardName)}`);
+            const rewardParams = [`reward=${encodeURIComponent(data.rewardName)}`];
+            if (surveyDetails.data.finishedAt) {
+              rewardParams.push(`until=${encodeURIComponent(surveyDetails.data.finishedAt)}`);
+            }
+            nextRouter.push(`/s/${surveyId}/result?${rewardParams.join('&')}`);
           } else {
             nextRouter.push(`/s/${surveyId}/result`);
           }
@@ -88,7 +105,7 @@ export default function Page({ params }: { params: { surveyId: string } }) {
               break;
             case 'DR0004': // 이미 선택된 티켓입니다.
               setSelected(null);
-              refetch();
+              drawingInfo.refetch();
               break;
             case 'DR0005': // 이미 마감된 추첨입니다.
               window.location.reload();
@@ -107,12 +124,23 @@ export default function Page({ params }: { params: { surveyId: string } }) {
       <div className={styles.container}>
         <h1>리워드 추첨</h1>
         <div className={styles.field}>
+          <div>본 설문조사는 추첨을 통해 다음과 같은 리워드를 지급합니다.</div>
+          <div className={styles.rewards}>
+            {surveyDetails.data.rewards.map((reward) => (
+              <div key={v4()} className={styles.rewardItem}>
+                <span>{reward.item}</span>
+                <span>(총 {reward.count}개)</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.field}>
           <h2>1. 추첨권을 선택해주세요.</h2>
           <span className={styles.description}>반투명한 추첨권은 이미 선택된 추첨권입니다.</span>
           <Board
             selected={selected}
             setSelected={setSelected}
-            tickets={drawingInfo.tickets.map((gone, id) => ({ gone, id }))}
+            tickets={drawingInfo.data.tickets.map((gone, id) => ({ gone, id }))}
           />
         </div>
         <div className={styles.field}>
