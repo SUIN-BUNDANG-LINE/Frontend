@@ -1,14 +1,17 @@
 .board {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
   gap: 12px;
+
+  max-height: 250px;
 
   background-color: var(--gray-l);
   padding: 24px 24px;
   border: 1px solid var(--gray);
 
-  overflow-x: scroll;
+  overflow-x: hidden;
 
   box-shadow:
     inset 5px 0px 5px -5px rgba(0, 0, 0, 0.1),
