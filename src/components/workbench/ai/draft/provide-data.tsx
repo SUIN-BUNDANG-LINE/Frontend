@@ -152,15 +152,15 @@ export default function ProvideData({
           설문지를 처음부터 작성하는 게 부담된다면, AI 초안 생성 기능이 도와드립니다! 여러분의 설문 목적에 맞추어 적절한
           질문을 자동으로 만들어드립니다. 아래 정보를 입력하여 바로 시작해 보세요.
         </p>
-        <p>주의 : 초안 생성 기능으로 만든 설문조사를 저장하면, 기존 섹션과 질문은 사라집니다.</p>
+        <p>주의 : 초안 생성 기능으로 만든 설문조사를 저장하면, 기존 내용은 사라집니다.</p>
       </div>
       <form className={styles.form}>
         <ul>
           <li className={styles.field}>
             <div>
-              정보 입력 <strong style={{ color: 'red' }}>*</strong>
+              <span style={{ color: 'red' }}>[필수]</span> 정보 입력
             </div>
-            <p>[필수] 프로젝트 기획서, 논문 등 AI가 설문을 생성할 때 활용할 정보를 입력해주세요.</p>
+            <p>AI가 설문을 생성할 때 활용할 정보를 입력해주세요. ex: 조사한 자료, 위키 문서, 기획서, 논문 등</p>
             <div className={styles.dataTypeBtns}>
               <button
                 type="button"
@@ -180,7 +180,7 @@ export default function ProvideData({
             {dataType === 'text' && (
               <>
                 <textarea
-                  placeholder=""
+                  placeholder="고창은 한반도는 물론 동북아시아에서 가장 조밀한 고인돌 분포지역으로, 탁자식(북방식), 바둑판식(남방식), 지상석곽식, 개석식 등 다양한 형태의 고인돌이 분포되어 있으며 유네스코 세계유산으로 2000년 12월 2일 등재..."
                   maxLength={MAX_LENGTH.data}
                   value={formData.data}
                   name="data"
@@ -199,22 +199,22 @@ export default function ProvideData({
                     className={styles.fileInputHidden}
                     id="file-input"
                     type="file"
-                    accept=".pdf, .txt"
+                    accept=".pdf, .txt, .docx, .pptx"
                     onChange={fileHandler}
                     disabled={pending || filePending}
                   />
                   <div className={styles.fileInput}>업로드</div>
                   <span className={styles.fileMessage}>{fileMessage}</span>
                 </label>
-                <span>* pdf, txt 파일만 업로드 할 수 있습니다.</span>
+                <span>* docx, pptx, pdf, txt 파일을 업로드 할 수 있어요.</span>
               </div>
             )}
           </li>
           <li className={styles.field}>
-            <div>프롬프트</div>
-            <p>AI에게 할 추가 명령을 입력해주세요.</p>
+            <div>요청 사항</div>
+            <p>AI에게 하고 싶은 명령을 입력해주세요.</p>
             <textarea
-              placeholder=""
+              placeholder="고창군의 다양한 관광지를 홍보할 수 있는 설문조사를 만들어 봐. 각 섹션은 하나의 관광지에 대해 다루고, 질문은 최대 3개까지만 만들어."
               maxLength={MAX_LENGTH.prompt}
               value={formData.prompt}
               name="prompt"
@@ -227,7 +227,7 @@ export default function ProvideData({
           </li>
           <li className={styles.field}>
             <div>참여 대상</div>
-            <p>설문에 참여할 대상을 입력하면 최적화된 설문을 만드는데 도움이 됩니다.</p>
+            <p>설문에 참여할 대상을 입력하면 좋은 질문을 만드는데 도움이 됩니다.</p>
             <input
               type="text"
               placeholder="대학생, 20대 남성, 행사 참석자..."
@@ -243,7 +243,7 @@ export default function ProvideData({
           </li>
           <li className={styles.field}>
             <div>소속</div>
-            <p>소속을 입력하면 최적화된 설문을 만드는데 도움이 됩니다.</p>
+            <p>설문 소개 문구에 사용됩니다.</p>
             <input
               type="text"
               placeholder="개인, 팀 이름..."
