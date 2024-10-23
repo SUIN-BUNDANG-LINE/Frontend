@@ -3,23 +3,27 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: fit-content;
   margin-top: 108px;
+
+  box-sizing: border-box;
+  padding-left: calc((100vw - 1366px) / 2);
+
+  /* background-color: #f3f3f3; */
 }
 
 .container {
+  position: relative;
   width: 100%;
-  min-height: calc(100vh - 108px);
+
   display: grid;
-  grid-template-columns: minmax(82px, calc(50vw - 390px)) 1fr;
-  align-items: center;
-  justify-content: flex-start;
+  grid-template-columns: 96px 1fr;
 }
 
-.container > div:first-child {
-  justify-self: flex-end;
-}
-.container > div:last-child {
-  justify-self: flex-start;
+@media screen and (max-width: 429px) {
+  .container {
+    grid-template-columns: 52px 1fr;
+  }
 }
 
 .getStarted {
@@ -32,21 +36,36 @@
 }
 
 .isEmpty {
-  padding: 12px 0;
+  padding: 16px 0;
+  color: var(--gray-d);
 }
 
-.startFromScratch {
-  padding: 24px 12px;
+.getStarted .buttons {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-flow: row wrap;
   gap: 8px;
-  border-radius: 4px;
-  border: none;
-  background-color: var(--primary);
-  cursor: pointer;
-  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.startFromScratch:hover {
-  background-color: var(--primary-alt);
+.getStarted button {
+  width: 200px;
+  height: 64px;
+
+  color: var(--gray-d);
+
+  border-radius: 4px;
+  border: none;
+  background-color: var(--gray-ml);
+  cursor: pointer;
+  transition:
+    background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+    color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.getStarted button:hover {
+  background-color: var(--gray);
+  color: #fff;
 }

@@ -1,0 +1,54 @@
+.line {
+  min-height: 22px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 4px 4px 4px 0;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  outline: none;
+  cursor: pointer;
+}
+
+.option {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-items: center;
+  font-size: 14px;
+}
+
+.option > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option > div:last-child {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px gray inset;
+  background-color: transparent;
+}
+
+.input {
+  height: 18px;
+  padding-left: 4px;
+  width: 50%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid var(--gray);
+  font-size: 13px;
+  color: var(--gray);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

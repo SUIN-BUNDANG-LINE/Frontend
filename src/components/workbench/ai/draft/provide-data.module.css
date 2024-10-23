@@ -1,0 +1,235 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 768px;
+}
+
+.introduction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px dashed var(--gray-d);
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px;
+}
+
+.introduction h3 {
+  font-weight: 600;
+  font-size: 20px;
+  color: #000;
+}
+
+.introduction p {
+  line-height: 20px;
+  color: var(--gray-d);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 8px;
+}
+
+.form ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.field title {
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
+}
+
+.field p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.dataTypeBtns {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.dataTypeBtns button {
+  width: 96px;
+  height: 28px;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid var(--gray);
+  color: var(--gray-d);
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  cursor: pointer;
+}
+
+.dataTypeBtns button:hover {
+  background-color: var(--gray-ml);
+}
+
+.dataTypeBtns button.active {
+  cursor: text;
+  background-color: var(--gray);
+  color: #fff;
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.field textarea,
+.field input[type='text'] {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  text-align: left;
+  outline: none;
+}
+
+.field textarea:focus,
+.field input[type='text']:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 2px var(--primary);
+}
+
+.field textarea:disabled,
+.field input[type='text']:disabled {
+  background-color: var(--gray-l);
+  color: var(--gray);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 24px 0;
+}
+
+.buttons Button {
+  width: 120px;
+  height: 40px;
+}
+
+.maxLength {
+  margin-top: 8px;
+  text-align: right;
+  font-size: 14px;
+}
+
+.maxLength > span {
+  color: var(--gray-md);
+  background-color: var(--gray-ml);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.fileWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.fileWrapper > span {
+  font-size: 14px;
+  padding: 4px 0;
+  color: var(--gray-md);
+}
+
+.fileWrapper .fileInputHidden {
+  display: none;
+}
+
+.fileWrapper .fileInput {
+  display: inline-block;
+  text-align: center;
+  line-height: 38px;
+  width: 72px;
+  height: 38px;
+  border: none;
+  background-color: var(--primary);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.fileWrapper .fileInput:hover {
+  background-color: var(--primary-alt);
+}
+
+.fileWrapper.disabled .fileInput {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.fileWrapper.disabled .fileInput:hover {
+  background-color: var(--primary);
+}
+
+.fileMessage {
+  padding-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--gray-d);
+}
+
+.pending {
+  background-color: #fff;
+  padding: 24px 12px;
+  width: 100%;
+  margin: 12px 12px 0 12px;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, var(--primary) 94%, #0000) top/8px 8px no-repeat,
+    conic-gradient(#0000 30%, var(--primary));
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+}
+
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
+}

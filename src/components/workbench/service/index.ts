@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { fetchSurveyGet, fetchSurveyPut, fetchCreate, fetchSurveyStart } from './fetch';
-import { OutgoingSurvey } from '../types';
+import { fetchSurveyGet, fetchSurveyPut, fetchCreate, fetchSurveyStart, fetchGenerateSurvey } from './fetch';
+import { ImportedSurvey, OutgoingSurvey } from '../types';
 
 const queryKeys = {
   root: ['workbench'],
@@ -38,4 +38,29 @@ const useStartSurvey = (surveyId: string, onSuccess: () => void, onError: (error
   });
 };
 
-export { useGetSurvey, usePutSurvey, useCreateSurvey, useStartSurvey };
+const useGenerateSurvey = ({
+  onSuccess,
+  onError,
+  surveyId,
+}: {
+  onSuccess: (data: ImportedSurvey) => void;
+  onError: (error: Error) => void;
+  surveyId: string;
+}) => {
+  return useMutation({
+    mutationKey: ['ai', 'generate', 'survey', surveyId],
+    mutationFn: ({
+      method,
+      formData,
+      signal,
+    }: {
+      method: 'text-document' | 'file-url';
+      formData: { target: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
+      signal: AbortSignal;
+    }) => fetchGenerateSurvey({ method, formData, surveyId, signal }),
+    onSuccess,
+    onError,
+  });
+};
+
+export { useGetSurvey, usePutSurvey, useCreateSurvey, useStartSurvey, useGenerateSurvey };

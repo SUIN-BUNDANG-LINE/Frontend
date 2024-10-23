@@ -27,6 +27,7 @@ interface SurveysResultParams {
   surveyId: string;
   resultFilter: ResultFilter;
   participantId: string | undefined;
+  visitorId: string | undefined;
 }
 
 interface ResultFilter {

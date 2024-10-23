@@ -1,0 +1,109 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.introduction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px dashed var(--gray-d);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 768px;
+  box-sizing: border-box;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+}
+
+.button > span {
+  font-size: 14px;
+  color: var(--gray-md);
+  padding: 4px 0;
+}
+
+.approveButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-width);
+  padding: 12px 0;
+}
+
+.legend {
+  width: 100%;
+  text-align: center;
+  background-color: var(--gray-md);
+  color: #fff;
+  padding: 18px 0 12px 0;
+  border-radius: 8px 8px 0 0;
+}
+
+.legend h3 {
+  margin-top: 4px;
+}
+
+.heads {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.headsHeading {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0 8px 12px;
+  font-size: 14px;
+  background-color: #dddddd;
+  margin-top: 8px;
+}
+
+.headsContent {
+  box-sizing: border-box;
+  padding: 12px;
+  padding-bottom: 0;
+  width: 100%;
+  background-color: #fff;
+}
+
+.description,
+.finishMessage {
+  width: 100%;
+  line-height: 22px;
+  border: none;
+  outline: none;
+  resize: none;
+  color: var(--gray-d);
+  margin-bottom: 15px;
+  max-height: 300px;
+  color: var(--gray-md);
+}

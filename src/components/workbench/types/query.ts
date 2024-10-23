@@ -10,6 +10,7 @@ type ImportedSurvey = {
   status: Status;
   finishMessage: string;
   isVisible: boolean;
+  isResultOpen: boolean;
   rewardSetting: RewardConfig;
   sections: Section[];
 };
@@ -62,4 +63,4 @@ type Question = {
 
 type QuestionType = 'TEXT_RESPONSE' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
 
-export type { ImportedSurvey, OutgoingSurvey, RouteDetails, Question };
+export type { ImportedSurvey, OutgoingSurvey, RouteDetails, Question, RouteByNumerical, RouteByChoice, RouteByUser };

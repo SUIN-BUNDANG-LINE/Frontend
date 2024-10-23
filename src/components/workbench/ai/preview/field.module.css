@@ -1,0 +1,128 @@
+.container {
+  width: 100%;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.heading {
+  width: 100%;
+  font-size: 14px;
+  padding: 8px 0 8px 12px;
+}
+
+.content {
+  width: 100%;
+  display: grid;
+  padding: 0;
+}
+
+.field {
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 12px;
+  padding-bottom: 6px;
+
+  text-align: left;
+
+  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.field > div {
+  overflow-wrap: anywhere;
+}
+
+.required {
+  display: inline-block;
+  background-color: var(--primary);
+  color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  vertical-align: text-top;
+  padding: 1px 4px;
+  margin: 1px;
+  border-radius: 2px;
+}
+
+.title {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 4px 0;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--gray-d);
+  padding: 4px 0;
+}
+
+.body {
+  padding: 12px 0;
+}
+
+/* highlight */
+
+.heading {
+  background-color: #dddddd;
+}
+
+.field {
+  background-color: #fdfdfd;
+}
+
+.field:hover {
+  background-color: #f0f0f0;
+}
+
+.container.MODIFIED {
+  .heading {
+    background-color: #ffd374;
+  }
+
+  .field:last-child {
+    background-color: #fffacd;
+  }
+
+  .field:last-child:hover {
+    background-color: #fff8bc;
+  }
+}
+
+.container.DELETED {
+  .heading {
+    background-color: #ffabab;
+  }
+
+  .field:last-child {
+    background-color: #ffecec;
+  }
+
+  .field:last-child:hover {
+    background-color: #ffe1e1;
+  }
+}
+
+.container.CREATED {
+  .heading {
+    background-color: #aff192;
+  }
+
+  .field:last-child {
+    background-color: #f2ffde;
+  }
+
+  .field:last-child:hover {
+    background-color: #e8fbca;
+  }
+}

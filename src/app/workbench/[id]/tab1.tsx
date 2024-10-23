@@ -3,26 +3,32 @@
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useSurveyStore } from '@/components/workbench/store';
 import { Field } from '@/components/workbench/types';
-import Toolbar from '@/components/workbench/canvas/Toolbar';
 import Canvas from '@/components/workbench/canvas/Canvas';
 import React from 'react';
 import Loading from '@/components/ui/loading/Loading';
-import { LuBaby } from 'react-icons/lu';
+import Toolbar2 from '@/components/workbench/canvas/Toolbar2';
 import styles from './tab1.module.css';
 
-function Tab1() {
+type Props = {
+  openDraft: () => void;
+  openChat: () => void;
+};
+
+function Tab1({ openDraft, openChat }: Props) {
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const sections = useSurveyStore((state) => state.sections);
-  const fields = useSurveyStore((state) => state.fields);
-  const setSections = useSurveyStore((state) => state.setSections);
-  const setFields = useSurveyStore((state) => state.setFields);
-  const addField = useSurveyStore((state) => state.addField);
-  const addSection = useSurveyStore((state) => state.addSection);
+  const { sections, fields, setSections, setFields, addField, addSection } = useSurveyStore((state) => ({
+    sections: state.sections,
+    fields: state.fields,
+    setSections: state.setSections,
+    setFields: state.setFields,
+    addField: state.addField,
+    addSection: state.addSection,
+  }));
 
   const startFromScratch = () => {
     addSection({ index: 0 });
@@ -110,24 +116,30 @@ function Tab1() {
   if (sections.length === 0) {
     return (
       <div className={styles.getStarted}>
-        <div className={styles.isEmpty}>표시할 내용이 없습니다.</div>
-        <button type="button" onClick={startFromScratch} className={styles.startFromScratch}>
-          <LuBaby size="32px" /> 빈 설문지로 시작하기
-        </button>
+        <div className={styles.isEmpty}>아직 표시할 내용이 없습니다.</div>
+        <div className={styles.buttons}>
+          <button type="button" onClick={startFromScratch} className={styles.startFromScratch}>
+            빈 설문지로 시작하기 →
+          </button>
+          <button type="button" onClick={openDraft} className={styles.startWithAi}>
+            AI로 초안 만들기 →
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
     <div className={styles.main}>
-      <div className={styles.container}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          <>
-            <Toolbar />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className={styles.container}>
+          <Toolbar2 openDraft={openDraft} openChat={openChat} />
+          <div />
+          <div className={styles.canvas}>
             <Canvas />
-          </>
-        </DragDropContext>
-      </div>
+          </div>
+        </div>
+      </DragDropContext>
     </div>
   );
 }

@@ -11,6 +11,8 @@ import { replaceURLSearchParams } from '@/utils/url-search-params';
 import { showToast } from '@/utils/toast';
 import { ErrorCause } from '@/services/ky-wrapper';
 import { Footer } from '@/components/layout/main';
+import Draft from '@/components/workbench/ai/draft';
+import Chat from '@/components/workbench/ai/chat';
 import Tab1 from './tab1';
 import Tab0 from './tab0';
 import Tab2 from './tab2';
@@ -29,6 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   // Tab state
   const [tab, setTab] = React.useState(getTabFromSearchParams(searchParams));
+  const [ai, setAi] = React.useState<null | 'draft' | 'chat'>(null);
 
   const tabHandler = (newTab: number) => {
     setTab(newTab);
@@ -83,7 +86,7 @@ export default function Page({ params }: { params: { id: string } }) {
       case 0:
         return <Tab0 />;
       case 1:
-        return <Tab1 />;
+        return <Tab1 openDraft={() => setAi('draft')} openChat={() => setAi('chat')} />;
       case 2:
         return <Tab2 surveyId={id} />;
       default:
@@ -94,6 +97,29 @@ export default function Page({ params }: { params: { id: string } }) {
   if (data && !['IN_MODIFICATION', 'NOT_STARTED'].includes(data.status)) {
     showToast('error', '접근할 수 없습니다.');
     router.push('/mypage');
+  }
+
+  if (ai === 'draft') {
+    return (
+      <Draft
+        closeAi={() => setAi(null)}
+        openDraft={() => setAi('draft')}
+        openChat={() => setAi('chat')}
+        surveyId={id}
+      />
+    );
+  }
+
+  if (ai === 'chat') {
+    return (
+      <Chat
+        closeAi={() => setAi(null)}
+        openDraft={() => setAi('draft')}
+        store={store}
+        initStore={initStore}
+        surveyId={id}
+      />
+    );
   }
 
   return (
