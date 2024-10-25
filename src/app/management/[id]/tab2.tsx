@@ -44,7 +44,7 @@ export default function Tab2({
           setCurrentParticipantIndex(0);
           setInputIndex('1');
         }
-      } else {
+      } else if (currentParticipantIndex === 0) {
         setCurrentParticipantIndex(0);
         setInputIndex('1');
       }

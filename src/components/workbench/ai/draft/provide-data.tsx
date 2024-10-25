@@ -54,8 +54,9 @@ export default function ProvideData({
       setPhase(2);
       setSurvey(cin(data));
     },
-    onError: (error: Error) => {
-      showToast('error', `설문을 생성하지 못했습니다: ${(error.cause as ErrorCause).message}`);
+    onError: () => {
+      setElapsedTime(0);
+      showToast('error', '초안을 생성하지 못했습니다. 다시 한번 시도해주세요.');
     },
     surveyId,
   });
