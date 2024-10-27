@@ -1,89 +1,112 @@
-import useChatbox from '@/hooks/useChatbox';
-import { FileUploader } from 'react-drag-drop-files';
-import { useFileUpload } from '@/services/s3';
-import { FileUploadResponse } from '@/services/s3/types';
-import { showToast } from '@/utils/toast';
-import { ErrorCause } from '@/services/ky-wrapper';
 import React from 'react';
+import useChatbox from '@/hooks/useChatbox';
+import { type FileUploadResponse } from '@/services/s3/types';
+import { ErrorCause } from '@/services/ky-wrapper';
+import { useFileUpload } from '@/services/s3';
+import { showToast } from '@/utils/toast';
+import { ImportedSurvey } from '@/components/workbench/types';
+import { type Request } from './types';
 import styles from './form.module.css';
+import FileArea from './file-area';
+import { useGenerateSurvey } from './hooks';
+import Generating from './generating';
 
-export default function Form() {
-  const [prompt, setPrompt] = React.useState('');
-  const [file, setFile] = React.useState({ name: '', url: '' });
+type Props = {
+  request: Request;
+  setRequest: React.Dispatch<React.SetStateAction<Request>>;
+  unmount: () => void;
+  load: (s: ImportedSurvey) => void;
+  visitorId: string | undefined;
+};
 
-  const textareaRef = useChatbox(20 * 9);
+export default function Form({ request, setRequest, unmount, load, visitorId }: Props) {
+  const abortController = React.useRef<AbortController>(new AbortController());
+  const textareaRef = useChatbox(180); // 20 * 9
+  const { file, prompt } = request;
 
-  const onSuccess = (data: FileUploadResponse) => setFile((pre) => ({ ...pre, url: data.fileUrl }));
-  const onError = (error: Error) => {
-    const message = (error.cause as ErrorCause).message || '설문조사를 생성하지 못했습니다.';
-    showToast('error', message);
-    setFile({ url: '', name: '' });
+  // queries
+
+  const surveyQuery = useGenerateSurvey({
+    onSuccess: (data) => {
+      showToast('success', '설문지가 완성되었습니다!');
+      load(data);
+    },
+    onError: (error) => {
+      showToast('error', (error.cause as ErrorCause)?.message || '설문지를 만들지 못했습니다.');
+      unmount();
+    },
+    visitorId,
+  });
+
+  const fileQuery = useFileUpload({
+    onSuccess: ({ fileUrl }: FileUploadResponse) => {
+      setRequest((prev) => ({ ...prev, file: { ...prev.file, url: fileUrl } }));
+    },
+    onError: (error: Error) => {
+      showToast('error', (error.cause as ErrorCause)?.message || '파일을 업로드하지 못했습니다.');
+      setRequest((prev) => ({ ...prev, file: { url: '', name: '' } }));
+    },
+  });
+
+  const updateRequest = (field: keyof Request, value: unknown) => {
+    setRequest((prev) => ({ ...prev, [field]: value }));
   };
 
-  const { mutate: fMutate, isPending: fPending } = useFileUpload({ onSuccess, onError });
+  const clearFile = React.useCallback(() => {
+    setRequest((prev) => ({ ...prev, file: { name: '', url: '' } }));
+  }, [setRequest]);
 
   const handleFileChange = (f: File) => {
-    const data = new FormData();
-    data.append('file', f);
-
-    setFile((pre) => ({ ...pre, name: f.name }));
-    fMutate(data);
+    const formData = new FormData();
+    formData.append('file', f);
+    updateRequest('file', { name: f.name });
+    fileQuery.mutate(formData);
   };
 
-  const FileContent = React.useMemo(() => {
-    // name은 업로드 요청하는 순간 변경
-    if (file.name === '') {
-      return (
-        <>
-          <div>
-            참고할 자료가 있다면 여기에 드래그 하거나 <span className={styles.highlight}>직접 업로드</span> 해주세요.
-          </div>
-          <div className={styles.limits}>* pptx, docx, pdf, txt 지원, 최대 5MB.</div>
-        </>
-      );
-    }
+  const abort = () => {
+    abortController.current.abort();
+    unmount();
+  };
 
-    // name은 있는데 url이 없으면 pending
-    if (file.url === '') {
-      return (
-        <>
-          <span className={styles.pending} />
-          업로드 중...
-        </>
-      );
-    }
-
-    return (
-      <>
-        <button type="button" onClick={() => setFile({ name: '', url: '' })} className={styles.delete}>
-          삭제
-        </button>
-        {file.name}
-      </>
-    );
-  }, [file]);
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!prompt.trim()) {
+      showToast('error', '요청 사항을 입력해주세요.');
+      return;
+    }
+
+    surveyQuery.mutate({
+      form: {
+        userPrompt: prompt,
+        fileUrl: file.url === '' ? null : file.url,
+        target: '',
+        groupName: '',
+      },
+      signal: abortController.current.signal,
+    });
   };
+
+  if (surveyQuery.isPending) {
+    return <Generating abort={abort} />;
+  }
 
   return (
-    <form className={styles.form} onSubmit={submitHandler}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <textarea
         ref={textareaRef}
         className={styles.prompt}
         placeholder="어떤 내용의 설문지를 만들어 볼까요?"
         value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
+        onChange={(e) => updateRequest('prompt', e.target.value.slice(0, 20000))}
+        maxLength={20000}
       />
+      <div className={`${styles.warning} ${prompt.length >= 20000 ? styles.full : ''}`}>
+        최대 20000자까지 입력할 수 있습니다.
+      </div>
       <div className={styles.bottom}>
-        {file.name === '' && (
-          <FileUploader handleChange={handleFileChange} name="file" types={['DOCX', 'PPTX', 'TXT', 'PDF']}>
-            <div className={styles.drop}>{FileContent}</div>
-          </FileUploader>
-        )}
-        {file.name !== '' && <div className={styles.display}>{FileContent}</div>}
-        <button type="submit" className={styles.submit} disabled={fPending}>
+        <FileArea file={file} clearFile={clearFile} handleFileChange={handleFileChange} />
+        <button type="submit" className={styles.submit} disabled={fileQuery.isPending || !visitorId}>
           <div className={styles.submitInner}>만들기</div>
         </button>
       </div>
