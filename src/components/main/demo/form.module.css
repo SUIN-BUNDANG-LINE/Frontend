@@ -1,0 +1,134 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+}
+
+.prompt {
+  width: 100%;
+  border: none;
+  border-radius: 4px 4px 0 0;
+  padding: 16px;
+  box-sizing: border-box;
+  outline: none;
+  resize: none;
+  line-height: 20px;
+  min-height: 112px;
+  background-color: #fff;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: 1fr 72px;
+  column-gap: 8px;
+
+  width: 100%;
+  border: none;
+  border-radius: 0 0 4px 4px;
+  padding: 16px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.bottom input[type='file'] {
+  display: none;
+}
+
+.drop,
+.display {
+  border: 2px dashed var(--gray-ml);
+  padding: 16px;
+  transition: 0.3s all cubic-bezier(0.165, 0.84, 0.44, 1);
+  color: var(--gray-md);
+  font-size: 14px;
+}
+
+.drop {
+  cursor: pointer;
+}
+
+.drop:hover {
+  border-color: var(--gray);
+  background-color: var(--gray-l);
+}
+
+.highlight {
+  color: var(--primary);
+}
+
+.submit {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.submitInner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: var(--gray-d);
+  background-color: #fff;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit:hover .submitInner {
+  background-color: var(--gray-ml);
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow);
+  color: #000;
+}
+
+.limits {
+  font-size: 12px;
+  color: var(--gray);
+  padding-top: 4px;
+}
+
+.display {
+  display: flex;
+  align-items: center;
+  column-gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pending {
+  display: inline-block;
+  content: '';
+  width: 20px;
+  height: 20px;
+  background-color: var(--gray);
+  border-radius: 50%;
+  animation: leaves 1s ease-in-out infinite alternate;
+  -webkit-animation: leaves 1s ease-in-out infinite alternate;
+}
+
+.delete {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: var(--gray-l);
+  cursor: pointer;
+  transition: 0.3s all cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.delete:hover {
+  background-color: var(--gray-ml);
+}
+
+@keyframes leaves {
+  0% {
+    transform: scale(0.8);
+    background-color: var(--gray-ml);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

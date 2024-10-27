@@ -1,9 +1,11 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   align-items: center;
   color: var(--gray-d);
-  padding: max(20vh - 48px, 96px) 16px 0 16px;
+  padding: 0 16px;
+  min-height: calc(50vh - 24px);
   width: 100%;
   max-width: var(--container-width);
   box-sizing: border-box;
