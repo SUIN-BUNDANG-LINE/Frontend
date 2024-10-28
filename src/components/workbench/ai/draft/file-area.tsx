@@ -5,12 +5,17 @@ type Props = {
   file: { name: string; url: string };
   clearFile: () => void;
   handleFileChange: (f: File) => void;
+  disabled: boolean;
 };
 
-export default function FileArea({ file, clearFile, handleFileChange }: Props) {
+export default function FileArea({ file, clearFile, handleFileChange, disabled }: Props) {
   if (!file.name) {
     return (
-      <FileUploader handleChange={handleFileChange} name="file" types={['DOCX', 'PPTX', 'TXT', 'PDF']}>
+      <FileUploader
+        disabled={disabled}
+        handleChange={handleFileChange}
+        name="file"
+        types={['DOCX', 'PPTX', 'TXT', 'PDF']}>
         <div className={styles.drop}>
           <div>
             참고할 자료가 있다면 여기에 드래그 하거나 <span className={styles.highlight}>직접 업로드</span> 해주세요.

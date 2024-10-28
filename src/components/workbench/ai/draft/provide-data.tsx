@@ -52,6 +52,7 @@ export default function ProvideData({ formData, setFormData, setPhase, setSurvey
 
   const fileQuery = useFileUpload({
     onSuccess: ({ fileUrl }: FileUploadResponse) => {
+      showToast('success', '파일이 업로드 되었습니다!');
       setFormData((prev) => ({ ...prev, file: { ...prev.file, url: fileUrl } }));
     },
     onError: (error: Error) => {
@@ -145,13 +146,20 @@ export default function ProvideData({ formData, setFormData, setPhase, setSurvey
               disabled={surveyQuery.isPending}
             />
             <div className={styles.maxLength}>
-              <span>{formData.prompt.length} / 1000자</span>
+              <span>
+                {formData.prompt.length} / {MAX_LENGTH.prompt}자
+              </span>
             </div>
           </li>
           <li className={styles.field}>
             <div>정보 입력</div>
             <p>AI가 설문을 생성할 때 활용할 정보를 입력해주세요. ex: 조사한 자료, 위키 문서, 기획서, 논문 등</p>
-            <FileArea file={formData.file} clearFile={clearFile} handleFileChange={handleFileChange} />
+            <FileArea
+              disabled={surveyQuery.isPending}
+              file={formData.file}
+              clearFile={clearFile}
+              handleFileChange={handleFileChange}
+            />
             {/* <div className={`${styles.fileWrapper} ${pending || filePending ? styles.disabled : ''}`}>
               <label htmlFor="file-input">
                 <input
@@ -181,7 +189,9 @@ export default function ProvideData({ formData, setFormData, setPhase, setSurvey
               disabled={surveyQuery.isPending}
             />
             <div className={styles.maxLength}>
-              <span>{formData.target.length} / 100자</span>
+              <span>
+                {formData.target.length} / {MAX_LENGTH.target}자
+              </span>
             </div>
           </li>
           <li className={styles.field}>
@@ -197,15 +207,17 @@ export default function ProvideData({ formData, setFormData, setPhase, setSurvey
               disabled={surveyQuery.isPending}
             />
             <div className={styles.maxLength}>
-              <span>{formData.affiliation.length} / 100자</span>
+              <span>
+                {formData.affiliation.length} / {MAX_LENGTH.affiliation}자
+              </span>
             </div>
           </li>
         </ul>
         <div className={styles.buttons}>
-          <Button variant="secondary" onClick={reset} disabled={surveyQuery.isPending}>
+          <Button variant="secondary" onClick={reset} disabled={surveyQuery.isPending || fileQuery.isPending}>
             초기화
           </Button>
-          <Button variant="primary" onClick={submit} disabled={surveyQuery.isPending}>
+          <Button variant="primary" onClick={submit} disabled={surveyQuery.isPending || fileQuery.isPending}>
             초안 생성하기
           </Button>
         </div>
