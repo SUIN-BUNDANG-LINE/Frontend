@@ -13,8 +13,22 @@ ChartJS.register(ArcElement, Tooltip, ChartDataLabels);
 function CompareExample() {
   const [state, setState] = React.useState(false);
 
+  const handleClick = () => {
+    if (state) setState(false);
+    else setState(true);
+  };
+
   return (
-    <div className={styles.preview}>
+    <div
+      className={styles.preview}
+      onClick={state ? handleClick : undefined}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (state && (e.key === 'Enter' || e.key === ' ')) {
+          handleClick();
+        }
+      }}>
       <div className={styles.previewWrapper}>
         <Field
           changeType={state ? 'MODIFIED' : 'UNCHANGED'}
@@ -50,7 +64,7 @@ function CompareExample() {
         />
       </div>
       {!state && (
-        <button type="button" className={styles.chatWrapper} onClick={() => setState(true)}>
+        <button type="button" className={styles.chatWrapper} onClick={handleClick}>
           <div className={styles.chat}>
             <div>
               <IoChatbubbleEllipsesOutline /> <span>유명한 곳으로 더 추가해줘</span>
@@ -65,6 +79,11 @@ function CompareExample() {
 
 function StatisticsExample() {
   const [state, setState] = React.useState(false);
+
+  const handleClick = () => {
+    if (state) setState(false);
+    else setState(true);
+  };
 
   const data = {
     labels: ['스타벅스', '투썸플레이스', '이디야'],
@@ -121,10 +140,19 @@ function StatisticsExample() {
   };
 
   return (
-    <div className={styles.preview}>
+    <div
+      className={styles.preview}
+      onClick={state ? handleClick : undefined}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (state && (e.key === 'Enter' || e.key === ' ')) {
+          handleClick();
+        }
+      }}>
       <Pie data={data} options={options} />
       {!state && (
-        <button type="button" className={styles.chatWrapper} onClick={() => setState(true)}>
+        <button type="button" className={styles.chatWrapper} onClick={handleClick}>
           <div className={styles.chat}>
             <div>
               <FaSearch /> <span>&lsquo;인천 거주자&rsquo; 라고 답한 사람의 응답 보기</span>
