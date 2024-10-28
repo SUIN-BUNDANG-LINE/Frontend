@@ -1,5 +1,8 @@
-.form {
+.top {
   position: relative;
+}
+
+.form {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -27,6 +30,7 @@
 .warning {
   display: block;
   position: absolute;
+  top: 0;
   padding: 8px 12px;
   margin: 8px;
   border-radius: 4px;
@@ -47,6 +51,41 @@
   transform: translateY(0);
 }
 
+.preset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 100%;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 30px;
+  width: fit-content;
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  border: 1px solid transparent;
+  color: var(--gray-md);
+  background-color: transparent;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.preset:not(:disabled) {
+  cursor: pointer;
+}
+
+.preset:not(:disabled):hover {
+  color: var(--gray-d);
+  background-color: var(--gray-ml);
+}
+
+.preset:disabled {
+  transform: translateY(16px);
+  user-select: none;
+  pointer-events: none;
+  background-color: transparent;
+  color: transparent;
+}
+
 .bottom {
   display: grid;
   grid-template-columns: 1fr 72px;
@@ -56,6 +95,7 @@
   border: none;
   border-radius: 0 0 4px 4px;
   padding: 16px;
+  padding-top: 8px;
   box-sizing: border-box;
   background-color: #fff;
 }

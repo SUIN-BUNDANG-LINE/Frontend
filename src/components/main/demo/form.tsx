@@ -5,11 +5,13 @@ import { ErrorCause } from '@/services/ky-wrapper';
 import { useFileUpload } from '@/services/s3';
 import { showToast } from '@/utils/toast';
 import { ImportedSurvey } from '@/components/workbench/types';
+import { RiSparkling2Fill } from 'react-icons/ri';
 import { type Request } from './types';
 import styles from './form.module.css';
 import FileArea from './file-area';
 import { useGenerateSurvey } from './hooks';
 import Generating from './generating';
+import { preset } from './preset';
 
 type Props = {
   request: Request;
@@ -68,6 +70,10 @@ export default function Form({ request, setRequest, unmount, load, visitorId }: 
     unmount();
   };
 
+  const testPreset = () => {
+    updateRequest('prompt', preset[Math.floor(Math.random() * preset.length)]);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -93,16 +99,21 @@ export default function Form({ request, setRequest, unmount, load, visitorId }: 
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <textarea
-        ref={textareaRef}
-        className={styles.prompt}
-        placeholder="어떤 내용의 설문지를 만들어 볼까요?"
-        value={prompt}
-        onChange={(e) => updateRequest('prompt', e.target.value.slice(0, 20000))}
-        maxLength={20000}
-      />
-      <div className={`${styles.warning} ${prompt.length >= 20000 ? styles.full : ''}`}>
-        최대 20000자까지 입력할 수 있습니다.
+      <div className={styles.top}>
+        <textarea
+          ref={textareaRef}
+          className={styles.prompt}
+          placeholder="어떤 내용의 설문지를 만들어 볼까요?"
+          value={prompt}
+          onChange={(e) => updateRequest('prompt', e.target.value.slice(0, 20000))}
+          maxLength={20000}
+        />
+        <div className={`${styles.warning} ${prompt.length >= 20000 ? styles.full : ''}`}>
+          최대 20000자까지 입력할 수 있습니다.
+        </div>
+        <button className={styles.preset} type="button" onClick={testPreset} disabled={prompt.length !== 0}>
+          <RiSparkling2Fill size={20} /> <span>준비된 요청 사항 써보기</span>
+        </button>
       </div>
       <div className={styles.bottom}>
         <FileArea file={file} clearFile={clearFile} handleFileChange={handleFileChange} />
