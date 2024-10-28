@@ -22,7 +22,6 @@ export default function Draft({ openDraft, openChat, closeAi, surveyId }: Props)
   */
 
   const [formData, setFormData] = React.useState<FormData>(DEFAULT_FORM_DATA);
-  const [dataType, setDataType] = React.useState<'text' | 'file'>('file');
   const [survey, setSurvey] = React.useState<Store | null>(null);
 
   React.useEffect(() => {
@@ -66,8 +65,6 @@ export default function Draft({ openDraft, openChat, closeAi, surveyId }: Props)
           <ProvideData
             formData={formData}
             setFormData={setFormData}
-            dataType={dataType}
-            setDataType={setDataType}
             setPhase={setPhase}
             setSurvey={setSurvey}
             surveyId={surveyId}

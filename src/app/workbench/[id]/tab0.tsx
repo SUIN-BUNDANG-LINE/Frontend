@@ -10,7 +10,7 @@ function Tab0() {
     <div className={styles.container}>
       <MainSection />
       <RewardSection />
-      <hr />
+      {/* <hr /> */}
       <MiscSection />
     </div>
   );

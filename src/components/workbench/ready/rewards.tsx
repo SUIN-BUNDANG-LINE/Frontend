@@ -12,7 +12,7 @@ export default function Rewards({ config }: { config: RewardConfig }) {
     if (config.type === 'NO_REWARD') return '리워드를 지급하지 않습니다.';
 
     const date = moment(config.finishedAt);
-    return `${date.year()}년 ${date.month()}월 ${date.date()}일 ${date.hour()}시가 되면 설문조사를 마감하고 리워드를 지급합니다.`;
+    return `${date.year()}년 ${date.month() + 1}월 ${date.date()}일 ${date.hour()}시가 되면 설문조사를 마감하고 리워드를 지급합니다.`;
   })();
 
   const list = (() => {

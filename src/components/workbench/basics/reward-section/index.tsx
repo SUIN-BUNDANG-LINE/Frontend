@@ -26,14 +26,9 @@ export default function RewardSection() {
 
       <RewardType readonly={readonly} />
 
-      {type !== 'NO_REWARD' && (
-        <>
-          <RewardList readonly={readonly} />
-          <FinishedAt readonly={readonly} />
-        </>
-      )}
-
       {type === 'IMMEDIATE_DRAW' && <MaxParticipants readonly={readonly} />}
+      {type !== 'NO_REWARD' && <RewardList readonly={readonly} />}
+      {type !== 'NO_REWARD' && <FinishedAt readonly={readonly} />}
     </>
   );
 }

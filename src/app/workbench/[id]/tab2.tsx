@@ -13,6 +13,7 @@ import Modal from '@/components/ui/modal/Modal';
 import StartSurveyFailedModal from '@/components/workbench/ready/modal';
 import { extractStore, validate } from '@/components/workbench/func';
 import { ErrorCause } from '@/services/ky-wrapper';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import styles from './tab2.module.css';
 
 type Props = {
@@ -100,6 +101,11 @@ function Tab2({ surveyId }: Props) {
             </Button>
           </>
         )}
+        <div style={{ height: '12px' }} />
+        <a target="_blank" href={`/workbench/${surveyId}/preview`} className={styles.preview} rel="noreferrer">
+          <FaExternalLinkAlt />
+          <div>미리보기</div>
+        </a>
       </div>
     </div>
   );
