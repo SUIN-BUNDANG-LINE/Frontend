@@ -47,6 +47,10 @@ interface QuestionResultInfo {
   contents: string[];
 }
 
+interface SurveyRawResult {
+  rawResults: string[][];
+}
+
 type QuestionType = 'TEXT_RESPONSE' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
 
 export type {
@@ -59,4 +63,5 @@ export type {
   QuestionFilter,
   QuestionType,
   QuestionResultInfo,
+  SurveyRawResult,
 };
