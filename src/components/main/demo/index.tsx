@@ -33,7 +33,12 @@ export default function Demo() {
     <div className={styles.wrapper}>
       <div className={styles.title}>🤔 믿기지 않는다면 지금 바로 시험해보세요.</div>
       {phase === 0 && (
-        <Form request={request} setRequest={setRequest} load={load} unmount={unmount} visitorId={visitorId} />
+        <>
+          <Form request={request} setRequest={setRequest} load={load} unmount={unmount} visitorId={visitorId} />
+          <div style={{ width: '100%', maxWidth: '640px', padding: '4px 0', color: 'var(--gray)', fontSize: '14px' }}>
+            * 주의 : 이 화면에서 생성한 설문지는 저장되지 않습니다.
+          </div>
+        </>
       )}
       {phase === 1 && survey && (
         <>
