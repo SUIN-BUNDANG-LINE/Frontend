@@ -5,7 +5,8 @@
 }
 
 .addButton,
-.searchButton {
+.searchButton,
+.excelButton {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -31,6 +32,15 @@
 
 .searchButton:hover {
   background-color: #0056b3;
+}
+
+.excelButton {
+  background-color: #38a169;
+  color: white;
+}
+
+.excelButton:hover {
+  background-color: #2f855a;
 }
 
 .buttonIcon {

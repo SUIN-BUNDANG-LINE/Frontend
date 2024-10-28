@@ -28,7 +28,6 @@
   align-items: center;
   margin-bottom: 8px;
   white-space: nowrap;
-  overflow: hidden;
   width: 100%;
   cursor: pointer;
 }

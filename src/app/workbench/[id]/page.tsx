@@ -83,9 +83,9 @@ export default function Page({ params }: { params: { id: string } }) {
   const content = React.useMemo(() => {
     if (!authorized || isLoading) return <Loading message="설문지를 불러오는 중..." />;
     switch (tab) {
-      case 0:
-        return <Tab0 />;
       case 1:
+        return <Tab0 />;
+      case 0:
         return <Tab1 openDraft={() => setAi('draft')} openChat={() => setAi('chat')} />;
       case 2:
         return <Tab2 surveyId={id} />;

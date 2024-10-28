@@ -1,52 +1,66 @@
 'use client';
 
 import { usePreview } from '@/components/preview/hooks/usePreview';
-import PreviewDetails from '@/components/preview/ui/Details';
 import Navigator from '@/components/preview/ui/Participate/Navigator';
 import Section from '@/components/preview/ui/Participate/Section';
-import Placeholder from '@/components/preview/ui/Placeholder';
 import Field from '@/components/preview/ui/Participate/Field';
 import { validateResponse } from '@/components/preview/funcs';
 import ReadyToSubmit from '@/components/preview/ui/Ready';
 import { showToast } from '@/utils/toast';
 import Header from '@/components/preview/ui/Header';
-import { fetchSurveyGet } from '@/components/workbench/service/fetch';
-import { cin } from '@/components/workbench/func';
-import { useQuery } from '@tanstack/react-query';
+import { Store } from '@/components/workbench/types';
+import React from 'react';
+import Button from '@/components/ui/button/Button';
+import styles from './preview.module.css';
 
-const getQueryOptions = (surveyId: string) => ({
-  queryKey: ['preview', surveyId],
-  queryFn: () => fetchSurveyGet({ surveyId }),
-  select: cin,
-  staleTime: 0,
-  gcTime: 0,
-});
+type Props = {
+  survey: Store;
+  unmount: () => void;
+};
 
-export default function Page({ params }: { params: { id: string } }) {
-  const { data: survey, isLoading, isError } = useQuery(getQueryOptions(params.id));
+export default function Preview({ survey, unmount }: Props) {
   const { ok, payload } = usePreview(survey);
+  const { title, description, finishMessage } = survey;
 
-  if (!survey || !ok) return <Placeholder isLoading={isLoading} isError={isError} />;
+  const resize = () => {
+    const textarea = document.getElementById('description');
+    if (!textarea) return;
+    textarea.style.height = 'auto';
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  };
+
+  React.useEffect(() => {
+    resize();
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
+  }, []);
+
+  if (!ok) return <div />;
 
   const { progress, state, actions, responses, dispatch } = payload;
-  const { title, description, thumbnail, status, rewardConfig, finishMessage } = survey;
 
   if (state === 'surveyDetails') {
     return (
-      <>
-        <Header title={title} />
-        <PreviewDetails
-          title={title}
-          description={description}
-          thumbnail={thumbnail}
-          status={status}
-          rewardConfig={rewardConfig}
-          onStart={() => {
-            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-            actions.push();
-          }}
-        />
-      </>
+      <div className={styles.details}>
+        <div className={styles.top}>설문이용 AI가 만든 설문지입니다.</div>
+        <h2 className={styles.title}>{title}</h2>
+        <textarea id="description" className={styles.description} value={description} readOnly />
+        <div className={styles.buttons}>
+          <button type="button" className={styles.return} onClick={unmount}>
+            ← 또 만들기
+          </button>
+          <Button
+            variant="primary"
+            width="100%"
+            height="48px"
+            onClick={() => {
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              actions.push();
+            }}>
+            참여하기
+          </Button>
+        </div>
+      </div>
     );
   }
 
@@ -86,7 +100,7 @@ export default function Page({ params }: { params: { id: string } }) {
     };
 
     return (
-      <>
+      <div className={styles.overlay}>
         <Header title={title} />
         <Section title={section.title} description={section.description}>
           {fieldData.map(({ key, field, filteredResponses, valid }) => (
@@ -94,7 +108,7 @@ export default function Page({ params }: { params: { id: string } }) {
           ))}
         </Section>
         <Navigator stack={progress.stack} push={push} pop={pop} />
-      </>
+      </div>
     );
   }
 
@@ -104,9 +118,9 @@ export default function Page({ params }: { params: { id: string } }) {
   };
 
   return (
-    <>
+    <div className={styles.overlay}>
       <Header title={title} />
       <ReadyToSubmit message={finishMessage} submitHandler={submitHandler} pop={pop} />
-    </>
+    </div>
   );
 }

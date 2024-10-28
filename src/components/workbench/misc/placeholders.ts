@@ -4,6 +4,5 @@ export const DEFAULT_FORM_DATA: FormData = {
   target: '',
   affiliation: '',
   prompt: '',
-  data: '',
-  file: null,
+  file: { url: '', name: '' },
 };
