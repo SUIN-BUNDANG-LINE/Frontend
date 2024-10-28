@@ -57,7 +57,7 @@ export default function Tab0({ surveyId, visitorId }: { surveyId: string; visito
         </div>
         <div className={styles.participantInfoContent}>응답자 수 : {data?.participantCount}명</div>
       </div>
-      <FilterManager onSearch={handleSearch} resultInfo={makeResultInfo()} />
+      <FilterManager onSearch={handleSearch} resultInfo={makeResultInfo()} surveyId={surveyId} visitorId={visitorId} />
       {data?.sectionResults.map((sectionResult: SectionResult) => (
         <SectionResultViewer key={sectionResult.sectionId} sectionResult={sectionResult} />
       ))}
