@@ -194,7 +194,7 @@ export default function ProvideData({ formData, setFormData, setPhase, setSurvey
               </span>
             </div>
           </li>
-          <li className={styles.field}>
+          {/* <li className={styles.field}>
             <div>소속</div>
             <p>설문 소개 문구에 사용됩니다.</p>
             <input
@@ -211,7 +211,7 @@ export default function ProvideData({ formData, setFormData, setPhase, setSurvey
                 {formData.affiliation.length} / {MAX_LENGTH.affiliation}자
               </span>
             </div>
-          </li>
+          </li> */}
         </ul>
         <div className={styles.buttons}>
           <Button variant="secondary" onClick={reset} disabled={surveyQuery.isPending || fileQuery.isPending}>
