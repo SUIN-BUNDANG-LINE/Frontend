@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import type { QuestionFilter, QuestionResultInfo } from '@/services/result/types';
 import QuestionFilterComponent from '@/components/management/result/QuestionFilterComponent';
-import { FaPlus, FaSearch } from 'react-icons/fa';
+import { FaFileExcel, FaPlus, FaSearch } from 'react-icons/fa';
 import { showToast } from '@/utils/toast';
+import { getRawResults } from '@/services/result/fetch';
+import * as XLSX from 'xlsx';
 import styles from './FilterManager.module.css';
 
 interface FilterManagerProps {
   onSearch: (filters: QuestionFilter[]) => void;
   resultInfo: QuestionResultInfo[];
+  surveyId: string;
+  visitorId: string | undefined;
 }
 
-export default function FilterManager({ onSearch, resultInfo }: FilterManagerProps) {
+export default function FilterManager({ onSearch, resultInfo, surveyId, visitorId }: FilterManagerProps) {
   const [tempFilters, setTempFilters] = useState<QuestionFilter[]>([]);
   const [invalidFilterIndexes, setInvalidFilterIndexes] = useState<number[]>([]);
 
@@ -67,6 +71,20 @@ export default function FilterManager({ onSearch, resultInfo }: FilterManagerPro
     }
   };
 
+  const handleExcelDownload = async () => {
+    const rawResults = await getRawResults({ surveyId, visitorId });
+
+    // 워크시트 생성
+    const worksheet = XLSX.utils.aoa_to_sheet(rawResults.rawResults);
+
+    // 워크북 생성 및 워크시트 추가
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Questions');
+
+    // 파일 다운로드
+    XLSX.writeFile(workbook, 'questions.xlsx');
+  };
+
   return (
     <div className={styles.filterManagerContainer}>
       <div className={styles.buttonGroup}>
@@ -75,6 +93,9 @@ export default function FilterManager({ onSearch, resultInfo }: FilterManagerPro
         </button>
         <button type="button" onClick={handleSearch} className={styles.searchButton}>
           <FaSearch className={styles.buttonIcon} /> 필터 적용
+        </button>
+        <button type="button" onClick={handleExcelDownload} className={styles.excelButton}>
+          <FaFileExcel className={styles.buttonIcon} /> 엑셀 보기
         </button>
       </div>
       {tempFilters.map((filter, index) => (
