@@ -2,7 +2,7 @@
   box-sizing: border-box;
   background-color: var(--gray-l);
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .header {
@@ -86,9 +86,10 @@
 }
 
 .previewWrapper {
+  height: 100%;
   min-height: 240px;
   max-height: calc(100vh - 71px - 240px);
-  overflow-y: auto;
+  overflow-y: scroll;
   transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
   border-top: 1px solid transparent;
   border-bottom: 1px solid transparent;

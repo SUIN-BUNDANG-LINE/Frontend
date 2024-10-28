@@ -1,34 +1,20 @@
 import React from 'react';
-import { cin } from '@/components/workbench/func';
-import { fetchSurveyGet } from '@/components/workbench/service/fetch';
-import { useQuery } from '@tanstack/react-query';
 import { Other } from '@/components/workbench/misc/Route';
+import { Store } from '@/components/workbench/types';
 import { Progress, Response, State } from '../types/core';
 import { Dispatch } from '../types/participate';
 
-const getQueryOptions = (surveyId: string) => ({
-  queryKey: ['preview', surveyId],
-  queryFn: () => fetchSurveyGet({ surveyId }),
-  select: cin,
-  staleTime: 0,
-  gcTime: 0,
-});
-
-const usePreview = (surveyId: string) => {
-  const { data: survey, isLoading, isError } = useQuery(getQueryOptions(surveyId));
-
+const usePreview = (survey: Store | undefined) => {
   // hooks
   const [progress, setProgress] = React.useState<Progress>({ stack: [], page: [] });
   const [state, setState] = React.useState<State>('surveyDetails');
   const [responses, setResponses] = React.useState<Response[]>([]);
 
-  // data is not ready.
+  // data is not ready
+  if (!survey) return { ok: false as const, payload: undefined };
 
-  if (!survey) return { query: { isLoading, isError }, payload: undefined };
-
-  // data is ready.
-
-  const { title, description, thumbnail, status, rewardConfig, fields, sections, finishMessage } = survey;
+  // functionalities
+  const { fields, sections } = survey;
 
   const getNextSection = () => {
     const { stack, page } = progress;
@@ -167,26 +153,13 @@ const usePreview = (surveyId: string) => {
   };
 
   return {
-    query: {
-      isLoading,
-      isError,
-    },
+    ok: true as const,
     payload: {
-      survey: {
-        title,
-        description,
-        thumbnail,
-        status,
-        rewardConfig,
-        finishMessage,
-      },
-      core: {
-        responses,
-        progress,
-        actions,
-        state,
-        dispatch,
-      },
+      responses,
+      progress,
+      actions,
+      state,
+      dispatch,
     },
   };
 };

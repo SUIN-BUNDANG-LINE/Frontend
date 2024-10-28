@@ -50,14 +50,12 @@ const useGenerateSurvey = ({
   return useMutation({
     mutationKey: ['ai', 'generate', 'survey', surveyId],
     mutationFn: ({
-      method,
       formData,
       signal,
     }: {
-      method: 'text-document' | 'file-url';
-      formData: { target: string; groupName: string; userPrompt: string; textDocument?: string; fileUrl?: string };
+      formData: { target: string; groupName: string; userPrompt: string; fileUrl: string | null };
       signal: AbortSignal;
-    }) => fetchGenerateSurvey({ method, formData, surveyId, signal }),
+    }) => fetchGenerateSurvey({ formData, surveyId, signal }),
     onSuccess,
     onError,
   });
