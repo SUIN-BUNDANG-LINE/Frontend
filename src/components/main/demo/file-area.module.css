@@ -53,6 +53,10 @@
   background-color: var(--gray-ml);
 }
 
+.limits {
+  color: var(--gray);
+}
+
 @keyframes leaves {
   0% {
     transform: scale(0.8);

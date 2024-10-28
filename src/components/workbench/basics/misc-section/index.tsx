@@ -1,4 +1,4 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import { useSurveyStore } from '../../store';
 import styles from './index.module.css';
 
@@ -19,7 +19,7 @@ export default function MiscSection() {
 
   return (
     <div className={styles.group}>
-      <label className={styles.checkboxLabel} htmlFor="survey-is-result">
+      <label className={styles.checkboxLabel} htmlFor="survey-is-result-open">
         <input
           id="survey-is-result-open"
           type="checkbox"
@@ -42,18 +42,18 @@ export default function MiscSection() {
           checked={isVisible}
           onChange={isVisibleChangeHandler}
         />
-        설문지를 설문이용에 공개하는데 동의합니다. (권장)
+        설문지를 설문이용에 공개하는데 동의합니다.
       </label>
-      <div className={styles.description}>
-        설문지를 공개하면 다음과 같이 설문이용의 메인 페이지에 노출되어 누구나 참여할 수 있게 됩니다.
+      <div className={styles.description} style={{ marginBottom: '24px' }}>
+        설문지를 공개하면 설문이용의 설문 목록 페이지에 노출되어 누구나 참여할 수 있게 됩니다.
       </div>
-      <Image
+      {/* <Image
         src="/assets/what_isvisible_does.png"
         alt="예시"
         width={676}
         height={422}
         style={{ width: '100%', height: 'auto', margin: '12px 0', boxShadow: 'var(--box-shadow)' }}
-      />
+      /> */}
     </div>
   );
 }
