@@ -13,6 +13,13 @@
   position: relative;
 }
 
+.mid {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .bot {
   position: absolute;
   bottom: 0;
