@@ -10,6 +10,7 @@
   background-color: #fff;
   border-radius: 4px;
   overflow: hidden;
+  box-shadow: var(--box-shadow);
 }
 
 .prompt {
@@ -22,7 +23,7 @@
   outline: none;
   resize: none;
   line-height: 20px;
-  min-height: 112px;
+  min-height: 124px;
   background-color: #fff;
   transition: background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
