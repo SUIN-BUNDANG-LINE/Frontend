@@ -1,32 +1,17 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   color: var(--gray-d);
   padding: 0 16px;
   width: 100%;
-  height: calc(100vh - 80px);
-  min-height: 480px;
+  /* height: calc(100vh - 80px); */
+  height: 40vh;
+  min-height: 420px;
   max-width: var(--container-width);
   box-sizing: border-box;
   position: relative;
-}
-
-.mid {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.bot {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .bot button {

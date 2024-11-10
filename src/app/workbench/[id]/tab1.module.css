@@ -69,3 +69,17 @@
   background-color: var(--gray);
   color: #fff;
 }
+
+@media screen and (min-width: 769px) {
+  .isEmpty {
+    padding: 24px 0;
+    font-size: 20px;
+    color: var(--gray-d);
+  }
+
+  .getStarted button {
+    width: 320px;
+    height: 96px;
+    font-size: 20px;
+  }
+}
