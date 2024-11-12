@@ -1,12 +1,15 @@
+import { useRef } from 'react';
 import { QuestionResult } from '@/services/result/types';
-import { FaUsers } from 'react-icons/fa';
+import { FaUsers, FaClipboard } from 'react-icons/fa';
+import html2canvas from 'html2canvas';
 import styles from './QuestionResultViewer.module.css';
 import PieChartComponent from './PieChartComponent';
 import TextResponseList from './TextResponseList';
 import Svg from '../misc/Svg';
 
 export default function QuestionResultViewer({ questionResult }: { questionResult: QuestionResult }) {
-  const { title, responses, participantCount, type } = questionResult;
+  const { id, title, responses, participantCount, type } = questionResult;
+  const componentRef = useRef<HTMLDivElement>(null);
 
   const fields = [
     {
@@ -29,8 +32,47 @@ export default function QuestionResultViewer({ questionResult }: { questionResul
     TEXT_RESPONSE: { label: '주관식', icon: <Svg path={fields[2].path} size="15px" /> },
   };
 
+  const handleCopyToClipboard = async () => {
+    if (componentRef.current) {
+      const copyButton = componentRef.current.querySelector(`.${styles.copyButton}`) as HTMLButtonElement;
+      if (copyButton) {
+        copyButton.style.display = 'none';
+      }
+
+      const canvas = await html2canvas(componentRef.current, {
+        width: 800,
+        height: 425,
+        windowWidth: 800,
+        windowHeight: 425,
+        scale: 2,
+      });
+
+      if (copyButton) {
+        copyButton.style.display = 'block';
+      }
+
+      canvas.toBlob(async (blob) => {
+        if (blob) {
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({
+                [blob.type]: blob,
+              }),
+            ]);
+            alert('이미지가 클립보드에 복사되었습니다.');
+          } catch (err) {
+            console.error('클립보드 복사 중 오류 발생:', err);
+          }
+        }
+      });
+    }
+  };
+
   return (
-    <div className={styles.questionContainer}>
+    <div className={styles.questionContainer} id={`question-result-${id}`} ref={componentRef}>
+      <button type="button" aria-label="클립보드에 복사" className={styles.copyButton} onClick={handleCopyToClipboard}>
+        <FaClipboard />
+      </button>
       <h2 className={styles.questionTitle}>{title}</h2>
       <div className={styles.questionInfo}>
         <div className={styles.questionType}>
