@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { QuestionResult } from '@/services/result/types';
 import { FaUsers, FaClipboard } from 'react-icons/fa';
 import html2canvas from 'html2canvas';
+import { showToast } from '@/utils/toast';
 import styles from './QuestionResultViewer.module.css';
 import PieChartComponent from './PieChartComponent';
 import TextResponseList from './TextResponseList';
@@ -59,9 +60,9 @@ export default function QuestionResultViewer({ questionResult }: { questionResul
                 [blob.type]: blob,
               }),
             ]);
-            alert('이미지가 클립보드에 복사되었습니다.');
+            showToast('success', '이미지가 클립보드에 복사되었습니다.');
           } catch (err) {
-            console.error('클립보드 복사 중 오류 발생:', err);
+            showToast('error', '클립보드 복사 중 오류가 발생했습니다.');
           }
         }
       });
