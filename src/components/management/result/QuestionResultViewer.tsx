@@ -1,15 +1,16 @@
 import { useRef } from 'react';
 import { QuestionResult } from '@/services/result/types';
-import { FaUsers, FaClipboard } from 'react-icons/fa';
+import { FaUsers } from 'react-icons/fa';
 import html2canvas from 'html2canvas';
 import { showToast } from '@/utils/toast';
+import { writeClipboard } from '@/utils/misc';
 import styles from './QuestionResultViewer.module.css';
 import PieChartComponent from './PieChartComponent';
 import TextResponseList from './TextResponseList';
 import Svg from '../misc/Svg';
 
 export default function QuestionResultViewer({ questionResult }: { questionResult: QuestionResult }) {
-  const { id, title, responses, participantCount, type } = questionResult;
+  const { title, responses, participantCount, type } = questionResult;
   const componentRef = useRef<HTMLDivElement>(null);
 
   const fields = [
@@ -34,6 +35,11 @@ export default function QuestionResultViewer({ questionResult }: { questionResul
   };
 
   const handleCopyToClipboard = async () => {
+    if (type === 'TEXT_RESPONSE') {
+      if (responses) writeClipboard(responses.map((i) => i.content).join('\n'));
+      return;
+    }
+
     if (componentRef.current) {
       const copyButton = componentRef.current.querySelector(`.${styles.copyButton}`) as HTMLButtonElement;
       if (copyButton) {
@@ -70,10 +76,12 @@ export default function QuestionResultViewer({ questionResult }: { questionResul
   };
 
   return (
-    <div className={styles.questionContainer} id={`question-result-${id}`} ref={componentRef}>
-      <button type="button" aria-label="클립보드에 복사" className={styles.copyButton} onClick={handleCopyToClipboard}>
-        <FaClipboard />
-      </button>
+    <div className={styles.questionContainer} ref={componentRef}>
+      <div className={styles.copyButton}>
+        <button type="button" className={styles.submit} onClick={handleCopyToClipboard}>
+          <div className={styles.submitInner}>복사</div>
+        </button>
+      </div>
       <h2 className={styles.questionTitle}>{title}</h2>
       <div className={styles.questionInfo}>
         <div className={styles.questionType}>
