@@ -37,6 +37,7 @@ export default function QuestionResultViewer({ questionResult }: { questionResul
   const handleCopyToClipboard = async () => {
     if (type === 'TEXT_RESPONSE') {
       if (responses) writeClipboard(responses.map((i) => i.content).join('\n'));
+      showToast('success', '텍스트가 클립보드에 복사되었습니다.');
       return;
     }
 
