@@ -1,9 +1,60 @@
 .questionContainer {
+  position: relative;
   background-color: #ffffff;
   /* box-shadow: -6px 0px 0px 0px rgb(255, 213, 33); */
   border-radius: 4px;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+.copyButton {
+  position: absolute;
+  top: 26px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #5b5b5b;
+  z-index: 1000;
+}
+
+.copyButton:hover {
+  color: #000;
+}
+
+.submit {
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.submitInner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: var(--gray-d);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 10px 14px;
+}
+
+.submit:not(:disabled):hover .submitInner {
+  background-color: var(--gray-ml);
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow);
+  color: #000;
+}
+
+.submit:disabled:hover .submitInner {
+  color: var(--gray);
+  cursor: wait;
 }
 
 .questionTitle {
