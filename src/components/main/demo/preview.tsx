@@ -57,7 +57,7 @@ export default function Preview({ survey, unmount }: Props) {
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
               actions.push();
             }}>
-            참여하기
+            생성된 설문 보기
           </Button>
         </div>
       </div>

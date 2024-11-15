@@ -35,7 +35,7 @@ export default function Demo() {
       {phase === 0 && (
         <>
           <Form request={request} setRequest={setRequest} load={load} unmount={unmount} visitorId={visitorId} />
-          <div style={{ width: '100%', maxWidth: '640px', padding: '4px 0', color: 'var(--gray)', fontSize: '14px' }}>
+          <div style={{ width: '100%', maxWidth: '640px', padding: '8px 0', color: 'var(--gray)', fontSize: '14px' }}>
             * 주의 : 이 화면에서 생성한 설문지는 저장되지 않습니다.
           </div>
         </>
