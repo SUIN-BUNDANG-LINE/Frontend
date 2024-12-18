@@ -1,7 +1,8 @@
 import React from 'react';
-import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react';
+// import { useVisitorData } from '@fingerprintjs/fingerprintjs-pro-react';
 import type { ImportedSurvey, Store } from '@/components/workbench/types';
 import { cin } from '@/components/workbench/func';
+import { v4 } from 'uuid';
 import Form from './form';
 import styles from './index.module.css';
 import { Request } from './types';
@@ -19,7 +20,7 @@ export default function Demo() {
     if (phase < 0) setPhase(0);
   }, [phase]);
 
-  const visitorId = useVisitorData({ extendedResult: false }, { immediate: true }).data?.visitorId;
+  // const visitorId = useVisitorData({ extendedResult: false }, { immediate: true }).data?.visitorId;
   const unmount = () => {
     setPhase(-1);
     setSurvey(null);
@@ -34,7 +35,7 @@ export default function Demo() {
       <div className={styles.title}>🤔 믿기지 않는다면 지금 바로 시험해보세요.</div>
       {phase === 0 && (
         <>
-          <Form request={request} setRequest={setRequest} load={load} unmount={unmount} visitorId={visitorId} />
+          <Form request={request} setRequest={setRequest} load={load} unmount={unmount} visitorId={v4()} />
           <div style={{ width: '100%', maxWidth: '640px', padding: '8px 0', color: 'var(--gray)', fontSize: '14px' }}>
             * 주의 : 이 화면에서 생성한 설문지는 저장되지 않습니다.
           </div>
