@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'files.sulmoon.io',
+        hostname: 'file.sulmoon.io',
       },
     ],
   },
