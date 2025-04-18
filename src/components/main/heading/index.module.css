@@ -7,8 +7,8 @@
   padding: 0 16px;
   width: 100%;
   /* height: calc(100vh - 80px); */
-  height: 40vh;
-  min-height: 420px;
+  height: 35vh;
+  /* min-height: 420px; */
   max-width: var(--container-width);
   box-sizing: border-box;
   position: relative;
