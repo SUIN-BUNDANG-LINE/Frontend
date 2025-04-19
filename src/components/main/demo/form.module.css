@@ -119,17 +119,19 @@
   justify-content: center;
   border: none;
   color: var(--gray-d);
-  background-color: #fff;
+  background-color: var(--primary);
+  /* background-color: #fff; */
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: var(--box-shadow);
   border-radius: 4px;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .submit:not(:disabled):hover .submitInner {
-  background-color: var(--gray-ml);
+  background-color: var(--primary-alt);
   transform: translateY(-2px);
   box-shadow: var(--box-shadow);
-  color: #000;
 }
 
 .submit:disabled:hover .submitInner {

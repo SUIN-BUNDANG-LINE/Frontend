@@ -11,7 +11,7 @@ export default function Header() {
 
   const Login = (
     <Link href="/login" className={styles.login}>
-      로그인
+      설문조사 시작하기
     </Link>
   );
 

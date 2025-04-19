@@ -32,7 +32,7 @@ export default function Demo() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.title}>🤔 믿기지 않는다면 지금 바로 시험해보세요.</div>
+      {/* <div className={styles.title}>🤔 믿기지 않는다면 지금 바로 시험해보세요.</div> */}
       {phase === 0 && (
         <>
           <Form request={request} setRequest={setRequest} load={load} unmount={unmount} visitorId={v4()} />
